@@ -1,15 +1,19 @@
+@{
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
+}
+
 <footer class="site-footer" aria-label="Site footer">
     <div class="container">
       <div class="site-footer__inner">
         <div class="footer-brand">
-          <a asp-controller="Home" asp-action="Index" class="site-logo" aria-label="Hindawi Foundation home">
+          <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="site-logo" aria-label="Hindawi Foundation home">
             <img src="~/Logos/hindawi_en.svg" alt="Hindawi Foundation">
           </a>
           <p>Hindawi Foundation is a registered charity no. 1187180 in England and Wales. Registered address: York House, 41 Sheet Street, Windsor, SL4 1DD.</p>
           <ul class="footer-social" aria-label="Social links">
-            <li><a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
-            <li><a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a></li>
-            <li><a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="footer-social__item linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="footer-social__item facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="footer-social__item instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
           </ul>
         </div>
 
@@ -17,18 +21,18 @@
           <section class="footer-group" aria-label="Main links">
             <h4>Menu</h4>
             <ul>
-              <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-              <li><a asp-controller="Home" asp-action="About">About</a></li>
-              <li><a asp-controller="Home" asp-action="News">News</a></li>
-              <li><a asp-controller="Home" asp-action="Partners">Partners</a></li>
+              <li><a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">Home</a></li>
+              <li><a asp-controller="Home" asp-action="About" asp-route-culture="@culture">About</a></li>
+              <li><a asp-controller="Home" asp-action="News" asp-route-culture="@culture">News</a></li>
+              <li><a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture">Partners</a></li>
             </ul>
           </section>
 
           <section class="footer-group" aria-label="Policy links">
             <h4 class="invisible" aria-hidden="true">Menu</h4>
             <ul>
-              <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
-              <li><a asp-controller="Home" asp-action="Donate">Donate</a></li>
+              <li><a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture">Contact</a></li>
+              <li><a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture">Donate</a></li>
               <li><a href="#">Privacy Policy</a></li>
               <li><a href="#">Terms and Conditions</a></li>
             </ul>

@@ -1,11 +1,18 @@
+@model HindawiFoundation.Web.Models.DonationViewModel
+@using Microsoft.Extensions.Options
+@inject IOptions<HindawiFoundation.Web.Models.AppSettings> Options
 @{
     ViewData["Title"] = "Donate";
     ViewData["BodyClass"] = "page page--donate";
     ViewData["ActivePage"] = "donate";
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
+    var recaptchaSiteKey = Options.Value.DonationApi.GoogleRecaptchaKey;
+    var account = Options.Value.DonationAccount;
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/assets/css/pages/donate.css" asp-append-version="true">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 }
 
 <main id="main-content">
@@ -50,104 +57,127 @@
 
               <!-- PANEL: Credit/Debit Card (default) -->
               <div class="payment-panel is-active" data-payment-panel="card">
-                <form id="donateForm" novalidate>
+                  <form id="donateForm"
+                        action="@Url.Action("Index", "Donate", new { culture = culture })"
+                        method="post"
+                        novalidate>
+                      @Html.AntiForgeryToken()
+                      <input type="hidden" asp-for="PaymentMethodnonce" id="PaymentMethodnonce" />
+                      <input type="hidden" asp-for="CurrencyCode" id="CurrencyCode" />
 
-                  <!-- Row 1: Frequency | Amount | Email -->
-                  <div class="donate-grid donate-grid--3">
+                      <!-- Row 1: Frequency | Amount | Email -->
+                      <div class="donate-grid donate-grid--3">
 
-                    <div class="form-field">
-                      <label class="donation-form-field__label">Donation Frequency</label>
-                      <div class="frequency-options">
-                        <label class="frequency-option">
-                          <input type="radio" name="frequency" value="one-time"> One-time
-                        </label>
-                        <label class="frequency-option">
-                          <input type="radio" name="frequency" value="monthly" checked> Monthly
-                        </label>
+                          <div class="form-field">
+                              <label class="donation-form-field__label">Donation Frequency</label>
+                              <div class="frequency-options">
+                                  <label class="frequency-option">
+                                      <input type="radio" asp-for="Frequency" value="one-time"> One-time
+                                  </label>
+                                  <label class="frequency-option">
+                                      <input type="radio" asp-for="Frequency" value="monthly"> Monthly
+                                  </label>
+                              </div>
+                          </div>
+
+                          <div class="form-field">
+                              <label class="form-field__label" for="donationAmount">Donation Amount</label>
+                              <div class="amount-input-wrap">
+                                  <input class="form-input" type="number" asp-for="Amount" id="donationAmount" min="1" step="1" autocomplete="off">
+                                  <span class="amount-currency" id="amountCurrencyLabel">EGP</span>
+                              </div>
+                          </div>
+
+                          <div class="form-field">
+                              <label class="form-field__label" for="donorEmail">Email Address</label>
+                              <input class="form-input" type="email" asp-for="Email" id="donorEmail" autocomplete="email" required>
+                          </div>
+
                       </div>
-                    </div>
 
-                    <div class="form-field">
-                      <label class="form-field__label" for="donationAmount">Donation Amount</label>
-                      <div class="amount-input-wrap">
-                        <input class="form-input" type="number" id="donationAmount" name="donationAmount" min="1" step="1" autocomplete="off">
-                        <span class="amount-currency">EGP</span>
+                      <!-- Row 2: First Name | Last Name | Phone -->
+                      <div class="donate-grid donate-grid--3">
+
+                          <div class="form-field">
+                              <label class="form-field__label" for="firstName">First Name</label>
+                              <input class="form-input" type="text" asp-for="FirstName" id="firstName" autocomplete="given-name">
+                          </div>
+
+                          <div class="form-field">
+                              <label class="form-field__label" for="lastName">Last Name</label>
+                              <input class="form-input" type="text" asp-for="LastName" id="lastName" autocomplete="family-name">
+                          </div>
+
+                          <div class="form-field">
+                              <label class="form-field__label" for="phone">Phone Number</label>
+                              <input class="form-input" type="tel" asp-for="Phone" id="phone" autocomplete="tel">
+                          </div>
+
                       </div>
-                    </div>
 
-                    <div class="form-field">
-                      <label class="form-field__label" for="donorEmail">Email Address</label>
-                      <input class="form-input" type="email" id="donorEmail" name="email" autocomplete="email" required>
-                    </div>
+                      <hr class="donate-divider">
 
-                  </div>
+                      <!-- Row 3: Card Number | Expiry | CVV (Braintree Hosted Fields) -->
+                      <div class="donate-grid donate-grid--card">
 
-                  <!-- Row 2: First Name | Last Name | Phone -->
-                  <div class="donate-grid donate-grid--3">
+                          <div class="form-field form-field--card-number">
+                              <label class="form-field__label" for="cardNumber">Card Number</label>
+                              <div class="card-number-input">
+                                  <div class="form-input card-number-input__field" id="cardNumber"></div>
+                                  <div class="card-number-input__icons" aria-hidden="true">
+                                      <img src="~/Icons/master-card.svg" alt="">
+                                      <img src="~/Icons/visa.svg" alt="">
+                                  </div>
+                              </div>
+                          </div>
 
-                    <div class="form-field">
-                      <label class="form-field__label" for="firstName">First Name</label>
-                      <input class="form-input" type="text" id="firstName" name="firstName" autocomplete="given-name" required>
-                    </div>
+                          <div class="form-field">
+                              <label class="form-field__label" for="cardExpiry">Expiration Date</label>
+                              <div class="form-input" id="cardExpiry"></div>
+                          </div>
 
-                    <div class="form-field">
-                      <label class="form-field__label" for="lastName">Last Name</label>
-                      <input class="form-input" type="text" id="lastName" name="lastName" autocomplete="family-name" required>
-                    </div>
+                          <div class="form-field">
+                              <label class="form-field__label" for="cardCvc">CVV/CVC Code</label>
+                              <div class="form-input" id="cardCvc"></div>
+                          </div>
 
-                    <div class="form-field">
-                      <label class="form-field__label" for="phone">Phone Number</label>
-                      <input class="form-input" type="tel" id="phone" name="phone" autocomplete="tel">
-                    </div>
-
-                  </div>
-
-                  <hr class="donate-divider">
-
-                  <!-- Row 3: Card Number | Expiry | CVV -->
-                  <div class="donate-grid donate-grid--card">
-
-                    <div class="form-field form-field--card-number">
-                      <label class="form-field__label" for="cardNumber">Card Number</label>
-                      <div class="card-number-input">
-                        <input
-                          class="form-input card-number-input__field"
-                          type="text"
-                          id="cardNumber"
-                          name="cardNumber"
-                          placeholder="**** **** **** ****"
-                          maxlength="19"
-                          autocomplete="cc-number"
-                          inputmode="numeric"
-                        >
-                        <div class="card-number-input__icons" aria-hidden="true">
-                          <img src="~/Icons/master-card.svg" alt="">
-                          <img src="~/Icons/visa.svg" alt="">
-                        </div>
                       </div>
-                    </div>
 
-                    <div class="form-field">
-                      <label class="form-field__label" for="cardExpiry">Expiration Date</label>
-                      <input class="form-input" type="text" id="cardExpiry" name="cardExpiry" placeholder="MM/YY" maxlength="7" autocomplete="cc-exp">
-                    </div>
+                      <!-- reCAPTCHA -->
+                      @if (!string.IsNullOrWhiteSpace(recaptchaSiteKey))
+                  {
+                      <div class="form-field">
+                          <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
+                      </div>
+                  }
 
-                    <div class="form-field">
-                      <label class="form-field__label" for="cardCvc">CVV/CVC Code</label>
-                      <input class="form-input" type="text" id="cardCvc" name="cardCvc" maxlength="4" autocomplete="cc-csc" inputmode="numeric">
-                    </div>
+                      <!-- Submit -->
+                      <button class="donate-submit" type="submit">
+                          <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                          Donate Now
+                      </button>
 
-                  </div>
+                      @{
+                            var modelOnlyErrors = ViewData.ModelState[string.Empty]?.Errors;
+                       }
 
-                  <!-- Submit -->
-                  <button class="donate-submit" type="submit">
-                    <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                    Donate Now
-                  </button>
+                        @if (modelOnlyErrors != null && modelOnlyErrors.Count > 0)
+                        {
+                            <div class="donate-message is-error" role="alert" aria-live="polite">
+                                <ul>
+                                                @foreach (var error in modelOnlyErrors)
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(error.ErrorMessage))
+                                        {
+                                                        <li>@error.ErrorMessage</li>
+                                        }
+                                    }
+                              </ul>
+                            </div>
+                        }
+                      <div class="donate-message" id="donateMessage" role="alert" aria-live="polite" hidden></div>
 
-                  <div class="donate-message" id="donateMessage" role="alert" aria-live="polite" hidden></div>
-
-                </form>
+                  </form>
               </div>
               <!-- end card panel -->
 
@@ -156,23 +186,23 @@
                 <div class="wire-transfer-table" aria-label="Bank transfer details">
                   <div class="wire-transfer-row">
                     <span class="wire-transfer-row__label">Account Name</span>
-                    <span class="wire-transfer-row__value">Account Name</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.AccountName) ? "Account Name" : account.AccountName)</span>
                   </div>
                   <div class="wire-transfer-row">
                     <span class="wire-transfer-row__label">Bank Code</span>
-                    <span class="wire-transfer-row__value">Bank Code</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankCode) ? "Bank Code" : account.BankCode)</span>
                   </div>
                   <div class="wire-transfer-row">
                     <span class="wire-transfer-row__label">Account Number</span>
-                    <span class="wire-transfer-row__value">Account Number</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankNumber) ? "Account Number" : account.BankNumber)</span>
                   </div>
                   <div class="wire-transfer-row">
                     <span class="wire-transfer-row__label">SWIFT Code</span>
-                    <span class="wire-transfer-row__value">SWIFT Code</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.SwiftCode) ? "SWIFT Code" : account.SwiftCode)</span>
                   </div>
                   <div class="wire-transfer-row">
                     <span class="wire-transfer-row__label">IBAN</span>
-                    <span class="wire-transfer-row__value">IBAN</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.Iban) ? "IBAN" : account.Iban)</span>
                   </div>
                   <div class="wire-transfer-row wire-transfer-row--last">
                     <span class="wire-transfer-row__label">Bank Location</span>
@@ -341,3 +371,183 @@
     </section>
 
 </main>
+
+@section Scripts {
+    <script src="https://js.braintreegateway.com/web/3.96.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.96.0/js/hosted-fields.min.js"></script>
+    <script>
+      (function () {
+        'use strict';
+
+        var clientToken = @Html.Raw(string.IsNullOrWhiteSpace(Model?.ClientToken) ? "null" : "\"" + Model.ClientToken + "\"");
+        var form = document.getElementById('donateForm');
+        var submitBtn = form ? form.querySelector('.donate-submit') : null;
+        var msg = document.getElementById('donateMessage');
+        var nonceField = document.getElementById('PaymentMethodnonce');
+        var currencyField = document.getElementById('CurrencyCode');
+        var amountInput = document.getElementById('donationAmount');
+        var phoneInput = document.getElementById('phone');
+        var hostedFieldsInstance = null;
+        var isSubmitting = false;
+
+        function showMessage(text, isError) {
+          if (!msg) { return; }
+          msg.hidden = false;
+          msg.textContent = text;
+          msg.classList.toggle('is-error', !!isError);
+        }
+
+        function setSubmitting(state) {
+          isSubmitting = state;
+          if (submitBtn) {
+            submitBtn.disabled = state;
+            submitBtn.classList.toggle('is-loading', state);
+          }
+        }
+
+        // Prevent scientific notation in amount input
+        if (amountInput) {
+          amountInput.addEventListener('keydown', function (e) {
+            if (e.key === 'e' || e.key === 'E' || e.key === '+' || e.key === '-') {
+              e.preventDefault();
+            }
+          });
+        }
+
+        // Prevent invalid phone characters (allow digits, spaces, +, -, parentheses)
+        if (phoneInput) {
+          phoneInput.addEventListener('input', function () {
+            phoneInput.value = phoneInput.value.replace(/[^\d+\-\s()]/g, '');
+          });
+        }
+
+        // Payment method tab toggling (preserve existing UX)
+        var tabs = document.querySelectorAll('.payment-method');
+        var panels = document.querySelectorAll('.payment-panel');
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            var key = tab.getAttribute('data-payment');
+            tabs.forEach(function (t) {
+              t.classList.toggle('is-active', t === tab);
+              t.setAttribute('aria-pressed', t === tab ? 'true' : 'false');
+            });
+            panels.forEach(function (p) {
+              var match = p.getAttribute('data-payment-panel') === key;
+              p.classList.toggle('is-active', match);
+              p.hidden = !match;
+            });
+          });
+        });
+
+        // Initialize Braintree only if a client token is available
+        if (!clientToken) {
+          showMessage('Payment service is unavailable. Please try again later.', true);
+          if (submitBtn) { submitBtn.disabled = true; }
+          return;
+        }
+
+        if (typeof braintree === 'undefined') {
+          showMessage('Payment service failed to load. Please refresh the page.', true);
+          if (submitBtn) { submitBtn.disabled = true; }
+          return;
+        }
+
+        braintree.client.create({ authorization: clientToken }, function (clientErr, clientInstance) {
+          if (clientErr) {
+            showMessage('Could not initialize payment form. Please refresh and try again.', true);
+            if (submitBtn) { submitBtn.disabled = true; }
+            return;
+          }
+
+          braintree.hostedFields.create({
+            client: clientInstance,
+            styles: {
+              'input': {
+                'font-size': '16px',
+                'color': '#333'
+              },
+              'input.invalid': { 'color': '#c00' },
+              'input.valid':   { 'color': '#0a7' }
+            },
+            fields: {
+              number:         { selector: '#cardNumber', placeholder: '**** **** **** ****' },
+              expirationDate: { selector: '#cardExpiry', placeholder: 'MM/YY' },
+              cvv:            { selector: '#cardCvc',    placeholder: 'CVV' }
+            }
+          }, function (hfErr, hfInstance) {
+            if (hfErr) {
+              showMessage('Could not load secure card fields. Please refresh and try again.', true);
+              if (submitBtn) { submitBtn.disabled = true; }
+              return;
+            }
+            hostedFieldsInstance = hfInstance;
+          });
+        });
+
+          if (form) {
+              form.addEventListener('submit', function (e) {
+                  if (isSubmitting) {
+                      e.preventDefault();
+                      return;
+                  }
+
+                  if (!form.checkValidity()) {
+                      e.preventDefault();
+                      form.reportValidity();
+                      return;
+                  }
+
+                  if (typeof grecaptcha !== 'undefined') {
+                      try {
+                          if (!grecaptcha.getResponse()) {
+                              e.preventDefault();
+                              showMessage('Please complete the reCAPTCHA verification.', true);
+                              return;
+                          }
+                      } catch (ex) {
+                          // Let the server validate if the widget is not ready/readable.
+                      }
+                  }
+
+                  if (!hostedFieldsInstance) {
+                      e.preventDefault();
+                      showMessage('Payment form is not ready. Please wait a moment and try again.', true);
+                      return;
+                  }
+
+                  e.preventDefault();
+                  setSubmitting(true);
+
+                  hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+                      if (tokenizeErr) {
+                          setSubmitting(false);
+                          showMessage('Please check your card details and try again.', true);
+                          return;
+                      }
+
+                      if (nonceField && payload && payload.nonce) {
+                          nonceField.value = payload.nonce;
+                      }
+
+                      HTMLFormElement.prototype.submit.call(form);
+                  });
+              });
+          }
+
+        // Optional: try to fetch default currency, fall back silently to EGP
+        try {
+          var culture = '@culture';
+          fetch('/' + culture + '/donate/default-currency?countryCode=EG', { credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (data) {
+              if (data && data.currencyCode && currencyField) {
+                currencyField.value = data.currencyCode;
+                var label = document.getElementById('amountCurrencyLabel');
+                if (label) { label.textContent = data.currencyCode; }
+              }
+            })
+            .catch(function () { /* ignore, keep default */ });
+        } catch (e) { /* ignore */ }
+      })();
+    </script>
+}

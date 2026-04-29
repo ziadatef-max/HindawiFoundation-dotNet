@@ -104,7 +104,7 @@ Every `<a href="*.html">` from the original pages was converted:
 | `news.html` | `<a asp-controller="Home" asp-action="News">` |
 | `news-details.html` | `<a asp-controller="Home" asp-action="NewsDetails">` |
 | `contact.html` | `<a asp-controller="Home" asp-action="Contact">` |
-| `donate.html` | `<a asp-controller="Home" asp-action="Donate">` |
+| `donate.html` | `<a asp-controller="Donate" asp-action="Index">` |
 
 External `https://`, `mailto:`, `tel:`, and `#` placeholder links are left untouched. The `privacy.html` and `terms.html` footer links currently point to `#` because no Razor views exist for them yet — wire them up if you decide to add those pages.
 

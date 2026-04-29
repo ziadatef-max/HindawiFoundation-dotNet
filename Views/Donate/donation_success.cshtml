@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Thank You";
+    ViewData["BodyClass"] = "page page--donate";
+    ViewData["ActivePage"] = "donate";
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/donate.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <div class="page-banner">
+      <div class="container">
+        <h1>Thank You</h1>
+      </div>
+    </div>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="donate-intro">
+          <h2 class="donate-intro__title">Your donation was successful.</h2>
+          <p class="donate-intro__desc">Thank you for supporting our mission to spread the joy of reading. A confirmation will be sent to your email shortly.</p>
+          <p class="donate-intro__desc">Your generosity helps us publish more books, expand into new languages, and reach more readers worldwide.</p>
+          <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;">
+            <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
+              <i class="fa-solid fa-heart" aria-hidden="true"></i>
+              Donate Again
+            </a>
+            <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="btn btn--secondary">
+              Back to Home
+            </a>
+            <a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="btn btn--secondary">
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+</main>

@@ -1,11 +1,12 @@
 @{
     var active = ViewData["ActivePage"] as string ?? "";
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
     string IsActive(string key) => active == key ? "is-active" : "";
 }
 <header class="site-header" data-component="header">
     <div class="site-header__top">
       <div class="container">
-        <a asp-controller="Home" asp-action="Index" class="site-logo" aria-label="Hindawi Foundation home">
+        <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="site-logo" aria-label="Hindawi Foundation home">
           <img class="site-logo__img" src="~/Logos/hindawi_en.svg" alt="Hindawi Foundation">
         </a>
 
@@ -35,15 +36,15 @@
       <div class="container">
         <nav class="site-nav" aria-label="Primary">
           <ul class="site-nav__menu">
-            <li><a asp-controller="Home" asp-action="Index" class="@IsActive("home")">Home</a></li>
-            <li><a asp-controller="Home" asp-action="About" class="@IsActive("about")">About</a></li>
-            <li><a asp-controller="Home" asp-action="News" class="@IsActive("news")">News</a></li>
-            <li><a asp-controller="Home" asp-action="Partners" class="@IsActive("partners")">Partners</a></li>
-            <li><a asp-controller="Home" asp-action="Contact" class="@IsActive("contact")">Contact</a></li>
+            <li><a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="@IsActive("home")">Home</a></li>
+            <li><a asp-controller="Home" asp-action="About" asp-route-culture="@culture" class="@IsActive("about")">About</a></li>
+            <li><a asp-controller="Home" asp-action="News" asp-route-culture="@culture" class="@IsActive("news")">News</a></li>
+            <li><a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture" class="@IsActive("partners")">Partners</a></li>
+            <li><a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="@IsActive("contact")">Contact</a></li>
           </ul>
           <ul class="site-nav__donate">
             <li>
-              <a asp-controller="Home" asp-action="Donate" class="@IsActive("donate")">
+              <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="@IsActive("donate")">
                 <i class="fa-solid fa-heart" aria-hidden="true"></i>
                 Donate
               </a>
@@ -66,10 +67,10 @@
 </header>
 
 <nav class="mobile-nav" id="mobileMenu" aria-label="Mobile" hidden>
-    <a asp-controller="Home" asp-action="Index" class="@IsActive("home")">Home</a>
-    <a asp-controller="Home" asp-action="About" class="@IsActive("about")">About</a>
-    <a asp-controller="Home" asp-action="News" class="@IsActive("news")">News</a>
-    <a asp-controller="Home" asp-action="Partners" class="@IsActive("partners")">Partners</a>
-    <a asp-controller="Home" asp-action="Contact" class="@IsActive("contact")">Contact</a>
-    <a asp-controller="Home" asp-action="Donate" class="@IsActive("donate")">Donate</a>
+    <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="@IsActive("home")">Home</a>
+    <a asp-controller="Home" asp-action="About" asp-route-culture="@culture" class="@IsActive("about")">About</a>
+    <a asp-controller="Home" asp-action="News" asp-route-culture="@culture" class="@IsActive("news")">News</a>
+    <a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture" class="@IsActive("partners")">Partners</a>
+    <a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="@IsActive("contact")">Contact</a>
+    <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="@IsActive("donate")">Donate</a>
 </nav>

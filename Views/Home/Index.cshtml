@@ -2,6 +2,7 @@
     ViewData["Title"] = "Home";
     ViewData["BodyClass"] = "page page--home";
     ViewData["ActivePage"] = "home";
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
 }
 
 @section Styles {
@@ -14,7 +15,7 @@
         <div class="hero__content">
           <h1 id="hero-title">Reading changes everything.</h1>
           <p>We promote the joy of reading by making books free and accessible. We aspire to reach readers across the world in every language.</p>
-          <a asp-controller="Home" asp-action="Donate" class="btn btn--primary btn--icon">
+          <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
             <i class="fa-solid fa-heart" aria-hidden="true"></i>
             Donate
           </a>
@@ -69,7 +70,7 @@
 
         <div class="donate-inline">
           <p>Help us spread the joy of reading</p>
-          <a asp-controller="Home" asp-action="Donate" class="btn btn--primary btn--icon">
+          <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
             <i class="fa-solid fa-heart" aria-hidden="true"></i>
             Donate
           </a>
@@ -195,7 +196,7 @@
           <h2 id="cta-title">Help Us Spread<br>the Joy of Reading</h2>
           <p>Every great story needs a champion. Your support allows us to write and illustrate more books for Booktime, license new material for Safahat, and improve Folios.</p>
         </div>
-        <a asp-controller="Home" asp-action="Donate" class="btn btn--light btn--icon">
+        <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--light btn--icon">
           <i class="fa-solid fa-heart" aria-hidden="true"></i>
           Donate
         </a>

@@ -870,21 +870,67 @@
   list-style: none;
 }
 
+.footer-social__item,
 .footer-social a {
   width: 34px;
   height: 34px;
   border-radius: 50%;
   background: #d9d9d9;
-  color: #000000;
+  color: #333333;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+}
+
+.footer-social__item i,
+.footer-social a i {
+  position: relative;
+  z-index: 2;
+  color: currentColor;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-social__item.instagram::after,
+.footer-social a.instagram::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.footer-social__item:hover,
+.footer-social a:hover {
+  color: #ffffff;
+}
+
+.footer-social__item.facebook:hover,
+.footer-social a.facebook:hover {
+  background-color: #1877f2;
+}
+
+.footer-social__item.linkedin:hover,
+.footer-social a.linkedin:hover {
+  background-color: #0A66C2;
+}
+
+.footer-social__item.instagram:hover::after,
+.footer-social a.instagram:hover::after {
+  opacity: 1;
 }
 
 .footer-menu {
   display: flex;
-  gap: 77px;
+  gap: 80px;
   align-items: flex-start;
 }
 

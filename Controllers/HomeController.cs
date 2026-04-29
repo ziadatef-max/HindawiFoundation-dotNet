@@ -2,30 +2,59 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HindawiFoundation.Web.Controllers;
 
+[Route("{culture}")]
 public class HomeController : Controller
 {
-    // GET: /  or /Home/Index   (was home.html)
-    public IActionResult Index() => View();
+    [HttpGet("")]
+    [HttpGet("Home")]
+    public IActionResult Index([FromRoute] string culture)
+    {
+        ViewData["Culture"] = culture;
+        ViewData["ActivePage"] = "home";
+        return View();
+    }
 
-    // GET: /Home/About          (was about.html)
-    public IActionResult About() => View();
+    [HttpGet("About")]
+    public IActionResult About([FromRoute] string culture)
+    {
+        ViewData["Culture"] = culture;
+        ViewData["ActivePage"] = "about";
+        return View();
+    }
 
-    // GET: /Home/Partners       (was partners.html)
-    public IActionResult Partners() => View();
+    [HttpGet("Partners")]
+    public IActionResult Partners([FromRoute] string culture)
+    {
+        ViewData["Culture"] = culture;
+        ViewData["ActivePage"] = "partners";
+        return View();
+    }
 
-    // GET: /Home/News           (was news.html)
-    public IActionResult News() => View();
+    [HttpGet("News")]
+    public IActionResult News([FromRoute] string culture)
+    {
+        ViewData["Culture"] = culture;
+        ViewData["ActivePage"] = "news";
+        return View();
+    }
 
-    // GET: /Home/NewsDetails    (was news-details.html)
-    public IActionResult NewsDetails(int? id = null) => View();
+    [HttpGet("NewsDetails")]
+    [HttpGet("NewsDetails/{id?}")]
+    public IActionResult NewsDetails([FromRoute] string culture, int? id = null)
+    {
+        ViewData["Culture"] = culture;
+        ViewData["ActivePage"] = "news";
+        return View();
+    }
 
-    // GET: /Home/Contact        (was contact.html)
-    public IActionResult Contact() => View();
+    [HttpGet("Contact")]
+    public IActionResult Contact([FromRoute] string culture)
+    {
+        ViewData["Culture"] = culture;
+        ViewData["ActivePage"] = "contact";
+        return View();
+    }
 
-    // GET: /Home/Donate         (was donate.html)
-    public IActionResult Donate() => View();
-
-    // Generic error page used by app.UseExceptionHandler("/Home/Error") in non-dev.
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error() => View();
 }
