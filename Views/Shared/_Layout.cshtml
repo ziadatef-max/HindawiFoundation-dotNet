@@ -1,0 +1,38 @@
+@{
+    var bodyClass = ViewData["BodyClass"] as string ?? "page";
+    var pageTitle = ViewData["Title"] as string;
+    var fullTitle = string.IsNullOrEmpty(pageTitle) || pageTitle == "Home"
+        ? "Hindawi Foundation - Reading changes everything."
+        : $"{pageTitle} - Hindawi Foundation";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@fullTitle</title>
+  <link rel="icon" href="~/Images/Favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@@700&family=Source+Sans+3:wght@@300;400;500;600;700&family=Playfair+Display:wght@@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="~/assets/css/tokens.css" asp-append-version="true">
+  <link rel="stylesheet" href="~/assets/css/base.css" asp-append-version="true">
+  <link rel="stylesheet" href="~/assets/css/layout.css" asp-append-version="true">
+  <link rel="stylesheet" href="~/assets/css/utilities.css" asp-append-version="true">
+  <link rel="stylesheet" href="~/assets/css/components.css" asp-append-version="true">
+  @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="@bodyClass">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  @await Html.PartialAsync("_Header")
+
+  @RenderBody()
+
+  @await Html.PartialAsync("_Footer")
+
+  <script type="module" src="~/assets/js/main.js" asp-append-version="true"></script>
+  @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

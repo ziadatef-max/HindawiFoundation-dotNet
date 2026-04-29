@@ -1,0 +1,343 @@
+@{
+    ViewData["Title"] = "Donate";
+    ViewData["BodyClass"] = "page page--donate";
+    ViewData["ActivePage"] = "donate";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/donate.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <div class="page-banner">
+      <div class="container">
+        <h1>Donate</h1>
+      </div>
+    </div>
+
+    <section class="section section--tight" aria-labelledby="donate-intro-title">
+      <div class="container">
+
+        <!-- Intro -->
+        <div class="donate-intro">
+          <h2 class="donate-intro__title" id="donate-intro-title">Help us spread the joy of reading!</h2>
+          <p class="donate-intro__desc">Everyone deserves access to literature, and to experience the joy of reading. Your support directly fuels our global mission, allowing us to publish more books, expand into new languages, and improve our technology. Whether you give once or monthly, your generosity helps us break down language barriers and reach more readers worldwide.</p>
+        </div>
+
+        <!-- Donation form card -->
+        <div class="donate-form-wrap">
+          <div class="donate-form-card">
+
+            <!-- Payment method tabs -->
+            <div class="payment-methods" role="group" aria-label="Payment method">
+              <button class="payment-method is-active" type="button" data-payment="card" aria-pressed="true">
+                <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
+                Credit/Debit Card
+              </button>
+              <button class="payment-method" type="button" data-payment="wire" aria-pressed="false">
+                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                Wire Transfer
+              </button>
+              <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false">
+                <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+                PayPal
+              </button>
+            </div>
+
+            <!-- Gray form body -->
+            <div class="donate-form-body">
+
+              <!-- PANEL: Credit/Debit Card (default) -->
+              <div class="payment-panel is-active" data-payment-panel="card">
+                <form id="donateForm" novalidate>
+
+                  <!-- Row 1: Frequency | Amount | Email -->
+                  <div class="donate-grid donate-grid--3">
+
+                    <div class="form-field">
+                      <label class="donation-form-field__label">Donation Frequency</label>
+                      <div class="frequency-options">
+                        <label class="frequency-option">
+                          <input type="radio" name="frequency" value="one-time"> One-time
+                        </label>
+                        <label class="frequency-option">
+                          <input type="radio" name="frequency" value="monthly" checked> Monthly
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="donationAmount">Donation Amount</label>
+                      <div class="amount-input-wrap">
+                        <input class="form-input" type="number" id="donationAmount" name="donationAmount" min="1" step="1" autocomplete="off">
+                        <span class="amount-currency">EGP</span>
+                      </div>
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="donorEmail">Email Address</label>
+                      <input class="form-input" type="email" id="donorEmail" name="email" autocomplete="email" required>
+                    </div>
+
+                  </div>
+
+                  <!-- Row 2: First Name | Last Name | Phone -->
+                  <div class="donate-grid donate-grid--3">
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="firstName">First Name</label>
+                      <input class="form-input" type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="lastName">Last Name</label>
+                      <input class="form-input" type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="phone">Phone Number</label>
+                      <input class="form-input" type="tel" id="phone" name="phone" autocomplete="tel">
+                    </div>
+
+                  </div>
+
+                  <hr class="donate-divider">
+
+                  <!-- Row 3: Card Number | Expiry | CVV -->
+                  <div class="donate-grid donate-grid--card">
+
+                    <div class="form-field form-field--card-number">
+                      <label class="form-field__label" for="cardNumber">Card Number</label>
+                      <div class="card-number-input">
+                        <input
+                          class="form-input card-number-input__field"
+                          type="text"
+                          id="cardNumber"
+                          name="cardNumber"
+                          placeholder="**** **** **** ****"
+                          maxlength="19"
+                          autocomplete="cc-number"
+                          inputmode="numeric"
+                        >
+                        <div class="card-number-input__icons" aria-hidden="true">
+                          <img src="~/Icons/master-card.svg" alt="">
+                          <img src="~/Icons/visa.svg" alt="">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="cardExpiry">Expiration Date</label>
+                      <input class="form-input" type="text" id="cardExpiry" name="cardExpiry" placeholder="MM/YY" maxlength="7" autocomplete="cc-exp">
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="cardCvc">CVV/CVC Code</label>
+                      <input class="form-input" type="text" id="cardCvc" name="cardCvc" maxlength="4" autocomplete="cc-csc" inputmode="numeric">
+                    </div>
+
+                  </div>
+
+                  <!-- Submit -->
+                  <button class="donate-submit" type="submit">
+                    <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                    Donate Now
+                  </button>
+
+                  <div class="donate-message" id="donateMessage" role="alert" aria-live="polite" hidden></div>
+
+                </form>
+              </div>
+              <!-- end card panel -->
+
+              <!-- PANEL: Wire Transfer -->
+              <div class="payment-panel" data-payment-panel="wire" hidden>
+                <div class="wire-transfer-table" aria-label="Bank transfer details">
+                  <div class="wire-transfer-row">
+                    <span class="wire-transfer-row__label">Account Name</span>
+                    <span class="wire-transfer-row__value">Account Name</span>
+                  </div>
+                  <div class="wire-transfer-row">
+                    <span class="wire-transfer-row__label">Bank Code</span>
+                    <span class="wire-transfer-row__value">Bank Code</span>
+                  </div>
+                  <div class="wire-transfer-row">
+                    <span class="wire-transfer-row__label">Account Number</span>
+                    <span class="wire-transfer-row__value">Account Number</span>
+                  </div>
+                  <div class="wire-transfer-row">
+                    <span class="wire-transfer-row__label">SWIFT Code</span>
+                    <span class="wire-transfer-row__value">SWIFT Code</span>
+                  </div>
+                  <div class="wire-transfer-row">
+                    <span class="wire-transfer-row__label">IBAN</span>
+                    <span class="wire-transfer-row__value">IBAN</span>
+                  </div>
+                  <div class="wire-transfer-row wire-transfer-row--last">
+                    <span class="wire-transfer-row__label">Bank Location</span>
+                    <span class="wire-transfer-row__value">Bank Location</span>
+                  </div>
+                </div>
+              </div>
+              <!-- end wire transfer panel -->
+
+              <!-- PANEL: PayPal -->
+              <div class="payment-panel" data-payment-panel="paypal" hidden>
+
+                <!-- Shared fields also shown for PayPal -->
+                <div class="donate-grid donate-grid--3">
+
+                  <div class="form-field">
+                    <label class="donation-form-field__label">Donation Frequency</label>
+                    <div class="frequency-options">
+                      <label class="frequency-option">
+                        <input type="radio" name="frequency-pp" value="one-time"> One-time
+                      </label>
+                      <label class="frequency-option">
+                        <input type="radio" name="frequency-pp" value="monthly" checked> Monthly
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-field__label" for="ppAmount">Donation Amount</label>
+                    <div class="amount-input-wrap">
+                      <input class="form-input" type="number" id="ppAmount" name="ppAmount" min="1" step="1" autocomplete="off">
+                      <span class="amount-currency">EGP</span>
+                    </div>
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-field__label" for="ppEmail">Email Address</label>
+                    <input class="form-input" type="email" id="ppEmail" name="ppEmail" autocomplete="email">
+                  </div>
+
+                </div>
+
+                <div class="donate-grid donate-grid--3">
+
+                  <div class="form-field">
+                    <label class="form-field__label" for="ppFirst">First Name</label>
+                    <input class="form-input" type="text" id="ppFirst" name="ppFirst" autocomplete="given-name">
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-field__label" for="ppLast">Last Name</label>
+                    <input class="form-input" type="text" id="ppLast" name="ppLast" autocomplete="family-name">
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-field__label" for="ppPhone">Phone Number</label>
+                    <input class="form-input" type="tel" id="ppPhone" name="ppPhone" autocomplete="tel">
+                  </div>
+
+                </div>
+
+                <hr class="donate-divider">
+
+                <div class="paypal-panel">
+                  <p class="paypal-message">Continue to PayPal to complete your donation.</p>
+                  <button class="paypal-button" type="button" aria-label="Pay with PayPal">
+                    <img src="~/Icons/paypal.svg" alt="" class="paypal-button__icon">
+                  </button>
+                </div>
+
+              </div>
+              <!-- end paypal panel -->
+
+            </div>
+            <!-- end gray form body -->
+
+          </div>
+        </div>
+
+        <!-- Note below form -->
+        <p class="donate-note">If you would like to speak to us about directing your donation toward a specific book, language, or project, please contact us at donations@@hindawi.org.</p>
+
+      </div>
+    </section>
+
+    <!-- IMPACT -->
+    <section class="section impact" aria-labelledby="impact-donate-title">
+      <div class="container">
+        <h2 class="section__title" id="impact-donate-title">Impact</h2>
+        <div class="impact-grid" role="list">
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-users" aria-hidden="true"></i>
+            </div>
+            <p class="number">300K+</p>
+            <p class="label">Monthly Readers</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <img src="~/Icons/book-open-cover.svg" alt="">
+            </div>
+            <p class="number">10M</p>
+            <p class="label label--nowrap">Books Read since 2024</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            </div>
+            <p class="number">190+</p>
+            <p class="label">Countries Served</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </div>
+            <p class="number">9+</p>
+            <p class="label">Languages Served</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+            </div>
+            <p class="number">3.5K+</p>
+            <p class="label">Books Published<br><span>(incl. translations)</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section section--tight testimonials" aria-labelledby="testimonials-donate-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="testimonials-donate-title">Testimonials</h2>
+        </header>
+
+        <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
+          <div class="testimonial-track" data-slider-track>
+            <article class="card card--testimonial" data-slide>
+              <p class="quote">"The quality of the refined translation using Gemini Pro was staggering. It captured the nuances of my protagonist's dialect better than any tool I've used before. It's truly a game-changer for literary work."</p>
+              <div class="author-row">
+                <p class="author">Michael Samuel</p>
+                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark">
+              </div>
+            </article>
+
+            <article class="card card--testimonial" data-slide>
+              <p class="quote">"Being able to translate my entire back catalog into three different languages in one afternoon for a fraction of traditional costs is a game-changer."</p>
+              <div class="author-row">
+                <p class="author">James Henry</p>
+                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark">
+              </div>
+            </article>
+          </div>
+
+          <div class="slider-dots" aria-label="Slider pagination">
+            <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="Show testimonial 1" aria-current="true"></button>
+            <button class="slider-dot" type="button" data-slide-to="1" aria-label="Show testimonial 2" aria-current="false"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+</main>

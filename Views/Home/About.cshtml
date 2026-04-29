@@ -1,0 +1,98 @@
+@{
+    ViewData["Title"] = "About";
+    ViewData["BodyClass"] = "page page--about";
+    ViewData["ActivePage"] = "about";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/about.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <div class="page-banner">
+      <div class="container">
+        <h1>About</h1>
+      </div>
+    </div>
+
+    <section class="section section--tight about-content" aria-label="About Hindawi Foundation">
+      <div class="container">
+        <p>For nearly 20 years, the Hindawi Foundation has reached tens of millions of readers worldwide.</p>
+        <p>We were originally founded to address the critical lack of diverse, high-quality reading material in Arabic. To combat this, we licensed and translated a vast selection of books and published seminal Arabic literature, including works by Nobel laureate Naguib Mahfouz, making them entirely free to download and read. These books remain freely accessible today at <a href="https://www.safahat.org/en/" target="_blank" rel="noopener noreferrer">Safahat.org</a>.</p>
+        <p>Guided by our core belief that "Reading Changes Everything," we expanded our mission in 2024 to spread the joy of reading across all languages.</p>
+        <p>To bring this vision to life, we created Booktime, a charitable publisher specializing in illustrated children's books in multiple languages, including Arabic, English, Portuguese, Spanish, and Japanese. Available via our dedicated mobile app and web platform, Booktime removes traditional financial and geographic barriers. By giving children from diverse backgrounds free access to stories that reflect their own languages and cultures, we are fostering early literacy and cross-cultural understanding on a global scale.</p>
+        <p>In 2026, we took our commitment to global information access even further by launching Folios. Leveraging AI technology, Folios empowers anyone to create book translations. By breaking down linguistic barriers, Folios ensures that no matter your language, you can read the books that interest you most.</p>
+        <p>Hindawi Foundation is a registered charity in England and Wales (Charity number: 1181788), with offices in Windsor, UK, and Cairo, Egypt.</p>
+      </div>
+    </section>
+
+    <section class="section impact" aria-labelledby="impact-title">
+      <div class="container">
+        <h2 class="section__title" id="impact-title">Impact</h2>
+        <div class="impact-grid" role="list">
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-users" aria-hidden="true"></i>
+            </div>
+            <p class="number">300K+</p>
+            <p class="label">Monthly Readers</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <img src="~/Icons/book-open-cover.svg" alt="">
+            </div>
+            <p class="number">10M</p>
+            <p class="label">Books Read since 2024</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            </div>
+            <p class="number">190+</p>
+            <p class="label">Countries Served</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </div>
+            <p class="number">9+</p>
+            <p class="label">Languages Served</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+            </div>
+            <p class="number">3.5K+</p>
+            <p class="label">Books Published<br><span>(incl. translations)</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight founders" aria-labelledby="founders-title">
+      <div class="container">
+        <h2 class="founders__title" id="founders-title">Founders</h2>
+        <p class="founders__intro">Dr Nagwa Abdelmottaleb and Dr Ahmed Hindawi are deeply committed to spreading the joy of reading and improving access to information across the world.</p>
+
+        <div class="founders__grid">
+          <article class="founder">
+            <img class="founder__photo" src="~/Images/Ahmed_Hindawi.svg" alt="Ahmed Hindawi, Executive Chairman">
+            <h3 class="founder__name">Ahmed Hindawi</h3>
+            <p class="founder__role">Executive Chairman</p>
+          </article>
+
+          <article class="founder">
+            <img class="founder__photo" src="~/Images/Nagwa_Abdelmottaleb.svg" alt="Nagwa Abdelmottaleb, Deputy Chairman">
+            <h3 class="founder__name">Nagwa Abdelmottaleb</h3>
+            <p class="founder__role">Deputy Chairman</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+</main>

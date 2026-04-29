@@ -1,0 +1,20 @@
+# .NET
+bin/
+obj/
+out/
+*.user
+*.suo
+*.userprefs
+
+# Rider / VS / VSCode
+.idea/
+.vs/
+.vscode/
+
+# Logs / OS
+*.log
+.DS_Store
+Thumbs.db
+
+# Keep wwwroot folders even when empty
+!wwwroot/**/.gitkeep

@@ -1,0 +1,94 @@
+@{
+    ViewData["Title"] = "News";
+    ViewData["BodyClass"] = "page page--news";
+    ViewData["ActivePage"] = "news";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/news.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <div class="page-banner">
+      <div class="container">
+        <h1>News</h1>
+      </div>
+    </div>
+
+    <section class="section section--tight" aria-labelledby="news-listing-title">
+      <div class="container">
+        <h2 class="sr-only" id="news-listing-title">Latest news articles</h2>
+        <div class="news-grid">
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails">
+            <img class="news-card__image" src="~/News/news_1.svg" alt="Ulverscroft Foundation and Booktime collaboration">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                29 October 2026
+              </p>
+              <h2 class="news-card__title">Ulverscroft Foundation Supports Booktime&#8217;s Voices of Literacy Project</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails">
+            <img class="news-card__image" src="~/News/news_2.svg" alt="Children using tablets in a classroom">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                12 September 2026
+              </p>
+              <h2 class="news-card__title">Supporting Tomorrow&#8217;s Illustrators: Booktime Teams Up with Birmingham City University</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails">
+            <img class="news-card__image" src="~/News/news_3.svg" alt="Children at a book fair">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                10 September 2026
+              </p>
+              <h2 class="news-card__title">The Summer Slide: Why Breaks Can Set Kids Back and How We Can Help</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails">
+            <img class="news-card__image" src="~/News/news_4.svg" alt="Globe representing new language support">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                30 August 2026
+              </p>
+              <h2 class="news-card__title">Great News: A new language is being added, and another one will be added soon</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails">
+            <img class="news-card__image" src="~/News/news_5.svg" alt="Colourful letters representing dyslexic reading tools">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                19 July 2026
+              </p>
+              <h2 class="news-card__title">The Dyslexic Mode feature for those who suffer from reading difficulties</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails">
+            <img class="news-card__image" src="~/News/news_6.svg" alt="Children excited about a new book in a bookstore">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                15 July 2026
+              </p>
+              <h2 class="news-card__title">The release of a new book sparks enthusiasm among children</h2>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+</main>

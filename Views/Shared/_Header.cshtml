@@ -1,0 +1,75 @@
+@{
+    var active = ViewData["ActivePage"] as string ?? "";
+    string IsActive(string key) => active == key ? "is-active" : "";
+}
+<header class="site-header" data-component="header">
+    <div class="site-header__top">
+      <div class="container">
+        <a asp-controller="Home" asp-action="Index" class="site-logo" aria-label="Hindawi Foundation home">
+          <img class="site-logo__img" src="~/Logos/hindawi_en.svg" alt="Hindawi Foundation">
+        </a>
+
+        <ul class="site-header__utilities" aria-label="Header utilities">
+          <li class="utility-item language-switch">
+            <button
+              class="utility-btn"
+              type="button"
+              aria-label="Change language"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls="languageMenu"
+              data-language-toggle
+            >
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </button>
+            <ul class="language-menu" id="languageMenu" aria-label="Language options">
+              <li><a href="#" class="is-active" data-lang="en" aria-current="true">English</a></li>
+              <li><a href="#" data-lang="ar" aria-current="false">العربية</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-header__bottom">
+      <div class="container">
+        <nav class="site-nav" aria-label="Primary">
+          <ul class="site-nav__menu">
+            <li><a asp-controller="Home" asp-action="Index" class="@IsActive("home")">Home</a></li>
+            <li><a asp-controller="Home" asp-action="About" class="@IsActive("about")">About</a></li>
+            <li><a asp-controller="Home" asp-action="News" class="@IsActive("news")">News</a></li>
+            <li><a asp-controller="Home" asp-action="Partners" class="@IsActive("partners")">Partners</a></li>
+            <li><a asp-controller="Home" asp-action="Contact" class="@IsActive("contact")">Contact</a></li>
+          </ul>
+          <ul class="site-nav__donate">
+            <li>
+              <a asp-controller="Home" asp-action="Donate" class="@IsActive("donate")">
+                <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                Donate
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <button
+          class="mobile-toggle"
+          type="button"
+          data-mobile-toggle
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+</header>
+
+<nav class="mobile-nav" id="mobileMenu" aria-label="Mobile" hidden>
+    <a asp-controller="Home" asp-action="Index" class="@IsActive("home")">Home</a>
+    <a asp-controller="Home" asp-action="About" class="@IsActive("about")">About</a>
+    <a asp-controller="Home" asp-action="News" class="@IsActive("news")">News</a>
+    <a asp-controller="Home" asp-action="Partners" class="@IsActive("partners")">Partners</a>
+    <a asp-controller="Home" asp-action="Contact" class="@IsActive("contact")">Contact</a>
+    <a asp-controller="Home" asp-action="Donate" class="@IsActive("donate")">Donate</a>
+</nav>

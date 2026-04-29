@@ -1,0 +1,98 @@
+@{
+    ViewData["Title"] = "Contact";
+    ViewData["BodyClass"] = "page page--contact";
+    ViewData["ActivePage"] = "contact";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/contact.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <div class="page-banner">
+      <div class="container">
+        <h1>Contact</h1>
+      </div>
+    </div>
+
+    <section class="section section--tight" aria-labelledby="contact-info-title">
+      <div class="container">
+
+        <!-- Contact row: left info + right map -->
+        <div class="contact-layout">
+
+          <div class="contact-block">
+            <h2 class="contact-block__title" id="contact-info-title">Get in Touch</h2>
+            <p class="contact-block__desc">Whether you have a question, a press enquiry, or an idea for how we can work together, we'd love to hear from you. Please fill out the form below and our team will be in touch.</p>
+
+            <ul class="contact-list" aria-label="Contact details">
+              <li class="contact-list-item">
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                <p><a href="mailto:hindawi@@hindawi.org">hindawi@@hindawi.org</a></p>
+              </li>
+              <li class="contact-list-item">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                <p>
+                  Hindawi Foundation<br>
+                  York House<br>
+                  41 Sheet Street<br>
+                  Windsor, Berkshire<br>
+                  Sl4 1DD<br>
+                  UK
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="contact-map" aria-label="Map showing Windsor, UK office location">
+            <img src="~/Images/contact_location.svg" alt="Map showing Hindawi Foundation office in Windsor, UK">
+          </div>
+
+        </div>
+
+        <!-- Global Hubs -->
+        <div class="contact-hubs" aria-labelledby="hubs-title">
+          <h2 class="contact-hubs__title" id="hubs-title">Two Global Hubs. One Worldwide Mission</h2>
+          <p class="contact-hubs__desc">While our core operations are anchored in the UK and Egypt. Our mission is powered by an incredible, decentralized network of freelancers, translators, and fundraisers working across the globe.</p>
+
+          <ul class="hubs-list" aria-label="Office locations">
+            <li class="hub-item">
+              <p class="hub-item__country">United Kingdom</p>
+              <p class="hub-item__city">Windsor</p>
+            </li>
+            <li class="hub-item">
+              <p class="hub-item__country">Egypt</p>
+              <p class="hub-item__city">Cairo</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Global Community -->
+        <div class="contact-community" aria-labelledby="community-title">
+          <h2 class="contact-community__title" id="community-title">Join Our Global Community</h2>
+          <p class="contact-community__desc">Follow us to keep up with all the latest from the Hindawi Foundation.</p>
+
+          <ul class="contact-social" aria-label="Social media links">
+            <li>
+              <a href="#" class="contact-social__link" aria-label="Follow us on LinkedIn" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="contact-social__link" aria-label="Follow us on Facebook" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="contact-social__link" aria-label="Follow us on Instagram" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+</main>
