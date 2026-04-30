@@ -93,5 +93,9 @@
   "donate_validation_email_invalid": "Please enter a valid email address.",
   "donate_validation_card_required": "Please enter your card details.",
   "donate_validation_expiry_required": "Please enter a valid expiry date.",
-  "donate_validation_cvv_required": "Please enter your CVV/CVC code."
+  "donate_validation_cvv_required": "Please enter your CVV/CVC code.",
+
+  "donation_card_number_required": "Card Number is required.",
+  "donation_expiry_required": "Expiration Date is required.",
+  "donation_cvv_required": "CVV is required."
 }

@@ -208,7 +208,7 @@
                 </div>
               </div>
 
-              {{!-- PayPal panel: code kept, hidden at tab level --}}
+              @* PayPal panel: code kept, hidden at tab level *@
               <div class="payment-panel" data-payment-panel="paypal" hidden>
 
                 <div class="donate-grid donate-grid--3">
@@ -381,6 +381,14 @@
     var hostedFieldsInstance = null;
     var isSubmitting = false;
 
+    // Map from Braintree field names to their container DOM elements.
+    // Populated once the DOM is ready (elements exist at parse time).
+    var hfContainerMap = {
+      'number'        : document.getElementById('cardNumber'),
+      'expirationDate': document.getElementById('cardExpiry'),
+      'cvv'           : document.getElementById('cardCvc')
+    };
+
     // ── Localized validation messages ──────────────────────────────────────
     var validationMsgs = {
       frequencyRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_frequency_required"].Value)),
@@ -390,7 +398,11 @@
       emailInvalid      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_email_invalid"].Value)),
       cardRequired      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_card_required"].Value)),
       expiryRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_expiry_required"].Value)),
-      cvvRequired       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_cvv_required"].Value))
+      cvvRequired       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_cvv_required"].Value)),
+      // "Field is required" messages shown when the hosted field is completely empty
+      cardNumberRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_card_number_required"].Value)),
+      expiryFieldRequired: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_expiry_required"].Value)),
+      cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_required"].Value))
     };
 
     // ── Field-error helpers ────────────────────────────────────────────────
@@ -545,7 +557,7 @@
         client: clientInstance,
         styles: {
           'input': donationCulture === 'ar'
-            ? { 'font-size': '16px', 'color': '#333', 'text-align': 'right', 'direction': 'rtl' }
+            ? { 'font-size': '16px', 'color': '#333', 'text-align': 'right', 'direction': 'ltr' }
             : { 'font-size': '16px', 'color': '#333' },
           'input.invalid': { 'color': '#c00' },
           'input.valid':   { 'color': '#0a7' }
@@ -563,11 +575,13 @@
         }
         hostedFieldsInstance = hfInstance;
 
-        // Clear card field errors on focus/change (Issue 2 + 3)
+        // Clear card field errors and invalid state on focus/change
+        var hfSpanMap = { 'number': 's_number', 'expirationDate': 's_expirationDate', 'cvv': 's_cvv' };
         hfInstance.on('focus', function (event) {
-          var spanMap = { 'number': 's_number', 'expirationDate': 's_expirationDate', 'cvv': 's_cvv' };
-          var spanId  = spanMap[event.emittedBy];
+          var field  = event.emittedBy;
+          var spanId = hfSpanMap[field];
           if (spanId) clearFieldError(spanId);
+          setInputState(hfContainerMap[field], false);
           clearGlobalError();
         });
         hfInstance.on('change', function () {
@@ -584,6 +598,31 @@
 
         // Run client-side validation first
         if (!validateDonateForm()) return;
+
+        // ── Pre-tokenize: check whether hosted card fields are empty (Issue 1) ──
+        if (hostedFieldsInstance) {
+          var hfState  = hostedFieldsInstance.getState();
+          var hfFields = hfState.fields;
+          var hfValid  = true;
+
+          if (hfFields.number && hfFields.number.isEmpty) {
+            showFieldError('s_number', validationMsgs.cardNumberRequired);
+            setInputState(hfContainerMap['number'], true);
+            hfValid = false;
+          }
+          if (hfFields.expirationDate && hfFields.expirationDate.isEmpty) {
+            showFieldError('s_expirationDate', validationMsgs.expiryFieldRequired);
+            setInputState(hfContainerMap['expirationDate'], true);
+            hfValid = false;
+          }
+          if (hfFields.cvv && hfFields.cvv.isEmpty) {
+            showFieldError('s_cvv', validationMsgs.cvvFieldRequired);
+            setInputState(hfContainerMap['cvv'], true);
+            hfValid = false;
+          }
+
+          if (!hfValid) return;
+        }
 
         // reCAPTCHA check
         if (typeof grecaptcha !== 'undefined') {
@@ -606,7 +645,7 @@
           if (tokenizeErr) {
             setSubmitting(false);
 
-            // Show per-field card errors when Braintree reports invalid fields
+            // Fields are non-empty here (empty was caught above); show "invalid" messages
             var invalidFields = (tokenizeErr.details && tokenizeErr.details.invalidFieldKeys) || [];
             var fieldSpanMap = { 'number': 's_number', 'expirationDate': 's_expirationDate', 'cvv': 's_cvv' };
             var fieldMsgMap  = {
@@ -617,7 +656,10 @@
 
             if (invalidFields.length > 0) {
               invalidFields.forEach(function (key) {
-                if (fieldSpanMap[key]) showFieldError(fieldSpanMap[key], fieldMsgMap[key] || validationMsgs.cardRequired);
+                if (fieldSpanMap[key]) {
+                  showFieldError(fieldSpanMap[key], fieldMsgMap[key] || validationMsgs.cardRequired);
+                  setInputState(hfContainerMap[key], true);
+                }
               });
             } else {
               showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_card_invalid"].Value)), true);

@@ -93,5 +93,9 @@
   "donate_validation_email_invalid": "يُرجى إدخال عنوان بريد إلكتروني صحيح.",
   "donate_validation_card_required": "يُرجى إدخال بيانات بطاقتك.",
   "donate_validation_expiry_required": "يُرجى إدخال تاريخ انتهاء صحيح.",
-  "donate_validation_cvv_required": "يُرجى إدخال رمز CVV/CVC الخاص ببطاقتك."
+  "donate_validation_cvv_required": "يُرجى إدخال رمز CVV/CVC الخاص ببطاقتك.",
+
+  "donation_card_number_required": "برجاء إدخال رقم البطاقة",
+  "donation_expiry_required": "برجاء إدخال تاريخ انتهاء الصلاحية",
+  "donation_cvv_required": "برجاء إدخال رمز حماية البطاقة"
 }

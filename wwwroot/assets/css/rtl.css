@@ -129,9 +129,12 @@
    DONATE PAGE — Arabic RTL (Issues 1 & 4)
    ══════════════════════════════════════════════════════════════ */
 
-/* Payment method tabs: full RTL direction so they flow right→left */
-.layout-rtl .page--donate .payment-methods {
-  direction: rtl;
+/* Payment method tabs: align group to the RIGHT while keeping the same card order as English.
+   `direction:ltr` on the flex container preserves visual order; `justify-content:flex-end`
+   pushes the whole group to the right edge. */
+.layout-rtl .payment-methods {
+  direction: ltr;
+  justify-content: flex-end;
 }
 
 /* Icon + label inside each button: align to the right */
