@@ -17,6 +17,9 @@ builder.Services
     .AddViewLocalization()
     .AddDataAnnotationsLocalization();
 
+// Force generated URLs to be lowercase (e.g. /en/about, not /en/About)
+builder.Services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
+
 // Caching for the JSON localizer
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddMemoryCache();
@@ -60,10 +63,20 @@ app.UseRequestLocalization(localizationOptions);
 
 app.UseAuthorization();
 
-// Redirect root to /en/Home
+// ── Redirects ────────────────────────────────────────────────────────────────
+
+// Root → English home
 app.MapGet("/", context =>
 {
-    context.Response.Redirect("/en/Home", permanent: false);
+    context.Response.Redirect("/en", permanent: false);
+    return Task.CompletedTask;
+});
+
+// /news/{id} without culture → /en/news/{id}
+app.MapGet("/news/{id}", context =>
+{
+    var id = context.GetRouteValue("id") as string ?? NewsMap.GetId(0);
+    context.Response.Redirect($"/en/news/{NewsMap.Resolve(id)}", permanent: false);
     return Task.CompletedTask;
 });
 

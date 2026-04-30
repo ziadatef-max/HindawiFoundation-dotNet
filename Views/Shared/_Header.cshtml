@@ -4,24 +4,38 @@
     var culture = string.Equals(routeCulture, "ar", StringComparison.OrdinalIgnoreCase) ? "ar" : "en";
     string IsActive(string key) => active == key ? "is-active" : "";
 
-    // Build the equivalent URLs in the *other* culture, preserving action + id.
-    var routeAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
+    // Build the equivalent URL in the *other* culture, preserving action + id.
+    var routeAction     = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
     var routeController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
-    var routeId = ViewContext.RouteData.Values["id"]?.ToString();
+    var routeId         = ViewContext.RouteData.Values["id"]?.ToString();
 
+    // Return the lowercase path segment(s) after /{culture}/, or "" for home.
     string SegmentForRoute()
     {
         if (string.Equals(routeController, "Donate", StringComparison.OrdinalIgnoreCase))
-            return "Donate";
+            return "donate";
         if (string.Equals(routeAction, "NewsDetails", StringComparison.OrdinalIgnoreCase))
-            return "News/Details";
-        return string.Equals(routeAction, "Index", StringComparison.OrdinalIgnoreCase) ? "Home" : routeAction;
+            return "news";
+        if (string.Equals(routeAction, "Index", StringComparison.OrdinalIgnoreCase))
+            return "";   // home has no extra segment
+        return routeAction.ToLowerInvariant();
     }
-    var segment = SegmentForRoute();
+
+    var segment  = SegmentForRoute();
     var idSuffix = string.IsNullOrEmpty(routeId) ? "" : "/" + routeId;
-    var qs = Context.Request.QueryString.Value ?? "";
-    var englishUrl = $"/en/{segment}{idSuffix}{qs}";
-    var arabicUrl = $"/ar/{segment}{idSuffix}{qs}";
+    var qs       = Context.Request.QueryString.Value ?? "";
+
+    // Build a full URL for a given culture, handling the empty-segment home case.
+    string MakeUrl(string cult)
+    {
+        var path = $"/{cult}";
+        if (!string.IsNullOrEmpty(segment)) path += $"/{segment}";
+        path += idSuffix;
+        return path + qs;
+    }
+
+    var englishUrl = MakeUrl("en");
+    var arabicUrl  = MakeUrl("ar");
 
     var logoSrc = culture == "ar" ? "/Logos/hindawi_ar.svg" : "/Logos/hindawi_en.svg";
     var logoAlt = localizer["site_name"].Value;
@@ -48,7 +62,7 @@
             </button>
             <ul class="language-menu" id="languageMenu" aria-label="Language options">
               <li><a href="@englishUrl" class="@(culture == "en" ? "is-active" : "")" data-lang="en" aria-current="@(culture == "en" ? "true" : "false")">@localizer["lang_english"]</a></li>
-              <li><a href="@arabicUrl" class="@(culture == "ar" ? "is-active" : "")" data-lang="ar" aria-current="@(culture == "ar" ? "true" : "false")">@localizer["lang_arabic"]</a></li>
+              <li><a href="@arabicUrl"  class="@(culture == "ar" ? "is-active" : "")" data-lang="ar" aria-current="@(culture == "ar" ? "true" : "false")">@localizer["lang_arabic"]</a></li>
             </ul>
           </li>
         </ul>
@@ -59,11 +73,11 @@
       <div class="container">
         <nav class="site-nav" aria-label="Primary">
           <ul class="site-nav__menu">
-            <li><a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="@IsActive("home")">@localizer["nav_home"]</a></li>
-            <li><a asp-controller="Home" asp-action="About" asp-route-culture="@culture" class="@IsActive("about")">@localizer["nav_about"]</a></li>
-            <li><a asp-controller="Home" asp-action="News" asp-route-culture="@culture" class="@IsActive("news")">@localizer["nav_news"]</a></li>
+            <li><a asp-controller="Home" asp-action="Index"    asp-route-culture="@culture" class="@IsActive("home")">@localizer["nav_home"]</a></li>
+            <li><a asp-controller="Home" asp-action="About"    asp-route-culture="@culture" class="@IsActive("about")">@localizer["nav_about"]</a></li>
+            <li><a asp-controller="Home" asp-action="News"     asp-route-culture="@culture" class="@IsActive("news")">@localizer["nav_news"]</a></li>
             <li><a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture" class="@IsActive("partners")">@localizer["nav_partners"]</a></li>
-            <li><a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="@IsActive("contact")">@localizer["nav_contact"]</a></li>
+            <li><a asp-controller="Home" asp-action="Contact"  asp-route-culture="@culture" class="@IsActive("contact")">@localizer["nav_contact"]</a></li>
           </ul>
           <ul class="site-nav__donate">
             <li>
@@ -90,10 +104,10 @@
 </header>
 
 <nav class="mobile-nav" id="mobileMenu" aria-label="Mobile" hidden>
-    <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="@IsActive("home")">@localizer["nav_home"]</a>
-    <a asp-controller="Home" asp-action="About" asp-route-culture="@culture" class="@IsActive("about")">@localizer["nav_about"]</a>
-    <a asp-controller="Home" asp-action="News" asp-route-culture="@culture" class="@IsActive("news")">@localizer["nav_news"]</a>
+    <a asp-controller="Home" asp-action="Index"    asp-route-culture="@culture" class="@IsActive("home")">@localizer["nav_home"]</a>
+    <a asp-controller="Home" asp-action="About"    asp-route-culture="@culture" class="@IsActive("about")">@localizer["nav_about"]</a>
+    <a asp-controller="Home" asp-action="News"     asp-route-culture="@culture" class="@IsActive("news")">@localizer["nav_news"]</a>
     <a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture" class="@IsActive("partners")">@localizer["nav_partners"]</a>
-    <a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="@IsActive("contact")">@localizer["nav_contact"]</a>
-    <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="@IsActive("donate")">@localizer["nav_donate"]</a>
+    <a asp-controller="Home" asp-action="Contact"  asp-route-culture="@culture" class="@IsActive("contact")">@localizer["nav_contact"]</a>
+    <a asp-controller="Donate" asp-action="Index"  asp-route-culture="@culture" class="@IsActive("donate")">@localizer["nav_donate"]</a>
 </nav>

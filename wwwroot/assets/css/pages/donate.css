@@ -232,6 +232,25 @@ font-size: 16px;
   text-align: center;
 }
 
+/* ── Field-level validation errors ─────────────────────────────── */
+.field-error {
+  display: none;
+  color: #c00;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-top: 5px;
+}
+
+.field-error.is-visible {
+  display: block;
+}
+
+.form-input.is-invalid,
+.form-field.is-invalid .form-input {
+  border-color: #c00;
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.10);
+}
+
 /* ── Note below form ────────────────────────────────────────────── */
 .donate-note {
   font-size: 18px;

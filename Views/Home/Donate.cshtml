@@ -44,7 +44,8 @@
                 <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
                 @localizer["donate_payment_wire"]
               </button>
-              <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false">
+              @* PayPal tab: code kept but hidden until PayPal is re-enabled *@
+              <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false" style="display:none" aria-hidden="true">
                 <i class="fa-brands fa-paypal" aria-hidden="true"></i>
                 @localizer["donate_payment_paypal"]
               </button>
@@ -73,6 +74,7 @@
                                       <input type="radio" asp-for="Frequency" value="monthly"> @localizer["donate_freq_monthly"]
                                   </label>
                               </div>
+                              <span class="field-error" id="frequency_span"></span>
                           </div>
 
                           <div class="form-field">
@@ -81,11 +83,13 @@
                                   <input class="form-input" type="number" asp-for="Amount" id="donationAmount" min="1" step="1" autocomplete="off">
                                   <span class="amount-currency" id="amountCurrencyLabel">EGP</span>
                               </div>
+                              <span class="field-error" id="amount_span"></span>
                           </div>
 
                           <div class="form-field">
                               <label class="form-field__label" for="donorEmail">@localizer["donate_label_email"]</label>
-                              <input class="form-input" type="email" asp-for="Email" id="donorEmail" autocomplete="email" required>
+                              <input class="form-input" type="email" asp-for="Email" id="donorEmail" autocomplete="email">
+                              <span class="field-error" id="email_span"></span>
                           </div>
 
                       </div>
@@ -122,16 +126,19 @@
                                       <img src="~/Icons/visa.svg" alt="">
                                   </div>
                               </div>
+                              <span class="field-error" id="s_number"></span>
                           </div>
 
                           <div class="form-field">
                               <label class="form-field__label" for="cardExpiry">@localizer["donate_label_expiry"]</label>
                               <div class="form-input" id="cardExpiry"></div>
+                              <span class="field-error" id="s_expirationDate"></span>
                           </div>
 
                           <div class="form-field">
                               <label class="form-field__label" for="cardCvc">@localizer["donate_label_cvv"]</label>
                               <div class="form-input" id="cardCvc"></div>
+                              <span class="field-error" id="s_cvv"></span>
                           </div>
 
                       </div>
@@ -140,10 +147,11 @@
                       {
                           <div class="form-field">
                               <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
+                              <span class="field-error" id="robot_span"></span>
                           </div>
                       }
 
-                      <button class="donate-submit" type="submit">
+                      <button class="donate-submit" type="submit" id="donateSubmitBtn">
                           <i class="fa-solid fa-heart" aria-hidden="true"></i>
                           @localizer["button_donate_now"]
                       </button>
@@ -154,7 +162,7 @@
 
                       @if (modelOnlyErrors != null && modelOnlyErrors.Count > 0)
                       {
-                          <div class="donate-message is-error" role="alert" aria-live="polite">
+                          <div class="donate-message is-error" role="alert" aria-live="polite" id="serverErrorMsg">
                               <ul>
                                   @foreach (var error in modelOnlyErrors)
                                   {
@@ -200,6 +208,7 @@
                 </div>
               </div>
 
+              {{!-- PayPal panel: code kept, hidden at tab level --}}
               <div class="payment-panel" data-payment-panel="paypal" hidden>
 
                 <div class="donate-grid donate-grid--3">
@@ -362,18 +371,56 @@
 
     var donationCulture = '@culture';
     var clientToken = @Html.Raw(string.IsNullOrWhiteSpace(Model?.ClientToken) ? "null" : "\"" + Model.ClientToken + "\"");
-    var form = document.getElementById('donateForm');
-    var submitBtn = form ? form.querySelector('.donate-submit') : null;
-    var msg = document.getElementById('donateMessage');
-    var nonceField = document.getElementById('PaymentMethodnonce');
+    var form        = document.getElementById('donateForm');
+    var submitBtn   = document.getElementById('donateSubmitBtn');
+    var msg         = document.getElementById('donateMessage');
+    var nonceField  = document.getElementById('PaymentMethodnonce');
     var currencyField = document.getElementById('CurrencyCode');
     var amountInput = document.getElementById('donationAmount');
-    var phoneInput = document.getElementById('phone');
+    var phoneInput  = document.getElementById('phone');
     var hostedFieldsInstance = null;
     var isSubmitting = false;
 
+    // ── Localized validation messages ──────────────────────────────────────
+    var validationMsgs = {
+      frequencyRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_frequency_required"].Value)),
+      amountRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_amount_required"].Value)),
+      amountMin         : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_amount_min"].Value)),
+      emailRequired     : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_email_required"].Value)),
+      emailInvalid      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_email_invalid"].Value)),
+      cardRequired      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_card_required"].Value)),
+      expiryRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_expiry_required"].Value)),
+      cvvRequired       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_cvv_required"].Value))
+    };
+
+    // ── Field-error helpers ────────────────────────────────────────────────
+    function showFieldError(spanId, message) {
+      var span = document.getElementById(spanId);
+      if (!span) return;
+      span.textContent = message || '';
+      span.classList.toggle('is-visible', !!message);
+    }
+
+    function clearFieldError(spanId) {
+      showFieldError(spanId, '');
+    }
+
+    function setInputState(el, invalid) {
+      if (!el) return;
+      el.classList.toggle('is-invalid', invalid);
+    }
+
+    // ── Global error helpers (Issue 2) ─────────────────────────────────────
+    function clearGlobalError() {
+      // Hide server-rendered error block
+      var serverErr = document.getElementById('serverErrorMsg');
+      if (serverErr) serverErr.hidden = true;
+      // Hide client message
+      if (msg) { msg.hidden = true; msg.textContent = ''; msg.classList.remove('is-error'); }
+    }
+
     function showMessage(text, isError) {
-      if (!msg) { return; }
+      if (!msg) return;
       msg.hidden = false;
       msg.textContent = text;
       msg.classList.toggle('is-error', !!isError);
@@ -387,36 +434,110 @@
       }
     }
 
-    if (amountInput) {
-      amountInput.addEventListener('keydown', function (e) {
-        if (e.key === 'e' || e.key === 'E' || e.key === '+' || e.key === '-') {
-          e.preventDefault();
-        }
+    // ── Clear global error on any field interaction (Issue 2) ──────────────
+    ['donationAmount', 'donorEmail', 'firstName', 'lastName', 'phone'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', clearGlobalError);
+        el.addEventListener('change', clearGlobalError);
+      }
+    });
+    if (form) {
+      form.querySelectorAll('input[name="Frequency"]').forEach(function (el) {
+        el.addEventListener('change', clearGlobalError);
       });
     }
 
+    // ── Clear individual field errors on input (so UI feels responsive) ────
+    if (amountInput) {
+      amountInput.addEventListener('input', function () {
+        clearFieldError('amount_span');
+        setInputState(amountInput, false);
+        clearGlobalError();
+      });
+    }
+    var emailEl = document.getElementById('donorEmail');
+    if (emailEl) {
+      emailEl.addEventListener('input', function () {
+        clearFieldError('email_span');
+        setInputState(emailEl, false);
+        clearGlobalError();
+      });
+    }
+
+    // ── Prevent non-numeric characters in number/phone inputs ─────────────
+    if (amountInput) {
+      amountInput.addEventListener('keydown', function (e) {
+        if (e.key === 'e' || e.key === 'E' || e.key === '+' || e.key === '-') e.preventDefault();
+      });
+    }
     if (phoneInput) {
       phoneInput.addEventListener('input', function () {
         phoneInput.value = phoneInput.value.replace(/[^\d+\-\s()]/g, '');
       });
     }
 
+    // ── Client-side form validation (Issue 3) ──────────────────────────────
+    function validateDonateForm() {
+      var valid = true;
+
+      // Clear all field errors
+      ['frequency_span','amount_span','email_span','s_number','s_expirationDate','s_cvv'].forEach(clearFieldError);
+      [amountInput, emailEl, document.getElementById('donationAmount')].forEach(function(el) { setInputState(el, false); });
+
+      // Frequency (required)
+      var freqChecked = form && form.querySelector('input[name="Frequency"]:checked');
+      if (!freqChecked) {
+        showFieldError('frequency_span', validationMsgs.frequencyRequired);
+        valid = false;
+      }
+
+      // Amount (required, min 1)
+      var rawAmount = amountInput ? amountInput.value.trim() : '';
+      var parsedAmount = parseFloat(rawAmount);
+      if (!rawAmount) {
+        showFieldError('amount_span', validationMsgs.amountRequired);
+        setInputState(amountInput, true);
+        valid = false;
+      } else if (isNaN(parsedAmount) || parsedAmount < 1) {
+        showFieldError('amount_span', validationMsgs.amountMin);
+        setInputState(amountInput, true);
+        valid = false;
+      }
+
+      // Email (required + format)
+      var emailVal = emailEl ? emailEl.value.trim() : '';
+      if (!emailVal) {
+        showFieldError('email_span', validationMsgs.emailRequired);
+        setInputState(emailEl, true);
+        valid = false;
+      } else if (!/^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/.test(emailVal)) {
+        showFieldError('email_span', validationMsgs.emailInvalid);
+        setInputState(emailEl, true);
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    // ── Early exit when payment service unavailable ────────────────────────
     if (!clientToken) {
       showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_unavailable"].Value)), true);
-      if (submitBtn) { submitBtn.disabled = true; }
+      if (submitBtn) submitBtn.disabled = true;
       return;
     }
 
     if (typeof braintree === 'undefined') {
       showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_failed_to_load"].Value)), true);
-      if (submitBtn) { submitBtn.disabled = true; }
+      if (submitBtn) submitBtn.disabled = true;
       return;
     }
 
+    // ── Braintree initialisation ───────────────────────────────────────────
     braintree.client.create({ authorization: clientToken }, function (clientErr, clientInstance) {
       if (clientErr) {
         showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_init_failed"].Value)), true);
-        if (submitBtn) { submitBtn.disabled = true; }
+        if (submitBtn) submitBtn.disabled = true;
         return;
       }
 
@@ -437,30 +558,41 @@
       }, function (hfErr, hfInstance) {
         if (hfErr) {
           showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_card_fields_failed"].Value)), true);
-          if (submitBtn) { submitBtn.disabled = true; }
+          if (submitBtn) submitBtn.disabled = true;
           return;
         }
         hostedFieldsInstance = hfInstance;
+
+        // Clear card field errors on focus/change (Issue 2 + 3)
+        hfInstance.on('focus', function (event) {
+          var spanMap = { 'number': 's_number', 'expirationDate': 's_expirationDate', 'cvv': 's_cvv' };
+          var spanId  = spanMap[event.emittedBy];
+          if (spanId) clearFieldError(spanId);
+          clearGlobalError();
+        });
+        hfInstance.on('change', function () {
+          clearGlobalError();
+        });
       });
     });
 
+    // ── Submit handler ─────────────────────────────────────────────────────
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        if (isSubmitting) { return; }
+        if (isSubmitting) return;
 
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
+        // Run client-side validation first
+        if (!validateDonateForm()) return;
 
+        // reCAPTCHA check
         if (typeof grecaptcha !== 'undefined') {
           try {
             if (!grecaptcha.getResponse()) {
               showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_recaptcha"].Value)), true);
               return;
             }
-          } catch (ex) { /* widget may not be ready, server will reject */ }
+          } catch (ex) { /* widget not yet ready — server will reject */ }
         }
 
         if (!hostedFieldsInstance) {
@@ -473,7 +605,23 @@
         hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
           if (tokenizeErr) {
             setSubmitting(false);
-            showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_card_invalid"].Value)), true);
+
+            // Show per-field card errors when Braintree reports invalid fields
+            var invalidFields = (tokenizeErr.details && tokenizeErr.details.invalidFieldKeys) || [];
+            var fieldSpanMap = { 'number': 's_number', 'expirationDate': 's_expirationDate', 'cvv': 's_cvv' };
+            var fieldMsgMap  = {
+              'number'         : validationMsgs.cardRequired,
+              'expirationDate' : validationMsgs.expiryRequired,
+              'cvv'            : validationMsgs.cvvRequired
+            };
+
+            if (invalidFields.length > 0) {
+              invalidFields.forEach(function (key) {
+                if (fieldSpanMap[key]) showFieldError(fieldSpanMap[key], fieldMsgMap[key] || validationMsgs.cardRequired);
+              });
+            } else {
+              showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_card_invalid"].Value)), true);
+            }
             return;
           }
 
@@ -486,6 +634,7 @@
       });
     }
 
+    // ── Auto-detect default currency ───────────────────────────────────────
     try {
       fetch('/' + donationCulture + '/donate/default-currency?countryCode=EG', { credentials: 'same-origin' })
         .then(function (r) { return r.ok ? r.json() : null; })
@@ -493,7 +642,7 @@
           if (data && data.currencyCode && currencyField) {
             currencyField.value = data.currencyCode;
             var label = document.getElementById('amountCurrencyLabel');
-            if (label) { label.textContent = data.currencyCode; }
+            if (label) label.textContent = data.currencyCode;
           }
         })
         .catch(function () { /* ignore, keep default */ });

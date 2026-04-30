@@ -1,3 +1,4 @@
+@using HindawiFoundation.Web.Services
 @{
     ViewData["Title"] = "News";
     ViewData["BodyClass"] = "page page--news";
@@ -22,7 +23,7 @@
         <h2 class="sr-only" id="news-listing-title">Latest news articles</h2>
         <div class="news-grid">
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(0)">
             <img class="news-card__image" src="~/News/news_1.svg" alt="Ulverscroft Foundation and Booktime collaboration">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -33,7 +34,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(1)">
             <img class="news-card__image" src="~/News/news_2.svg" alt="Children using tablets in a classroom">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -44,7 +45,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(2)">
             <img class="news-card__image" src="~/News/news_3.svg" alt="Children at a book fair">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -55,7 +56,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(3)">
             <img class="news-card__image" src="~/News/news_4.svg" alt="Globe representing new language support">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -66,7 +67,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(4)">
             <img class="news-card__image" src="~/News/news_5.svg" alt="Colourful letters representing dyslexic reading tools">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -77,7 +78,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(5)">
             <img class="news-card__image" src="~/News/news_6.svg" alt="Children excited about a new book in a bookstore">
             <div class="news-card__body">
               <p class="news-card__date">

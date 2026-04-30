@@ -1,3 +1,4 @@
+@using HindawiFoundation.Web.Services
 @{
     ViewData["BodyClass"] = "page page--news";
     ViewData["ActivePage"] = "news";
@@ -21,7 +22,7 @@
         <h2 class="sr-only" id="news-listing-title">آخر المقالات الإخبارية</h2>
         <div class="news-grid">
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(0)">
             <img class="news-card__image" src="~/News/news_1.svg" alt="تعاون مؤسسة Ulverscroft مع بوك تايم">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -32,7 +33,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(1)">
             <img class="news-card__image" src="~/News/news_2.svg" alt="أطفال يستخدمون أجهزة لوحية في فصل دراسي">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -43,7 +44,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(2)">
             <img class="news-card__image" src="~/News/news_3.svg" alt="أطفال في معرض كتاب">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -54,7 +55,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(3)">
             <img class="news-card__image" src="~/News/news_4.svg" alt="كرة أرضية ترمز إلى دعم لغة جديدة">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -65,7 +66,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(4)">
             <img class="news-card__image" src="~/News/news_5.svg" alt="حروف ملوَّنة ترمز إلى أدوات قراءة لذوي عسر القراءة">
             <div class="news-card__body">
               <p class="news-card__date">
@@ -76,7 +77,7 @@
             </div>
           </a>
 
-          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture" asp-route-id="@NewsMap.GetId(5)">
             <img class="news-card__image" src="~/News/news_6.svg" alt="أطفال متحمِّسون لكتاب جديد في مكتبة">
             <div class="news-card__body">
               <p class="news-card__date">
