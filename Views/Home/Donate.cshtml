@@ -2,60 +2,56 @@
 @using Microsoft.Extensions.Options
 @inject IOptions<HindawiFoundation.Web.Models.AppSettings> Options
 @{
-    ViewData["Title"] = "Donate";
     ViewData["BodyClass"] = "page page--donate";
     ViewData["ActivePage"] = "donate";
-    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
+    ViewData["TitleKey"] = "donate_page_title";
+    var routeCulture = ViewContext.RouteData.Values["culture"]?.ToString()?.ToLowerInvariant();
+    var culture = routeCulture == "ar" ? "ar" : "en";
     var recaptchaSiteKey = Options.Value.DonationApi.GoogleRecaptchaKey;
     var account = Options.Value.DonationAccount;
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/assets/css/pages/donate.css" asp-append-version="true">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl=@culture" async defer></script>
 }
 
 <main id="main-content">
 
     <div class="page-banner">
       <div class="container">
-        <h1>Donate</h1>
+        <h1>@localizer["donate_page_title"]</h1>
       </div>
     </div>
 
     <section class="section section--tight" aria-labelledby="donate-intro-title">
       <div class="container">
 
-        <!-- Intro -->
         <div class="donate-intro">
-          <h2 class="donate-intro__title" id="donate-intro-title">Help us spread the joy of reading!</h2>
-          <p class="donate-intro__desc">Everyone deserves access to literature, and to experience the joy of reading. Your support directly fuels our global mission, allowing us to publish more books, expand into new languages, and improve our technology. Whether you give once or monthly, your generosity helps us break down language barriers and reach more readers worldwide.</p>
+          <h2 class="donate-intro__title" id="donate-intro-title">@localizer["donate_intro_title"]</h2>
+          <p class="donate-intro__desc">@localizer["donate_intro_desc"]</p>
         </div>
 
-        <!-- Donation form card -->
         <div class="donate-form-wrap">
           <div class="donate-form-card">
 
-            <!-- Payment method tabs -->
             <div class="payment-methods" role="group" aria-label="Payment method">
               <button class="payment-method is-active" type="button" data-payment="card" aria-pressed="true">
                 <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
-                Credit/Debit Card
+                @localizer["donate_payment_card"]
               </button>
               <button class="payment-method" type="button" data-payment="wire" aria-pressed="false">
                 <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
-                Wire Transfer
+                @localizer["donate_payment_wire"]
               </button>
               <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false">
                 <i class="fa-brands fa-paypal" aria-hidden="true"></i>
-                PayPal
+                @localizer["donate_payment_paypal"]
               </button>
             </div>
 
-            <!-- Gray form body -->
             <div class="donate-form-body">
 
-              <!-- PANEL: Credit/Debit Card (default) -->
               <div class="payment-panel is-active" data-payment-panel="card">
                   <form id="donateForm"
                         action="@Url.Action("Index", "Donate", new { culture = culture })"
@@ -65,23 +61,22 @@
                       <input type="hidden" asp-for="PaymentMethodnonce" id="PaymentMethodnonce" />
                       <input type="hidden" asp-for="CurrencyCode" id="CurrencyCode" />
 
-                      <!-- Row 1: Frequency | Amount | Email -->
                       <div class="donate-grid donate-grid--3">
 
                           <div class="form-field">
-                              <label class="donation-form-field__label">Donation Frequency</label>
+                              <label class="donation-form-field__label">@localizer["donate_label_frequency"]</label>
                               <div class="frequency-options">
                                   <label class="frequency-option">
-                                      <input type="radio" asp-for="Frequency" value="one-time"> One-time
+                                      <input type="radio" asp-for="Frequency" value="one-time"> @localizer["donate_freq_one_time"]
                                   </label>
                                   <label class="frequency-option">
-                                      <input type="radio" asp-for="Frequency" value="monthly"> Monthly
+                                      <input type="radio" asp-for="Frequency" value="monthly"> @localizer["donate_freq_monthly"]
                                   </label>
                               </div>
                           </div>
 
                           <div class="form-field">
-                              <label class="form-field__label" for="donationAmount">Donation Amount</label>
+                              <label class="form-field__label" for="donationAmount">@localizer["donate_label_amount"]</label>
                               <div class="amount-input-wrap">
                                   <input class="form-input" type="number" asp-for="Amount" id="donationAmount" min="1" step="1" autocomplete="off">
                                   <span class="amount-currency" id="amountCurrencyLabel">EGP</span>
@@ -89,27 +84,26 @@
                           </div>
 
                           <div class="form-field">
-                              <label class="form-field__label" for="donorEmail">Email Address</label>
+                              <label class="form-field__label" for="donorEmail">@localizer["donate_label_email"]</label>
                               <input class="form-input" type="email" asp-for="Email" id="donorEmail" autocomplete="email" required>
                           </div>
 
                       </div>
 
-                      <!-- Row 2: First Name | Last Name | Phone -->
                       <div class="donate-grid donate-grid--3">
 
                           <div class="form-field">
-                              <label class="form-field__label" for="firstName">First Name</label>
+                              <label class="form-field__label" for="firstName">@localizer["donate_label_first_name"]</label>
                               <input class="form-input" type="text" asp-for="FirstName" id="firstName" autocomplete="given-name">
                           </div>
 
                           <div class="form-field">
-                              <label class="form-field__label" for="lastName">Last Name</label>
+                              <label class="form-field__label" for="lastName">@localizer["donate_label_last_name"]</label>
                               <input class="form-input" type="text" asp-for="LastName" id="lastName" autocomplete="family-name">
                           </div>
 
                           <div class="form-field">
-                              <label class="form-field__label" for="phone">Phone Number</label>
+                              <label class="form-field__label" for="phone">@localizer["donate_label_phone"]</label>
                               <input class="form-input" type="tel" asp-for="Phone" id="phone" autocomplete="tel">
                           </div>
 
@@ -117,11 +111,10 @@
 
                       <hr class="donate-divider">
 
-                      <!-- Row 3: Card Number | Expiry | CVV (Braintree Hosted Fields) -->
                       <div class="donate-grid donate-grid--card">
 
                           <div class="form-field form-field--card-number">
-                              <label class="form-field__label" for="cardNumber">Card Number</label>
+                              <label class="form-field__label" for="cardNumber">@localizer["donate_label_card_number"]</label>
                               <div class="card-number-input">
                                   <div class="form-input card-number-input__field" id="cardNumber"></div>
                                   <div class="card-number-input__icons" aria-hidden="true">
@@ -132,106 +125,99 @@
                           </div>
 
                           <div class="form-field">
-                              <label class="form-field__label" for="cardExpiry">Expiration Date</label>
+                              <label class="form-field__label" for="cardExpiry">@localizer["donate_label_expiry"]</label>
                               <div class="form-input" id="cardExpiry"></div>
                           </div>
 
                           <div class="form-field">
-                              <label class="form-field__label" for="cardCvc">CVV/CVC Code</label>
+                              <label class="form-field__label" for="cardCvc">@localizer["donate_label_cvv"]</label>
                               <div class="form-input" id="cardCvc"></div>
                           </div>
 
                       </div>
 
-                      <!-- reCAPTCHA -->
                       @if (!string.IsNullOrWhiteSpace(recaptchaSiteKey))
-                  {
-                      <div class="form-field">
-                          <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
-                      </div>
-                  }
+                      {
+                          <div class="form-field">
+                              <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
+                          </div>
+                      }
 
-                      <!-- Submit -->
                       <button class="donate-submit" type="submit">
                           <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                          Donate Now
+                          @localizer["button_donate_now"]
                       </button>
 
                       @{
-                            var modelOnlyErrors = ViewData.ModelState[string.Empty]?.Errors;
-                       }
+                          var modelOnlyErrors = ViewData.ModelState[string.Empty]?.Errors;
+                      }
 
-                        @if (modelOnlyErrors != null && modelOnlyErrors.Count > 0)
-                        {
-                            <div class="donate-message is-error" role="alert" aria-live="polite">
-                                <ul>
-                                                @foreach (var error in modelOnlyErrors)
-                                    {
-                                        if (!string.IsNullOrWhiteSpace(error.ErrorMessage))
-                                        {
-                                                        <li>@error.ErrorMessage</li>
-                                        }
-                                    }
+                      @if (modelOnlyErrors != null && modelOnlyErrors.Count > 0)
+                      {
+                          <div class="donate-message is-error" role="alert" aria-live="polite">
+                              <ul>
+                                  @foreach (var error in modelOnlyErrors)
+                                  {
+                                      if (!string.IsNullOrWhiteSpace(error.ErrorMessage))
+                                      {
+                                          <li>@error.ErrorMessage</li>
+                                      }
+                                  }
                               </ul>
-                            </div>
-                        }
+                          </div>
+                      }
                       <div class="donate-message" id="donateMessage" role="alert" aria-live="polite" hidden></div>
 
                   </form>
               </div>
-              <!-- end card panel -->
 
-              <!-- PANEL: Wire Transfer -->
               <div class="payment-panel" data-payment-panel="wire" hidden>
                 <div class="wire-transfer-table" aria-label="Bank transfer details">
                   <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">Account Name</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.AccountName) ? "Account Name" : account.AccountName)</span>
+                    <span class="wire-transfer-row__label">@localizer["donate_wire_account_name"]</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.AccountName) ? localizer["donate_wire_account_name"].Value : account.AccountName)</span>
                   </div>
                   <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">Bank Code</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankCode) ? "Bank Code" : account.BankCode)</span>
+                    <span class="wire-transfer-row__label">@localizer["donate_wire_bank_code"]</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankCode) ? localizer["donate_wire_bank_code"].Value : account.BankCode)</span>
                   </div>
                   <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">Account Number</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankNumber) ? "Account Number" : account.BankNumber)</span>
+                    <span class="wire-transfer-row__label">@localizer["donate_wire_account_number"]</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankNumber) ? localizer["donate_wire_account_number"].Value : account.BankNumber)</span>
                   </div>
                   <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">SWIFT Code</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.SwiftCode) ? "SWIFT Code" : account.SwiftCode)</span>
+                    <span class="wire-transfer-row__label">@localizer["donate_wire_swift"]</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.SwiftCode) ? localizer["donate_wire_swift"].Value : account.SwiftCode)</span>
                   </div>
                   <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">IBAN</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.Iban) ? "IBAN" : account.Iban)</span>
+                    <span class="wire-transfer-row__label">@localizer["donate_wire_iban"]</span>
+                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.Iban) ? localizer["donate_wire_iban"].Value : account.Iban)</span>
                   </div>
                   <div class="wire-transfer-row wire-transfer-row--last">
-                    <span class="wire-transfer-row__label">Bank Location</span>
-                    <span class="wire-transfer-row__value">Bank Location</span>
+                    <span class="wire-transfer-row__label">@localizer["donate_wire_bank_location"]</span>
+                    <span class="wire-transfer-row__value">@localizer["donate_wire_bank_location"]</span>
                   </div>
                 </div>
               </div>
-              <!-- end wire transfer panel -->
 
-              <!-- PANEL: PayPal -->
               <div class="payment-panel" data-payment-panel="paypal" hidden>
 
-                <!-- Shared fields also shown for PayPal -->
                 <div class="donate-grid donate-grid--3">
 
                   <div class="form-field">
-                    <label class="donation-form-field__label">Donation Frequency</label>
+                    <label class="donation-form-field__label">@localizer["donate_label_frequency"]</label>
                     <div class="frequency-options">
                       <label class="frequency-option">
-                        <input type="radio" name="frequency-pp" value="one-time"> One-time
+                        <input type="radio" name="frequency-pp" value="one-time"> @localizer["donate_freq_one_time"]
                       </label>
                       <label class="frequency-option">
-                        <input type="radio" name="frequency-pp" value="monthly" checked> Monthly
+                        <input type="radio" name="frequency-pp" value="monthly" checked> @localizer["donate_freq_monthly"]
                       </label>
                     </div>
                   </div>
 
                   <div class="form-field">
-                    <label class="form-field__label" for="ppAmount">Donation Amount</label>
+                    <label class="form-field__label" for="ppAmount">@localizer["donate_label_amount"]</label>
                     <div class="amount-input-wrap">
                       <input class="form-input" type="number" id="ppAmount" name="ppAmount" min="1" step="1" autocomplete="off">
                       <span class="amount-currency">EGP</span>
@@ -239,7 +225,7 @@
                   </div>
 
                   <div class="form-field">
-                    <label class="form-field__label" for="ppEmail">Email Address</label>
+                    <label class="form-field__label" for="ppEmail">@localizer["donate_label_email"]</label>
                     <input class="form-input" type="email" id="ppEmail" name="ppEmail" autocomplete="email">
                   </div>
 
@@ -248,17 +234,17 @@
                 <div class="donate-grid donate-grid--3">
 
                   <div class="form-field">
-                    <label class="form-field__label" for="ppFirst">First Name</label>
+                    <label class="form-field__label" for="ppFirst">@localizer["donate_label_first_name"]</label>
                     <input class="form-input" type="text" id="ppFirst" name="ppFirst" autocomplete="given-name">
                   </div>
 
                   <div class="form-field">
-                    <label class="form-field__label" for="ppLast">Last Name</label>
+                    <label class="form-field__label" for="ppLast">@localizer["donate_label_last_name"]</label>
                     <input class="form-input" type="text" id="ppLast" name="ppLast" autocomplete="family-name">
                   </div>
 
                   <div class="form-field">
-                    <label class="form-field__label" for="ppPhone">Phone Number</label>
+                    <label class="form-field__label" for="ppPhone">@localizer["donate_label_phone"]</label>
                     <input class="form-input" type="tel" id="ppPhone" name="ppPhone" autocomplete="tel">
                   </div>
 
@@ -274,24 +260,20 @@
                 </div>
 
               </div>
-              <!-- end paypal panel -->
 
             </div>
-            <!-- end gray form body -->
 
           </div>
         </div>
 
-        <!-- Note below form -->
-        <p class="donate-note">If you would like to speak to us about directing your donation toward a specific book, language, or project, please contact us at donations@@hindawi.org.</p>
+        <p class="donate-note">@localizer["donate_note"]</p>
 
       </div>
     </section>
 
-    <!-- IMPACT -->
     <section class="section impact" aria-labelledby="impact-donate-title">
       <div class="container">
-        <h2 class="section__title" id="impact-donate-title">Impact</h2>
+        <h2 class="section__title" id="impact-donate-title">@localizer["home_impact"]</h2>
         <div class="impact-grid" role="list">
           <article class="impact-item" role="listitem">
             <div class="impact-icon">
@@ -336,11 +318,10 @@
       </div>
     </section>
 
-    <!-- TESTIMONIALS -->
     <section class="section section--tight testimonials" aria-labelledby="testimonials-donate-title">
       <div class="container">
         <header class="section__header">
-          <h2 class="section__title" id="testimonials-donate-title">Testimonials</h2>
+          <h2 class="section__title" id="testimonials-donate-title">@localizer["home_testimonials"]</h2>
         </header>
 
         <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
@@ -373,181 +354,150 @@
 </main>
 
 @section Scripts {
-    <script src="https://js.braintreegateway.com/web/3.96.0/js/client.min.js"></script>
-    <script src="https://js.braintreegateway.com/web/3.96.0/js/hosted-fields.min.js"></script>
-    <script>
-      (function () {
-        'use strict';
+<script src="https://js.braintreegateway.com/web/3.96.0/js/client.min.js"></script>
+<script src="https://js.braintreegateway.com/web/3.96.0/js/hosted-fields.min.js"></script>
+<script>
+  (function () {
+    'use strict';
 
-        var clientToken = @Html.Raw(string.IsNullOrWhiteSpace(Model?.ClientToken) ? "null" : "\"" + Model.ClientToken + "\"");
-        var form = document.getElementById('donateForm');
-        var submitBtn = form ? form.querySelector('.donate-submit') : null;
-        var msg = document.getElementById('donateMessage');
-        var nonceField = document.getElementById('PaymentMethodnonce');
-        var currencyField = document.getElementById('CurrencyCode');
-        var amountInput = document.getElementById('donationAmount');
-        var phoneInput = document.getElementById('phone');
-        var hostedFieldsInstance = null;
-        var isSubmitting = false;
+    var donationCulture = '@culture';
+    var clientToken = @Html.Raw(string.IsNullOrWhiteSpace(Model?.ClientToken) ? "null" : "\"" + Model.ClientToken + "\"");
+    var form = document.getElementById('donateForm');
+    var submitBtn = form ? form.querySelector('.donate-submit') : null;
+    var msg = document.getElementById('donateMessage');
+    var nonceField = document.getElementById('PaymentMethodnonce');
+    var currencyField = document.getElementById('CurrencyCode');
+    var amountInput = document.getElementById('donationAmount');
+    var phoneInput = document.getElementById('phone');
+    var hostedFieldsInstance = null;
+    var isSubmitting = false;
 
-        function showMessage(text, isError) {
-          if (!msg) { return; }
-          msg.hidden = false;
-          msg.textContent = text;
-          msg.classList.toggle('is-error', !!isError);
+    function showMessage(text, isError) {
+      if (!msg) { return; }
+      msg.hidden = false;
+      msg.textContent = text;
+      msg.classList.toggle('is-error', !!isError);
+    }
+
+    function setSubmitting(state) {
+      isSubmitting = state;
+      if (submitBtn) {
+        submitBtn.disabled = state;
+        submitBtn.classList.toggle('is-loading', state);
+      }
+    }
+
+    if (amountInput) {
+      amountInput.addEventListener('keydown', function (e) {
+        if (e.key === 'e' || e.key === 'E' || e.key === '+' || e.key === '-') {
+          e.preventDefault();
+        }
+      });
+    }
+
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function () {
+        phoneInput.value = phoneInput.value.replace(/[^\d+\-\s()]/g, '');
+      });
+    }
+
+    if (!clientToken) {
+      showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_unavailable"].Value)), true);
+      if (submitBtn) { submitBtn.disabled = true; }
+      return;
+    }
+
+    if (typeof braintree === 'undefined') {
+      showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_failed_to_load"].Value)), true);
+      if (submitBtn) { submitBtn.disabled = true; }
+      return;
+    }
+
+    braintree.client.create({ authorization: clientToken }, function (clientErr, clientInstance) {
+      if (clientErr) {
+        showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_init_failed"].Value)), true);
+        if (submitBtn) { submitBtn.disabled = true; }
+        return;
+      }
+
+      braintree.hostedFields.create({
+        client: clientInstance,
+        styles: {
+          'input': donationCulture === 'ar'
+            ? { 'font-size': '16px', 'color': '#333', 'text-align': 'right', 'direction': 'rtl' }
+            : { 'font-size': '16px', 'color': '#333' },
+          'input.invalid': { 'color': '#c00' },
+          'input.valid':   { 'color': '#0a7' }
+        },
+        fields: {
+          number:         { selector: '#cardNumber', placeholder: '**** **** **** ****' },
+          expirationDate: { selector: '#cardExpiry', placeholder: 'MM/YY' },
+          cvv:            { selector: '#cardCvc',    placeholder: 'CVV' }
+        }
+      }, function (hfErr, hfInstance) {
+        if (hfErr) {
+          showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_card_fields_failed"].Value)), true);
+          if (submitBtn) { submitBtn.disabled = true; }
+          return;
+        }
+        hostedFieldsInstance = hfInstance;
+      });
+    });
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (isSubmitting) { return; }
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
         }
 
-        function setSubmitting(state) {
-          isSubmitting = state;
-          if (submitBtn) {
-            submitBtn.disabled = state;
-            submitBtn.classList.toggle('is-loading', state);
-          }
-        }
-
-        // Prevent scientific notation in amount input
-        if (amountInput) {
-          amountInput.addEventListener('keydown', function (e) {
-            if (e.key === 'e' || e.key === 'E' || e.key === '+' || e.key === '-') {
-              e.preventDefault();
+        if (typeof grecaptcha !== 'undefined') {
+          try {
+            if (!grecaptcha.getResponse()) {
+              showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_recaptcha"].Value)), true);
+              return;
             }
-          });
+          } catch (ex) { /* widget may not be ready, server will reject */ }
         }
 
-        // Prevent invalid phone characters (allow digits, spaces, +, -, parentheses)
-        if (phoneInput) {
-          phoneInput.addEventListener('input', function () {
-            phoneInput.value = phoneInput.value.replace(/[^\d+\-\s()]/g, '');
-          });
-        }
-
-        // Payment method tab toggling (preserve existing UX)
-        var tabs = document.querySelectorAll('.payment-method');
-        var panels = document.querySelectorAll('.payment-panel');
-        tabs.forEach(function (tab) {
-          tab.addEventListener('click', function () {
-            var key = tab.getAttribute('data-payment');
-            tabs.forEach(function (t) {
-              t.classList.toggle('is-active', t === tab);
-              t.setAttribute('aria-pressed', t === tab ? 'true' : 'false');
-            });
-            panels.forEach(function (p) {
-              var match = p.getAttribute('data-payment-panel') === key;
-              p.classList.toggle('is-active', match);
-              p.hidden = !match;
-            });
-          });
-        });
-
-        // Initialize Braintree only if a client token is available
-        if (!clientToken) {
-          showMessage('Payment service is unavailable. Please try again later.', true);
-          if (submitBtn) { submitBtn.disabled = true; }
+        if (!hostedFieldsInstance) {
+          showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_not_ready"].Value)), true);
           return;
         }
 
-        if (typeof braintree === 'undefined') {
-          showMessage('Payment service failed to load. Please refresh the page.', true);
-          if (submitBtn) { submitBtn.disabled = true; }
-          return;
-        }
+        setSubmitting(true);
 
-        braintree.client.create({ authorization: clientToken }, function (clientErr, clientInstance) {
-          if (clientErr) {
-            showMessage('Could not initialize payment form. Please refresh and try again.', true);
-            if (submitBtn) { submitBtn.disabled = true; }
+        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+          if (tokenizeErr) {
+            setSubmitting(false);
+            showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_card_invalid"].Value)), true);
             return;
           }
 
-          braintree.hostedFields.create({
-            client: clientInstance,
-            styles: {
-              'input': {
-                'font-size': '16px',
-                'color': '#333'
-              },
-              'input.invalid': { 'color': '#c00' },
-              'input.valid':   { 'color': '#0a7' }
-            },
-            fields: {
-              number:         { selector: '#cardNumber', placeholder: '**** **** **** ****' },
-              expirationDate: { selector: '#cardExpiry', placeholder: 'MM/YY' },
-              cvv:            { selector: '#cardCvc',    placeholder: 'CVV' }
-            }
-          }, function (hfErr, hfInstance) {
-            if (hfErr) {
-              showMessage('Could not load secure card fields. Please refresh and try again.', true);
-              if (submitBtn) { submitBtn.disabled = true; }
-              return;
-            }
-            hostedFieldsInstance = hfInstance;
-          });
-        });
-
-          if (form) {
-              form.addEventListener('submit', function (e) {
-                  if (isSubmitting) {
-                      e.preventDefault();
-                      return;
-                  }
-
-                  if (!form.checkValidity()) {
-                      e.preventDefault();
-                      form.reportValidity();
-                      return;
-                  }
-
-                  if (typeof grecaptcha !== 'undefined') {
-                      try {
-                          if (!grecaptcha.getResponse()) {
-                              e.preventDefault();
-                              showMessage('Please complete the reCAPTCHA verification.', true);
-                              return;
-                          }
-                      } catch (ex) {
-                          // Let the server validate if the widget is not ready/readable.
-                      }
-                  }
-
-                  if (!hostedFieldsInstance) {
-                      e.preventDefault();
-                      showMessage('Payment form is not ready. Please wait a moment and try again.', true);
-                      return;
-                  }
-
-                  e.preventDefault();
-                  setSubmitting(true);
-
-                  hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-                      if (tokenizeErr) {
-                          setSubmitting(false);
-                          showMessage('Please check your card details and try again.', true);
-                          return;
-                      }
-
-                      if (nonceField && payload && payload.nonce) {
-                          nonceField.value = payload.nonce;
-                      }
-
-                      HTMLFormElement.prototype.submit.call(form);
-                  });
-              });
+          if (nonceField && payload && payload.nonce) {
+            nonceField.value = payload.nonce;
           }
 
-        // Optional: try to fetch default currency, fall back silently to EGP
-        try {
-          var culture = '@culture';
-          fetch('/' + culture + '/donate/default-currency?countryCode=EG', { credentials: 'same-origin' })
-            .then(function (r) { return r.ok ? r.json() : null; })
-            .then(function (data) {
-              if (data && data.currencyCode && currencyField) {
-                currencyField.value = data.currencyCode;
-                var label = document.getElementById('amountCurrencyLabel');
-                if (label) { label.textContent = data.currencyCode; }
-              }
-            })
-            .catch(function () { /* ignore, keep default */ });
-        } catch (e) { /* ignore */ }
-      })();
-    </script>
+          form.submit();
+        });
+      });
+    }
+
+    try {
+      fetch('/' + donationCulture + '/donate/default-currency?countryCode=EG', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          if (data && data.currencyCode && currencyField) {
+            currencyField.value = data.currencyCode;
+            var label = document.getElementById('amountCurrencyLabel');
+            if (label) { label.textContent = data.currencyCode; }
+          }
+        })
+        .catch(function () { /* ignore, keep default */ });
+    } catch (e) { /* ignore */ }
+  })();
+</script>
 }

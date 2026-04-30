@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using HindawiFoundation.Web.Models;
@@ -13,6 +14,12 @@ public class DonationService : IDonationService
     private readonly AppSettings _appSettings;
     private readonly ILogger<DonationService> _logger;
     private readonly byte[] _iv = new byte[16];
+
+    private static readonly JsonSerializerSettings InvariantJson = new()
+    {
+        Culture = CultureInfo.InvariantCulture,
+        DateParseHandling = DateParseHandling.None
+    };
 
     public DonationService(
         IHttpClientFactory httpClientFactory,
@@ -74,16 +81,16 @@ public class DonationService : IDonationService
                 PaymentMethodnonce = donationViewModel.PaymentMethodnonce,
                 ProjectId = 1,
                 CurrencyCode = donationViewModel.CurrencyCode,
-                Language = language
+                Language = "en"
             };
 
-            var jsonPayload = JsonConvert.SerializeObject(vmDonation);
+            var jsonPayload = JsonConvert.SerializeObject(vmDonation, InvariantJson);
             var encryptedData = EncryptPayload(jsonPayload);
 
             var client = _httpClientFactory.CreateClient();
             var url = string.Format(_appSettings.DonationApi.Donate, _appSettings.DonationApi.BaseURL);
 
-            var jsonContent = JsonConvert.SerializeObject(encryptedData);
+            var jsonContent = JsonConvert.SerializeObject(encryptedData, InvariantJson);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             var response = await client.PostAsync(url, content);
@@ -125,7 +132,7 @@ public class DonationService : IDonationService
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                dynamic? result = JsonConvert.DeserializeObject(content);
+                dynamic? result = JsonConvert.DeserializeObject(content, InvariantJson);
                 return result?.success == true;
             }
 
@@ -150,7 +157,7 @@ public class DonationService : IDonationService
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var currencies = JsonConvert.DeserializeObject<List<CurrencyDto>>(content) ?? new List<CurrencyDto>();
+                var currencies = JsonConvert.DeserializeObject<List<CurrencyDto>>(content, InvariantJson) ?? new List<CurrencyDto>();
                 return currencies;
             }
 
@@ -179,7 +186,7 @@ public class DonationService : IDonationService
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                dynamic? result = JsonConvert.DeserializeObject(content);
+                dynamic? result = JsonConvert.DeserializeObject(content, InvariantJson);
                 return result?.currencyCode?.ToString() ?? "USD";
             }
 

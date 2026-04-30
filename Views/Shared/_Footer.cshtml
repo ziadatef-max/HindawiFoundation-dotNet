@@ -1,5 +1,11 @@
 @{
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
+    if (culture != "ar") culture = "en";
+    var logoSrc = culture == "ar" ? "~/Logos/hindawi_ar.svg" : "~/Logos/hindawi_en.svg";
+    var logoAlt = localizer["site_name"].Value;
+    var booktimeUrl = culture == "ar" ? "https://www.booktime.org/ar" : "https://www.booktime.org/en";
+    var safahatUrl = culture == "ar" ? "https://www.safahat.org/ar/" : "https://www.safahat.org/en/";
+    var foliosUrl = culture == "ar" ? "https://folios.org/ar" : "https://folios.org/en";
 }
 
 <footer class="site-footer" aria-label="Site footer">
@@ -7,10 +13,10 @@
       <div class="site-footer__inner">
         <div class="footer-brand">
           <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="site-logo" aria-label="Hindawi Foundation home">
-            <img src="~/Logos/hindawi_en.svg" alt="Hindawi Foundation">
+            <img src="@(culture == "ar" ? "/Logos/hindawi_ar.svg" : "/Logos/hindawi_en.svg")" alt="Hindawi Foundation">
           </a>
-          <p>Hindawi Foundation is a registered charity no. 1187180 in England and Wales. Registered address: York House, 41 Sheet Street, Windsor, SL4 1DD.</p>
-          <ul class="footer-social" aria-label="Social links">
+          <p>@localizer["footer_charity_text"]</p>
+          <ul class="footer-social" aria-label="@localizer["footer_social_links_label"]">
             <li><a href="#" class="footer-social__item linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
             <li><a href="#" class="footer-social__item facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a></li>
             <li><a href="#" class="footer-social__item instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
@@ -19,31 +25,31 @@
 
         <div class="footer-menu" aria-label="Footer links">
           <section class="footer-group" aria-label="Main links">
-            <h4>Menu</h4>
+            <h4>@localizer["footer_menu"]</h4>
             <ul>
-              <li><a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">Home</a></li>
-              <li><a asp-controller="Home" asp-action="About" asp-route-culture="@culture">About</a></li>
-              <li><a asp-controller="Home" asp-action="News" asp-route-culture="@culture">News</a></li>
-              <li><a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture">Partners</a></li>
+              <li><a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">@localizer["nav_home"]</a></li>
+              <li><a asp-controller="Home" asp-action="About" asp-route-culture="@culture">@localizer["nav_about"]</a></li>
+              <li><a asp-controller="Home" asp-action="News" asp-route-culture="@culture">@localizer["nav_news"]</a></li>
+              <li><a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture">@localizer["nav_partners"]</a></li>
             </ul>
           </section>
 
           <section class="footer-group" aria-label="Policy links">
-            <h4 class="invisible" aria-hidden="true">Menu</h4>
+            <h4 class="invisible" aria-hidden="true">@localizer["footer_menu"]</h4>
             <ul>
-              <li><a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture">Contact</a></li>
-              <li><a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture">Donate</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms and Conditions</a></li>
+              <li><a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture">@localizer["nav_contact"]</a></li>
+              <li><a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture">@localizer["nav_donate"]</a></li>
+              <li><a href="#">@localizer["footer_privacy_policy"]</a></li>
+              <li><a href="#">@localizer["footer_terms_conditions"]</a></li>
             </ul>
           </section>
 
           <section class="footer-group" aria-label="Products links">
-            <h4 class="invisible" aria-hidden="true">Menu</h4>
+            <h4 class="invisible" aria-hidden="true">@localizer["footer_menu"]</h4>
             <ul>
-              <li><a href="https://www.booktime.org/en" target="_blank" rel="noopener noreferrer">Booktime</a></li>
-              <li><a href="https://www.safahat.org/en/" target="_blank" rel="noopener noreferrer">Safahat</a></li>
-              <li><a href="https://folios.org/en" target="_blank" rel="noopener noreferrer">Folios</a></li>
+              <li><a href="@booktimeUrl" target="_blank" rel="noopener noreferrer">Booktime</a></li>
+              <li><a href="@safahatUrl" target="_blank" rel="noopener noreferrer">Safahat</a></li>
+              <li><a href="@foliosUrl" target="_blank" rel="noopener noreferrer">Folios</a></li>
             </ul>
           </section>
         </div>
@@ -51,6 +57,6 @@
     </div>
 
     <div class="site-footer__bottom">
-      <p>Copyright &copy; 2026 Hindawi Foundation. All rights reserved.</p>
+      <p>@localizer["footer_copyright"]</p>
     </div>
 </footer>

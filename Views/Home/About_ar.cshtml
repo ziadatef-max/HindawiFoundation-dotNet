@@ -1,0 +1,97 @@
+@{
+    ViewData["BodyClass"] = "page page--about";
+    ViewData["ActivePage"] = "about";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/about.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <div class="page-banner">
+      <div class="container">
+        <h1>@localizer["about_page_title"]</h1>
+      </div>
+    </div>
+
+    <section class="section section--tight about-content" aria-label="عن مؤسسة هنداوي">
+      <div class="container">
+        <p>على مدى ما يقرب من عشرين عامًا، وصلت مؤسسة هنداوي إلى عشرات الملايين من القُرَّاء حول العالم.</p>
+        <p>تأسَّست المؤسسة في الأصل لمعالجة النقص الحاد في مواد القراءة المتنوِّعة وعالية الجودة باللغة العربية. ولمواجهة هذا، قمنا بترخيص وترجمة مجموعة واسعة من الكتب، ونشرنا أعمالًا أدبية عربية بارزة، من بينها أعمال الأديب الحائز على جائزة نوبل نجيب محفوظ، وأتحناها مجانًا للتحميل والقراءة. ولا تزال هذه الكتب متاحة مجانًا حتى اليوم على <a href="https://www.safahat.org/ar/" target="_blank" rel="noopener noreferrer">Safahat.org</a>.</p>
+        <p>وانطلاقًا من إيماننا الجوهري بأن «القراءة تغيّر كل شيء»، وسَّعنا رسالتنا في عام 2024 لنشر متعة القراءة بكل اللغات.</p>
+        <p>ولتحقيق هذه الرؤية، أنشأنا «بوك تايم»، وهو ناشر خيري متخصِّص في كتب الأطفال المصوَّرة بلغات متعدِّدة، من بينها العربية والإنجليزية والبرتغالية والإسبانية واليابانية. ومن خلال تطبيقنا للهاتف المحمول ومنصتنا على الويب، يُزيل «بوك تايم» الحواجز المالية والجغرافية التقليدية، فيمنح أطفالًا من خلفيات متنوِّعة وصولًا مجانيًا إلى قصص تعكس لغاتهم وثقافاتهم، فنُسهم في تنمية القراءة المبكرة والتفاهم بين الثقافات على نطاق عالمي.</p>
+        <p>وفي عام 2026، عزَّزنا التزامنا بإتاحة المعلومات على المستوى العالمي بإطلاق «فوليوس». يستفيد «فوليوس» من تقنيات الذكاء الاصطناعي ليُمكِّن أي شخص من إنتاج ترجمات الكتب، فيكسر حواجز اللغة، ويتيح لك أن تقرأ الكتب التي تهمّك بأي لغة كانت.</p>
+        <p>مؤسسة هنداوي مسجَّلة كمؤسسة خيرية في إنجلترا وويلز (رقم الجمعية الخيرية: 1181788)، ولها مكاتب في وندسور بالمملكة المتحدة، والقاهرة بجمهورية مصر العربية.</p>
+      </div>
+    </section>
+
+    <section class="section impact" aria-labelledby="impact-title">
+      <div class="container">
+        <h2 class="section__title" id="impact-title">@localizer["home_impact"]</h2>
+        <div class="impact-grid" role="list">
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-users" aria-hidden="true"></i>
+            </div>
+            <p class="number">+300 ألف</p>
+            <p class="label">قارئ شهريًا</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <img src="~/Icons/book-open-cover.svg" alt="">
+            </div>
+            <p class="number">10 ملايين</p>
+            <p class="label">كتاب قُرئ منذ 2024</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            </div>
+            <p class="number">+190</p>
+            <p class="label">دولة نخدمها</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </div>
+            <p class="number">+9</p>
+            <p class="label">لغات نخدمها</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+            </div>
+            <p class="number">+3.5 آلاف</p>
+            <p class="label">كتاب منشور<br><span>(شاملاً الترجمات)</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight founders" aria-labelledby="founders-title">
+      <div class="container">
+        <h2 class="founders__title" id="founders-title">المؤسِّسون</h2>
+        <p class="founders__intro">د. نجوى عبد المطَّلب ود. أحمد هنداوي ملتزمان التزامًا عميقًا بنشر متعة القراءة وتحسين الوصول إلى المعلومات في كل أنحاء العالم.</p>
+
+        <div class="founders__grid">
+          <article class="founder">
+            <img class="founder__photo" src="~/Images/Ahmed_Hindawi.svg" alt="أحمد هنداوي، الرئيس التنفيذي">
+            <h3 class="founder__name">أحمد هنداوي</h3>
+            <p class="founder__role">الرئيس التنفيذي</p>
+          </article>
+
+          <article class="founder">
+            <img class="founder__photo" src="~/Images/Nagwa_Abdelmottaleb.svg" alt="نجوى عبد المطَّلب، نائبة الرئيس">
+            <h3 class="founder__name">نجوى عبد المطَّلب</h3>
+            <p class="founder__role">نائبة الرئيس</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+</main>

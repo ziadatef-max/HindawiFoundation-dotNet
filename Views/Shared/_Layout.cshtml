@@ -1,12 +1,21 @@
 @{
+    var culture = ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
+    if (culture != "ar") culture = "en";
+    var dir = culture == "ar" ? "rtl" : "ltr";
+    var layoutClass = culture == "ar" ? "layout-rtl" : "layout-ltr";
     var bodyClass = ViewData["BodyClass"] as string ?? "page";
-    var pageTitle = ViewData["Title"] as string;
-    var fullTitle = string.IsNullOrEmpty(pageTitle) || pageTitle == "Home"
-        ? "Hindawi Foundation - Reading changes everything."
-        : $"{pageTitle} - Hindawi Foundation";
+    var pageTitleKey = ViewData["TitleKey"] as string;
+    var pageTitle = !string.IsNullOrEmpty(pageTitleKey)
+        ? localizer[pageTitleKey].Value
+        : (ViewData["Title"] as string ?? "");
+    var siteName = localizer["site_name"].Value;
+    var siteTagline = localizer["site_tagline"].Value;
+    var fullTitle = string.IsNullOrEmpty(pageTitle) || pageTitle == "Home" || pageTitle == localizer["home_page_title"].Value
+        ? $"{siteName} - {siteTagline}"
+        : $"{pageTitle} - {siteName}";
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@culture" dir="@dir">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,10 +30,14 @@
   <link rel="stylesheet" href="~/assets/css/layout.css" asp-append-version="true">
   <link rel="stylesheet" href="~/assets/css/utilities.css" asp-append-version="true">
   <link rel="stylesheet" href="~/assets/css/components.css" asp-append-version="true">
+  @if (culture == "ar")
+  {
+      <link rel="stylesheet" href="~/assets/css/rtl.css" asp-append-version="true">
+  }
   @await RenderSectionAsync("Styles", required: false)
 </head>
-<body class="@bodyClass">
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+<body class="@layoutClass @bodyClass" data-culture="@culture">
+  <a class="skip-link" href="#main-content">@localizer["skip_to_main"]</a>
 
   @await Html.PartialAsync("_Header")
 

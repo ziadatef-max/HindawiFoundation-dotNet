@@ -100,8 +100,18 @@ function setActiveNavLink() {
     if (shouldBeActive) matched = true;
   });
 
-  // Fallback: if no exact match, try parent-section match by stripping
-  // the suffix after the last hyphen (e.g. /news-details → /news)
+  // Fallback 1: sub-path match — /ar/News/Details activates the /ar/News link
+  if (!matched) {
+    navLinks.forEach((link) => {
+      const linkPath = normalize(link.href);
+      if (linkPath.length > 4 && currentPath.startsWith(linkPath + '/')) {
+        link.classList.add("is-active");
+        matched = true;
+      }
+    });
+  }
+
+  // Fallback 2: hyphen-suffix strip (e.g. /news-details → /news)
   if (!matched) {
     const parentPath = currentPath.replace(/-[^/]+$/, "");
     navLinks.forEach((link) => {

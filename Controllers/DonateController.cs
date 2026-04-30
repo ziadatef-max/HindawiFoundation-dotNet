@@ -22,11 +22,28 @@ public class DonateController : Controller
         _logger = logger;
     }
 
+    private static string NormalizeCulture(string? culture) =>
+        string.Equals(culture, "ar", StringComparison.OrdinalIgnoreCase) ? "ar" : "en";
+
+    private void SetCommonViewData(string culture)
+    {
+        ViewData["Culture"] = NormalizeCulture(culture);
+        ViewData["ActivePage"] = "donate";
+        ViewData["TitleKey"] = "donate_page_title";
+    }
+
+    private static readonly HashSet<string> SupportedCultures =
+        new(StringComparer.OrdinalIgnoreCase) { "en", "ar" };
+
+    private static bool IsSupportedCulture(string? culture) =>
+        !string.IsNullOrEmpty(culture) && SupportedCultures.Contains(culture);
+
     [HttpGet("")]
     public async Task<IActionResult> Index([FromRoute] string culture)
     {
-        ViewData["Culture"] = culture;
-        ViewData["ActivePage"] = "donate";
+        if (!IsSupportedCulture(culture)) return NotFound();
+
+        SetCommonViewData(culture);
 
         var clientToken = await _donationService.GetClientToken();
 
@@ -50,35 +67,19 @@ public class DonateController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index([FromRoute] string culture, DonationViewModel model)
     {
-        ViewData["Culture"] = culture;
-        ViewData["ActivePage"] = "donate";
+        if (!IsSupportedCulture(culture)) return NotFound();
 
-        // Server-side validation: Frequency
+        SetCommonViewData(culture);
+
         if (model.Frequency != "monthly" && model.Frequency != "one-time")
         {
             ModelState.AddModelError(nameof(model.Frequency), "Please select a valid donation frequency.");
         }
 
-        // Server-side validation: Amount
         if (!model.Amount.HasValue || model.Amount.Value <= 0 || model.Amount.Value > 1000000)
         {
             ModelState.AddModelError(nameof(model.Amount), "Please enter a valid donation amount.");
         }
-
-        // reCAPTCHA validation
-        //var recaptchaToken = Request.Form["g-recaptcha-response"].ToString();
-        //if (string.IsNullOrWhiteSpace(recaptchaToken))
-        //{
-        //    ModelState.AddModelError(string.Empty, "Please complete the reCAPTCHA verification.");
-        //}
-        //else
-        //{
-        //    var recaptchaValid = await _donationService.ValidateRecaptcha(recaptchaToken);
-        //    if (!recaptchaValid)
-        //    {
-        //        ModelState.AddModelError(string.Empty, "reCAPTCHA verification failed. Please try again.");
-        //    }
-        //}
 
         if (string.IsNullOrWhiteSpace(model.PaymentMethodnonce))
         {
@@ -108,7 +109,8 @@ public class DonateController : Controller
     [HttpGet("~/{culture}/donate-unsubscribe")]
     public IActionResult Unsubscribe([FromRoute] string culture)
     {
-        ViewData["Culture"] = culture;
+        if (!IsSupportedCulture(culture)) return NotFound();
+        ViewData["Culture"] = NormalizeCulture(culture);
         ViewData["ActivePage"] = "donate";
         return View("~/Views/Donate/donation_unsubscribe.cshtml");
     }

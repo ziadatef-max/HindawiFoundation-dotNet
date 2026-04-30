@@ -1,0 +1,94 @@
+@{
+    ViewData["BodyClass"] = "page page--contact";
+    ViewData["ActivePage"] = "contact";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/contact.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <div class="page-banner">
+      <div class="container">
+        <h1>@localizer["contact_page_title"]</h1>
+      </div>
+    </div>
+
+    <section class="section section--tight" aria-labelledby="contact-info-title">
+      <div class="container">
+
+        <div class="contact-layout">
+
+          <div class="contact-block">
+            <h2 class="contact-block__title" id="contact-info-title">تواصل معنا</h2>
+            <p class="contact-block__desc">سواء كان لديك سؤال، أو استفسار صحفي، أو فكرة للتعاون معًا، يسعدنا أن نسمع منك. يُرجى ملء النموذج أدناه وسيتواصل معك فريقنا.</p>
+
+            <ul class="contact-list" aria-label="تفاصيل التواصل">
+              <li class="contact-list-item">
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                <p><a href="mailto:hindawi@@hindawi.org">hindawi@@hindawi.org</a></p>
+              </li>
+              <li class="contact-list-item">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                <p>
+                  مؤسسة هنداوي<br>
+                  York House<br>
+                  41 Sheet Street<br>
+                  وندسور، بيركشاير<br>
+                  SL4 1DD<br>
+                  المملكة المتحدة
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="contact-map" aria-label="خريطة تُظهر موقع مكتب وندسور بالمملكة المتحدة">
+            <img src="~/Images/contact_location.svg" alt="خريطة تُظهر مكتب مؤسسة هنداوي في وندسور بالمملكة المتحدة">
+          </div>
+
+        </div>
+
+        <div class="contact-hubs" aria-labelledby="hubs-title">
+          <h2 class="contact-hubs__title" id="hubs-title">مركزان عالميان. رسالة واحدة حول العالم</h2>
+          <p class="contact-hubs__desc">في حين ترتكز عملياتنا الأساسية في المملكة المتحدة ومصر، تنطلق رسالتنا بدعم شبكة لامركزية رائعة من المستقلين والمترجمين وجامعي التبرعات حول العالم.</p>
+
+          <ul class="hubs-list" aria-label="مواقع المكاتب">
+            <li class="hub-item">
+              <p class="hub-item__country">المملكة المتحدة</p>
+              <p class="hub-item__city">وندسور</p>
+            </li>
+            <li class="hub-item">
+              <p class="hub-item__country">مصر</p>
+              <p class="hub-item__city">القاهرة</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-community" aria-labelledby="community-title">
+          <h2 class="contact-community__title" id="community-title">انضمَّ إلى مجتمعنا العالمي</h2>
+          <p class="contact-community__desc">تابعنا للاطلاع على آخر مستجدات مؤسسة هنداوي.</p>
+
+          <ul class="contact-social" aria-label="روابط التواصل الاجتماعي">
+            <li>
+              <a href="#" class="contact-social__link linkedin" aria-label="تابعنا على LinkedIn" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="contact-social__link facebook" aria-label="تابعنا على Facebook" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="contact-social__link instagram" aria-label="تابعنا على Instagram" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+</main>

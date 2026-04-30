@@ -152,7 +152,6 @@
     z-index: var(--z-dropdown);
     }
 
-    .language-switch:hover .language-menu,
     .language-switch.is-open .language-menu {
     opacity: 1;
     visibility: visible;
@@ -1135,6 +1134,28 @@
 
   .impact-grid {
     gap: 48px;
+  }
+}
+
+/* ── Impact section: stay one line on desktop (issue 5) ──────── */
+@media (min-width: 1024px) {
+  .impact-grid {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  .impact-item {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .impact-item .number {
+    white-space: nowrap;
+  }
+
+  .impact-item .label {
+    overflow-wrap: normal;
+    word-break: normal;
   }
 }
 

@@ -1,0 +1,221 @@
+@{
+    ViewData["BodyClass"] = "page page--home";
+    ViewData["ActivePage"] = "home";
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "ar";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/home.css" asp-append-version="true">
+}
+
+<main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <h1 id="hero-title">@localizer["home_hero_title"]</h1>
+          <p>@localizer["home_hero_desc"]</p>
+          <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
+            <i class="fa-solid fa-heart" aria-hidden="true"></i>
+            @localizer["button_donate"]
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight what-we-do" aria-labelledby="what-we-do-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="what-we-do-title">@localizer["home_what_we_do"]</h2>
+          <p class="section__subtitle">@localizer["home_what_we_do_desc"]</p>
+        </header>
+
+        <div class="products-grid">
+          <article class="card card--product">
+            <div class="product-icon">
+              <img src="~/Logos/Booktime.svg" alt="بوك تايم">
+            </div>
+            <h3>بوك تايم</h3>
+            <p>كتب أطفال غنية بالرسوم بلغات متعدِّدة، متاحة مجانًا.</p>
+            <a href="https://www.booktime.org/ar" class="product-link product-link--booktime" data-product="booktime" target="_blank" rel="noopener noreferrer">
+                booktime.org
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <article class="card card--product">
+            <div class="product-icon">
+              <img src="~/Logos/safahat.svg" alt="صفحات">
+            </div>
+            <h3>صفحات</h3>
+            <p>مكتبة متنوِّعة تتيح للقُرَّاء الوصول إلى الأدب العربي مجانًا.</p>
+             <a href="https://www.safahat.org/ar/" class="product-link product-link--safahat" data-product="safahat" target="_blank" rel="noopener noreferrer">
+                safahat.org
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+             </a>
+          </article>
+
+          <article class="card card--product">
+            <div class="product-icon">
+              <img src="~/Logos/folios.svg" alt="فوليوس">
+            </div>
+            <h3>فوليوس</h3>
+            <p>أداة ترجمة مدعومة بالذكاء الاصطناعي تكسر حواجز اللغة أمام الأدب العالمي.</p>
+            <a href="https://folios.org/ar" class="product-link product-link--folios" data-product="folios" target="_blank" rel="noopener noreferrer">
+              folios.org
+              <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            </a>
+          </article>
+        </div>
+
+        <div class="donate-inline">
+          <p>@localizer["home_help_spread"]</p>
+          <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
+            <i class="fa-solid fa-heart" aria-hidden="true"></i>
+            @localizer["button_donate"]
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section class="section section--tight why-we-do" aria-labelledby="why-we-do-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="why-we-do-title">@localizer["home_why_we_do"]</h2>
+        </header>
+
+        <div class="stats-grid">
+          <article class="card card--stat">
+            <h3 class="stat">1 من كل 3</h3>
+            <p class="desc">من الأطفال حول العالم لا يجدون مواد قراءة مناسبة لأعمارهم (يونسكو، 2022)</p>
+          </article>
+
+          <article class="card card--stat">
+            <h3 class="stat">90%</h3>
+            <p class="desc">من الكتب تُنشر بعدد محدود من اللغات المهيمنة (يونسكو، 2012)</p>
+          </article>
+
+          <article class="card card--stat">
+            <h3 class="stat">+20%</h3>
+            <p class="desc">انخفاض في معدلات الوفيات والاكتئاب لدى البالغين الذين يقرؤون الكتب (NLT 2024، Bavishi وآخرون 2016)</p>
+          </article>
+
+          <article class="card card--stat">
+            <h3 class="stat">48%</h3>
+            <p class="desc">من الأطفال في الدول متوسطة ومنخفضة الدخل لا يمتلكون كتاب أطفال في المنزل (يونيسف، 2021)</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight impact" aria-labelledby="impact-title">
+      <div class="container">
+        <h2 class="section__title" id="impact-title">@localizer["home_impact"]</h2>
+        <div class="impact-grid" role="list">
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-users" aria-hidden="true"></i>
+            </div>
+            <p class="number">+300 ألف</p>
+            <p class="label">قارئ شهريًا</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <img src="~/Icons/book-open-cover.svg" alt="">
+            </div>
+            <p class="number">10 ملايين</p>
+            <p class="label label--nowrap">كتاب قُرئ منذ 2024</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            </div>
+            <p class="number">+190</p>
+            <p class="label">دولة نخدمها</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </div>
+            <p class="number">+9</p>
+            <p class="label">لغات نخدمها</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+            </div>
+            <p class="number">+3.5 آلاف</p>
+            <p class="label">كتاب منشور<br><span>(شاملاً الترجمات)</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight testimonials" aria-labelledby="testimonials-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="testimonials-title">@localizer["home_testimonials"]</h2>
+        </header>
+
+        <div class="testimonial-slider" data-slider tabindex="0" aria-label="آراء القُرَّاء">
+          <div class="testimonial-track" data-slider-track>
+            <article class="card card--testimonial" data-slide>
+              <p class="quote">"كانت جودة الترجمة المنقَّحة باستخدام Gemini Pro مذهلة. التقطت دقائق لهجة شخصيَّتي بأفضل ما رأيت من أدوات. إنها نقلة نوعية للعمل الأدبي."</p>
+              <div class="author-row">
+                <p class="author">مايكل صموئيل</p>
+                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+              </div>
+            </article>
+
+            <article class="card card--testimonial" data-slide>
+              <p class="quote">"إمكانية ترجمة كامل أعمالي السابقة إلى ثلاث لغات في فترة عصر واحدة وبتكلفة أقل بكثير من المعتاد، تُعدّ نقلة نوعية."</p>
+              <div class="author-row">
+                <p class="author">جيمس هنري</p>
+                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+              </div>
+            </article>
+          </div>
+
+          <div class="slider-dots" aria-label="ترقيم الشريحة">
+            <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="عرض الرأي الأول" aria-current="true"></button>
+            <button class="slider-dot" type="button" data-slide-to="1" aria-label="عرض الرأي الثاني" aria-current="false"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta" aria-labelledby="cta-title">
+      <div class="container cta__inner">
+        <div class="cta__content">
+          <h2 id="cta-title">@localizer["home_cta_title"]</h2>
+          <p>@localizer["home_cta_desc"]</p>
+        </div>
+        <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--light btn--icon">
+          <i class="fa-solid fa-heart" aria-hidden="true"></i>
+          @localizer["button_donate"]
+        </a>
+      </div>
+    </section>
+
+    <section class="section section--tight partners" aria-labelledby="partners-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="partners-title">@localizer["home_partners"]</h2>
+          <p class="section__subtitle">@localizer["home_partners_desc"]</p>
+        </header>
+
+        <div class="partners-grid">
+          <img src="~/Logos/Fundacao_Calouste_Gulbenkian.svg" alt="مؤسسة كالوست جولبنكيان" class="partner-logo">
+          <img src="~/Logos/Ulverscroft.svg" alt="مؤسسة Ulverscroft" class="partner-logo">
+          <img src="~/Logos/CNL.svg" alt="CNL" class="partner-logo">
+          <img src="~/Logos/PRODOMINICANA.svg" alt="PRODOMINICANA" class="partner-logo">
+          <img src="~/Logos/Birmingham_City_University.svg" alt="جامعة برمنغهام سيتي" class="partner-logo">
+        </div>
+      </div>
+    </section>
+</main>

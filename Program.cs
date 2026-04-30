@@ -1,26 +1,39 @@
+using System.Globalization;
+using HindawiFoundation.Web.Localization;
 using HindawiFoundation.Web.Models;
 using HindawiFoundation.Web.Services;
 using HindawiFoundation.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add configuration
+// Configuration
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-// Add MVC services (controllers + views).
-builder.Services.AddControllersWithViews();
+// MVC + view localization
+builder.Services
+    .AddControllersWithViews()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
 
-// Add services
+// Caching for the JSON localizer
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddMemoryCache();
+
+// Localization (JSON-based)
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
+
+// Application services
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IDonationService, DonationService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios.
     app.UseHsts();
 }
 
@@ -28,6 +41,22 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Configure request localization (route-based culture)
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("ar")
+};
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+};
+localizationOptions.RequestCultureProviders.Clear();
+localizationOptions.RequestCultureProviders.Add(new CustomRouteDataCultureProvider());
+app.UseRequestLocalization(localizationOptions);
 
 app.UseAuthorization();
 
@@ -38,7 +67,6 @@ app.MapGet("/", context =>
     return Task.CompletedTask;
 });
 
-// Attribute routing for Home and Donate controllers
 app.MapControllers();
 
 app.Run();

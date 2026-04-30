@@ -1,0 +1,94 @@
+@{
+    ViewData["BodyClass"] = "page page--news";
+    ViewData["ActivePage"] = "news";
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "ar";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/news.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <div class="page-banner">
+      <div class="container">
+        <h1>@localizer["news_page_title"]</h1>
+      </div>
+    </div>
+
+    <section class="section section--tight" aria-labelledby="news-listing-title">
+      <div class="container">
+        <h2 class="sr-only" id="news-listing-title">آخر المقالات الإخبارية</h2>
+        <div class="news-grid">
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+            <img class="news-card__image" src="~/News/news_1.svg" alt="تعاون مؤسسة Ulverscroft مع بوك تايم">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                29 أكتوبر 2026
+              </p>
+              <h2 class="news-card__title">مؤسسة Ulverscroft تدعم مشروع «أصوات القراءة» من بوك تايم</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+            <img class="news-card__image" src="~/News/news_2.svg" alt="أطفال يستخدمون أجهزة لوحية في فصل دراسي">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                12 سبتمبر 2026
+              </p>
+              <h2 class="news-card__title">دعم رسامي الغد: بوك تايم بالتعاون مع جامعة برمنغهام سيتي</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+            <img class="news-card__image" src="~/News/news_3.svg" alt="أطفال في معرض كتاب">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                10 سبتمبر 2026
+              </p>
+              <h2 class="news-card__title">انزلاق الصيف: لماذا تُؤخِّر الإجازات الأطفال وكيف نُساعدهم؟</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+            <img class="news-card__image" src="~/News/news_4.svg" alt="كرة أرضية ترمز إلى دعم لغة جديدة">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                30 أغسطس 2026
+              </p>
+              <h2 class="news-card__title">أخبار سارَّة: إضافة لغة جديدة قريبًا، وأخرى في الطريق</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+            <img class="news-card__image" src="~/News/news_5.svg" alt="حروف ملوَّنة ترمز إلى أدوات قراءة لذوي عسر القراءة">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                19 يوليو 2026
+              </p>
+              <h2 class="news-card__title">ميزة «وضع عسر القراءة» لمن يعانون من صعوبات القراءة</h2>
+            </div>
+          </a>
+
+          <a class="news-card" asp-controller="Home" asp-action="NewsDetails" asp-route-culture="@culture">
+            <img class="news-card__image" src="~/News/news_6.svg" alt="أطفال متحمِّسون لكتاب جديد في مكتبة">
+            <div class="news-card__body">
+              <p class="news-card__date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                15 يوليو 2026
+              </p>
+              <h2 class="news-card__title">إصدار كتاب جديد يُشعل حماس الأطفال</h2>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+</main>
