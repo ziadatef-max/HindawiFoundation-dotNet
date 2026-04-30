@@ -1,0 +1,238 @@
+/* RTL overrides — only loaded when culture=ar (see _Layout.cshtml).
+   All rules scoped to .layout-rtl so the LTR English layout stays untouched. */
+
+.layout-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.layout-rtl .site-header,
+.layout-rtl .site-footer {
+  text-align: right;
+}
+
+/* Issue 1: language switcher moves to the physical LEFT in Arabic.
+   In LTR, .site-header__utilities has margin-left:auto (pushes it right).
+   Reversing the auto margin pushes it to the left end of the flex row. */
+.layout-rtl .site-header__utilities {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* The last utility item loses its LTR right-edge zero-padding;
+   in RTL the item is at the left edge so remove left padding instead. */
+.layout-rtl .utility-item:last-child {
+  padding-right: var(--space-4);
+  padding-left: 0;
+}
+
+.layout-rtl .site-nav {
+  direction: rtl;
+}
+
+.layout-rtl .site-nav__menu {
+  margin-right: 0;
+  margin-left: auto;
+  direction: rtl;
+}
+
+.layout-rtl .site-nav__menu,
+.layout-rtl .site-nav__donate {
+  flex-direction: row;
+}
+
+.layout-rtl .mobile-toggle {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Language dropdown opens from the left edge of the globe button */
+.layout-rtl .language-menu {
+  left: 0;
+  right: auto;
+}
+
+.layout-rtl .mobile-nav {
+  text-align: right;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.layout-rtl .site-footer__inner,
+.layout-rtl .footer-menu,
+.layout-rtl .footer-brand {
+  text-align: right;
+}
+
+.layout-rtl .footer-social {
+  padding-inline-start: 0;
+}
+
+/* ── Home hero: flip only the background image layer (Issue 1) ── */
+/* Hide the LTR background-image on .hero; render a flipped copy via
+   ::after (z-index:0). The ::before gradient stays at z-index:1,
+   unaffected by the flip. hero__inner content sits at z-index:2. */
+.layout-rtl.page--home .hero,
+.layout-rtl .page--home .hero {
+  background-image: none;
+}
+
+.layout-rtl.page--home .hero::after,
+.layout-rtl .page--home .hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../../Images/hero_image.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  transform: scaleX(-1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.layout-rtl.page--home .hero::before,
+.layout-rtl .page--home .hero::before {
+  z-index: 1;
+}
+
+.layout-rtl.page--home .hero__inner,
+.layout-rtl .page--home .hero__inner {
+  position: relative;
+  z-index: 2;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.layout-rtl.page--home .hero__content,
+.layout-rtl .page--home .hero__content {
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+}
+
+/* ── Home partners grid: keep LTR visual order ──────────────── */
+.layout-rtl.page--home .partners .partners-grid,
+.layout-rtl .page--home .partners .partners-grid {
+  direction: ltr;
+  flex-direction: row;
+}
+
+/* ── CTA decorative leaf flip ───────────────────────────────── */
+.layout-rtl .cta::after {
+  right: auto;
+  left: -28px;
+  transform: scaleX(-1);
+}
+
+@media (max-width: 767px) {
+  .layout-rtl .cta::after {
+    right: auto;
+    left: -160px;
+  }
+}
+
+/* ── Donate inputs: keep numeric/email LTR for legibility ────── */
+.layout-rtl input[type="email"],
+.layout-rtl input[type="number"],
+.layout-rtl input[type="tel"],
+.layout-rtl #cardNumber,
+.layout-rtl #cardExpiry,
+.layout-rtl #cardCvc {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Text inputs (name fields etc.): right-align for Arabic entry */
+.layout-rtl input[type="text"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Amount currency badge stays on the RIGHT because the input is LTR
+   and numbers read left-to-right regardless of page direction */
+.layout-rtl .amount-currency {
+  right: 15px;
+  left: auto;
+}
+
+/* Keep right-side padding to accommodate the currency badge */
+.layout-rtl .amount-input-wrap .form-input {
+  padding-right: 56px;
+  padding-left: 15px;
+}
+
+/* ── Donate page: RTL alignment (Issue 4) ───────────────────── */
+
+/* Payment method tabs: icon+label align to the right of each button */
+.layout-rtl .payment-method {
+  align-items: flex-end;
+}
+
+/* Status / validation messages */
+.layout-rtl .donate-message {
+  text-align: right;
+}
+
+/* Wire-transfer detail rows flow right-to-left:
+   label appears on the right, value on the left */
+.layout-rtl .wire-transfer-row {
+  direction: rtl;
+}
+
+/* ── btn--icon: swap icon margin in RTL ─────────────────────── */
+.layout-rtl .btn--icon i {
+  margin-left: var(--space-2);
+  margin-right: 0;
+}
+
+.layout-rtl .news-card__date i,
+.layout-rtl .news-detail__date i {
+  margin-left: var(--space-2);
+  margin-right: 0;
+}
+
+/* ── Lists: flip default left-padding ──────────────────────── */
+.layout-rtl ul,
+.layout-rtl ol {
+  padding-right: 1.25rem;
+  padding-left: 0;
+}
+
+.layout-rtl .footer-social {
+  padding-right: 0;
+}
+
+/* ── News Details: RTL bullet position (Issue 6) ────────────── */
+/* The custom bullet list uses absolute-positioned ::before dots
+   anchored at left:0. Override to anchor them at right:0 for RTL. */
+.layout-rtl .news-detail__list {
+  padding-right: 25px;
+  padding-left: 0;
+}
+
+.layout-rtl .news-detail__list li {
+  padding-right: 15px;
+  padding-left: 0;
+}
+
+.layout-rtl .news-detail__list li::before {
+  right: 0;
+  left: auto;
+}
+
+/* ── Testimonial cards: RTL alignment ──────────────────────── */
+.layout-rtl .card--testimonial {
+  direction: rtl;
+  text-align: right;
+}
+
+.layout-rtl .card--testimonial .quote,
+.layout-rtl .card--testimonial p {
+  direction: rtl;
+  text-align: right;
+}
+
+.layout-rtl .card--testimonial .author-row {
+  direction: rtl;
+}

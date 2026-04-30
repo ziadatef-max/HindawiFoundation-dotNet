@@ -1,0 +1,92 @@
+/* About page — page-specific styles only
+   Shared components (header, footer, impact, buttons, page-banner)
+   must NOT be duplicated here. ─────────────────────────────────── */
+
+/* ── About text block ──────────────────────────────────────────── */
+.about-content p {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0 0 25px;
+}
+
+.about-content p:last-child {
+  margin-bottom: 0;
+}
+
+.about-content a {
+  color: var(--color-brand-orange);
+  text-decoration: underline;
+}
+
+/* ── Founders section ──────────────────────────────────────────── */
+.founders__title {
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0 0 16px;
+}
+
+.founders__intro {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0 0 60px;
+}
+
+.founders__grid {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.founder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.founder__photo {
+  width: 241px;
+  height: 241px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+.founder__name {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 700;
+  color: #333333;
+  margin: 0;
+}
+
+.founder__role {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0;
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .founders__grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .founder__photo {
+    width: 180px;
+    height: 180px;
+  }
+}

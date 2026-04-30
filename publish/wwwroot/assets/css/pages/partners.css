@@ -1,0 +1,191 @@
+/* Partners page — page-specific styles only
+   Shared components (header, footer, buttons, page-banner, layout)
+   must NOT be duplicated here. ─────────────────────────────────── */
+
+/* ── Intro ─────────────────────────────────────────────────────── */
+.partners-intro {
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.partners-intro__title {
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0 0 20px;
+}
+
+.partners-intro p {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0 0 16px;
+}
+
+.partners-intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Partner cards grid ────────────────────────────────────────── */
+.partner-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 380px);
+  gap: 30px;
+  justify-content: start;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+/* ── Partner card ──────────────────────────────────────────────── */
+.partner-card {
+  width: 380px;
+  height: auto;
+  min-height: 293px;
+  background: #efefef;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.partner-card__logo {
+  width: 100%;
+  height: 113px;
+  background: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 10px;
+  max-width: 360px;
+  box-sizing: border-box;
+  /* Override components.css grayscale rule */
+  filter: none;
+  opacity: 1;
+  transition: none;
+}
+
+.partner-card__logo-img {
+  max-height: 60px;
+  max-width: 285px;
+  object-fit: contain;
+  display: block;
+  /* Ensure original colours, no grayscale from shared styles */
+  filter: none;
+  opacity: 1;
+  transition: none;
+}
+
+/* Neutralise the components.css hover rule that would re-apply grayscale */
+.partner-card:hover .partner-card__logo,
+.partner-card:hover .partner-card__logo-img {
+  filter: none;
+  opacity: 1;
+}
+
+.partner-card__content {
+  padding: 20px 20px 0;
+  flex: 1;
+}
+
+.partner-card__label {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.partner-card__value {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 700;
+  color: #333333;
+  margin: 0 0 16px;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.partner-card__value:last-child {
+  margin-bottom: 0;
+}
+
+/* ── CTA section ───────────────────────────────────────────────── */
+
+/* Remove the extra 60px top-padding that the shared section--tight
+   would add between cards and CTA — gap comes from section 1's
+   60px bottom padding, giving exactly 60px total. */
+.partners-cta {
+  padding-top: 0;
+}
+
+.partners-cta__title {
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0 0 20px;
+}
+
+.partners-cta__text {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #333333;
+  margin: 0 0 16px;
+}
+
+.partners-cta__text:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Override shared .btn--primary fixed dimensions for this button */
+.partners-cta__btn {
+  width: 346px;
+  height: 70px;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 700;
+  border-radius: 1000px;
+  margin-top: 30px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 1259px) {
+  .partner-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .partner-card {
+    width: 100%;
+  }
+
+  .partner-card__logo {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .partner-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .partner-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .partners-cta__btn {
+    width: 100%;
+  }
+}
