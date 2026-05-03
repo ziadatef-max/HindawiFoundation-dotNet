@@ -12,16 +12,12 @@
   text-align: right;
 }
 
-/* Issue 1: language switcher moves to the physical LEFT in Arabic.
-   In LTR, .site-header__utilities has margin-left:auto (pushes it right).
-   Reversing the auto margin pushes it to the left end of the flex row. */
+/* Language switcher: move to the physical LEFT in Arabic */
 .layout-rtl .site-header__utilities {
   margin-left: 0;
   margin-right: auto;
 }
 
-/* The last utility item loses its LTR right-edge zero-padding;
-   in RTL the item is at the left edge so remove left padding instead. */
 .layout-rtl .utility-item:last-child {
   padding-right: var(--space-4);
   padding-left: 0;
@@ -68,10 +64,7 @@
   padding-inline-start: 0;
 }
 
-/* ── Home hero: flip only the background image layer (Issue 1) ── */
-/* Hide the LTR background-image on .hero; render a flipped copy via
-   ::after (z-index:0). The ::before gradient stays at z-index:1,
-   unaffected by the flip. hero__inner content sits at z-index:2. */
+/* ── Home hero: flip only the background image layer ────────── */
 .layout-rtl.page--home .hero,
 .layout-rtl .page--home .hero {
   background-image: none;
@@ -132,40 +125,123 @@
   }
 }
 
-/* ── Donate inputs: keep numeric/email LTR for legibility ────── */
-.layout-rtl input[type="email"],
-.layout-rtl input[type="number"],
-.layout-rtl input[type="tel"],
-.layout-rtl #cardNumber,
-.layout-rtl #cardExpiry,
-.layout-rtl #cardCvc {
-  direction: ltr;
-  text-align: left;
+/* ══════════════════════════════════════════════════════════════
+   DONATE PAGE — Arabic RTL (Issues 1 & 4)
+   ══════════════════════════════════════════════════════════════ */
+
+/* Payment method tabs: group aligns right; items stay in DOM order (Card → Wire). */
+.layout-rtl .payment-methods {
+    direction: rtl;
+    justify-content: flex-start;
 }
 
-/* Text inputs (name fields etc.): right-align for Arabic entry */
+/* Explicit order guarantees DOM order is preserved in all browsers */
+.layout-rtl .payment-method[data-payment="card"]   { order: 1; }
+.layout-rtl .payment-method[data-payment="wire"]   { order: 2; }
+.layout-rtl .payment-method[data-payment="paypal"] { order: 3; }
+
+/* Icon + label inside each button: align to the right */
+.layout-rtl .payment-method {
+/*  align-items: flex-end;*/
+  text-align: right;
+}
+
+/* Form body and grids: RTL flow */
+.layout-rtl .page--donate .donate-form-body,
+.layout-rtl .page--donate .donate-grid {
+  direction: rtl;
+}
+
+/* All labels in donate form */
+.layout-rtl .form-field__label,
+.layout-rtl .donation-form-field__label {
+  text-align: right;
+  display: block;
+}
+
+/* Text inputs (name fields): right-align for Arabic entry */
 .layout-rtl input[type="text"] {
   direction: rtl;
   text-align: right;
 }
 
-/* Amount currency badge stays on the RIGHT because the input is LTR
-   and numbers read left-to-right regardless of page direction */
+/* Numeric / contact inputs: keep LTR digit entry but text visually right */
+.layout-rtl input[type="number"],
+.layout-rtl input[type="tel"] {
+  direction: ltr;
+  text-align: right;
+}
+
+/* Email: LTR direction (addresses are always LTR) but right-aligned in field */
+.layout-rtl input[type="email"] {
+  direction: ltr;
+  text-align: right;
+}
+
+/* Legacy static badge (PayPal panel): stays on the RIGHT */
 .layout-rtl .amount-currency {
   right: 15px;
   left: auto;
 }
 
-/* Keep right-side padding to accommodate the currency badge */
+/* In Arabic: typed amount on the right, currency selector on the left */
 .layout-rtl .amount-input-wrap .form-input {
-  padding-right: 56px;
-  padding-left: 15px;
+  padding-right: 15px;
+  padding-left: 90px;
+  text-align: right;
 }
 
-/* ── Donate page: RTL alignment (Issue 4) ───────────────────── */
+/* Currency select moves to the LEFT side of the amount input in Arabic */
+.layout-rtl .currency-select {
+  left: 0;
+  right: auto;
+}
 
-/* Payment method tabs: icon+label align to the right of each button */
-.layout-rtl .payment-method {
+/* Force trigger and selected-code text to stay LTR so letters don't reverse */
+.layout-rtl .currency-select__trigger,
+.layout-rtl .currency-select__selected {
+  direction: ltr;
+}
+
+/* Trigger border flips: separator is now on the right (between selector and input) */
+.layout-rtl .currency-select__trigger {
+  border-left: none;
+  border-right: 1px solid #E2E2E2;
+  border-radius: 6px 0 0 6px;
+}
+
+/* Dropdown options stay LTR so currency names/codes read correctly */
+.layout-rtl .currency-select__option,
+.layout-rtl .currency-select__code {
+  direction: ltr;
+}
+
+/* Dropdown aligns to the left edge of the trigger in Arabic */
+.layout-rtl .currency-select__dropdown {
+  left: 0;
+  right: auto;
+}
+
+/* Frequency radio options: RTL direction */
+.layout-rtl .frequency-options {
+  direction: rtl;
+  justify-content: flex-start;
+}
+
+/* ── Card number field: icons move to LEFT side in RTL ───────── */
+.layout-rtl .card-number-input__icons {
+  right: auto;
+  left: 15px;
+}
+
+/* Swap padding so the hosted-field text has room on the right, icons on left */
+.layout-rtl .card-number-input__field {
+  padding-right: 15px;
+  padding-left: 110px;
+}
+
+/* reCAPTCHA widget: align to the right in RTL */
+.layout-rtl .form-field:has(.g-recaptcha) {
   align-items: flex-end;
 }
 
@@ -174,13 +250,21 @@
   text-align: right;
 }
 
-/* Wire-transfer detail rows flow right-to-left:
-   label appears on the right, value on the left */
+/* Field-level validation error messages */
+.layout-rtl .field-error {
+  text-align: right;
+}
+
+/* Wire-transfer detail rows: label on right, value on left */
 .layout-rtl .wire-transfer-row {
   direction: rtl;
 }
 
-/* ── btn--icon: swap icon margin in RTL ─────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   Misc RTL helpers
+   ══════════════════════════════════════════════════════════════ */
+
+/* btn--icon: swap icon margin in RTL */
 .layout-rtl .btn--icon i {
   margin-left: var(--space-2);
   margin-right: 0;
@@ -192,7 +276,7 @@
   margin-right: 0;
 }
 
-/* ── Lists: flip default left-padding ──────────────────────── */
+/* Lists: flip default left-padding */
 .layout-rtl ul,
 .layout-rtl ol {
   padding-right: 1.25rem;
@@ -203,9 +287,7 @@
   padding-right: 0;
 }
 
-/* ── News Details: RTL bullet position (Issue 6) ────────────── */
-/* The custom bullet list uses absolute-positioned ::before dots
-   anchored at left:0. Override to anchor them at right:0 for RTL. */
+/* News Details: RTL bullet position */
 .layout-rtl .news-detail__list {
   padding-right: 25px;
   padding-left: 0;
@@ -221,7 +303,7 @@
   left: auto;
 }
 
-/* ── Testimonial cards: RTL alignment ──────────────────────── */
+/* Testimonial cards: RTL alignment */
 .layout-rtl .card--testimonial {
   direction: rtl;
   text-align: right;

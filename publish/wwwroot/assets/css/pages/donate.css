@@ -147,7 +147,18 @@ font-size: 16px;
   box-shadow: 0 0 0 3px rgba(140, 60, 249, 0.12);
 }
 
-/* ── Amount input with currency suffix ─────────────────────────── */
+/* ── Remove native number-input spinner arrows ───────────────────── */
+.donate-form-card input[type="number"]::-webkit-outer-spin-button,
+.donate-form-card input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.donate-form-card input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ── Amount input with currency dropdown ────────────────────────── */
 .amount-input-wrap {
   position: relative;
   display: flex;
@@ -155,9 +166,10 @@ font-size: 16px;
 }
 
 .amount-input-wrap .form-input {
-  padding-right: 56px;
+  padding-right: 90px;
 }
 
+/* Legacy static badge (PayPal panel) */
 .amount-currency {
   position: absolute;
   right: 15px;
@@ -165,6 +177,121 @@ font-size: 16px;
   color: #333333;
   pointer-events: none;
   user-select: none;
+}
+
+/* ── Currency select component ──────────────────────────────────── */
+.currency-select {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.currency-select__trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 100%;
+  padding: 0 12px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid #E2E2E2;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333333;
+  white-space: nowrap;
+  direction: ltr;
+}
+
+.currency-select__trigger:focus {
+  outline: 2px solid #8C3CF9;
+  outline-offset: -2px;
+}
+
+.currency-select__trigger:hover {
+  background: rgba(140, 60, 249, 0.05);
+}
+
+.currency-select__selected {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+.currency-select__arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #555;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.currency-select__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 230px;
+  background: #fff;
+  border: 1px solid #E2E2E2;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.currency-select__list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    max-height: 240px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    width: 372.5px;
+}
+
+.currency-select__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #333333;
+  cursor: pointer;
+  direction: ltr;
+}
+
+.currency-select__option:hover,
+.currency-select__option:focus {
+  background: #F5F0FF;
+  outline: none;
+}
+
+.currency-select__option.is-selected {
+  background: #EDE8FF;
+  font-weight: 600;
+}
+
+.currency-select__name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.currency-select__separator {
+  color: #999;
+  flex-shrink: 0;
+}
+
+.currency-select__code {
+  flex-shrink: 0;
+  direction: ltr;
 }
 
 /* ── Donation frequency radio ───────────────────────────────────── */
@@ -230,6 +357,25 @@ font-size: 16px;
   font-size: 16px;
   color: #333333;
   text-align: center;
+}
+
+/* ── Field-level validation errors ─────────────────────────────── */
+.field-error {
+  display: none;
+  color: #c00;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-top: 5px;
+}
+
+.field-error.is-visible {
+  display: block;
+}
+
+.form-input.is-invalid,
+.form-field.is-invalid .form-input {
+  border-color: #c00;
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.10);
 }
 
 /* ── Note below form ────────────────────────────────────────────── */
