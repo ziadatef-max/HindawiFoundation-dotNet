@@ -84,5 +84,18 @@
   "donate_wire_iban": "رقم IBAN",
   "donate_wire_bank_location": "موقع البنك",
 
-  "partners_email_team_button": "راسل فريق الشراكات"
+  "partners_email_team_button": "راسل فريق الشراكات",
+
+  "donate_validation_frequency_required": "يُرجى اختيار تكرار التبرع.",
+  "donate_validation_amount_required": "يُرجى إدخال قيمة التبرع.",
+  "donate_validation_amount_min": "الحد الأدنى للتبرع هو 1.",
+  "donate_validation_email_required": "يُرجى إدخال عنوان بريدك الإلكتروني.",
+  "donate_validation_email_invalid": "يُرجى إدخال عنوان بريد إلكتروني صحيح.",
+  "donate_validation_card_required": "يُرجى إدخال بيانات بطاقتك.",
+  "donate_validation_expiry_required": "يُرجى إدخال تاريخ انتهاء صحيح.",
+  "donate_validation_cvv_required": "يُرجى إدخال رمز CVV/CVC الخاص ببطاقتك.",
+
+  "donation_card_number_required": "برجاء إدخال رقم البطاقة",
+  "donation_expiry_required": "برجاء إدخال تاريخ انتهاء الصلاحية",
+  "donation_cvv_required": "برجاء إدخال رمز حماية البطاقة"
 }
