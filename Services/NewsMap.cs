@@ -7,22 +7,22 @@ public static class NewsMap
 {
     private static readonly string[] IndexToId =
     [
-        "11111111",   // index 0
-        "22222222",   // index 1
-        "33333333",   // index 2
-        "44444444",   // index 3
-        "55555555",   // index 4
-        "66666666",   // index 5
+        "31794631",
+        "38989894",
+        "68390398",
+        "75670183",
+        "78235459",
+        "95621490",
     ];
 
     private static readonly Dictionary<string, int> IdToIndex = new(StringComparer.Ordinal)
     {
-        { "11111111", 0 },
-        { "22222222", 1 },
-        { "33333333", 2 },
-        { "44444444", 3 },
-        { "55555555", 4 },
-        { "66666666", 5 },
+        { "31794631", 0 },
+        { "38989894", 1 },
+        { "68390398", 2 },
+        { "75670183", 3 },
+        { "78235459", 4 },
+        { "95621490", 5 },
     };
 
     /// <summary>Returns the public ID for a 0-based index. Falls back to the first ID.</summary>

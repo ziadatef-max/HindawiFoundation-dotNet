@@ -151,19 +151,27 @@
 
                                         <div class="form-field">
                                             <label class="form-field__label" for="cardCvc">@localizer["donate_label_cvv"]</label>
-                                            <div class="form-input" id="cardCvc"></div>
+                                            <div class="cvv-input">
+                                                <div class="form-input cvv-input__field" id="cardCvc"></div>
+                                                <img src="~/Icons/cvv.svg"
+                                                     alt="@localizer["donation_cvv_icon_alt"]"
+                                                     class="cvv-icon"
+                                                     aria-hidden="true">
+                                            </div>
                                             <span class="field-error" id="s_cvv"></span>
                                         </div>
 
                                     </div>
 
                                     @if (!string.IsNullOrWhiteSpace(recaptchaSiteKey))
-                      {
-                                    <div class="form-field">
-                                        <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
-                                        <span class="field-error" id="robot_span"></span>
-                                    </div>
-                      }
+                                    {
+                                        <div class="form-field form-field--recaptcha">
+                                            <div class="recaptcha-wrap">
+                                                <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
+                                            </div>
+                                            <span class="field-error" id="robot_span"></span>
+                                        </div>
+                                    }
 
                                     <button class="donate-submit" type="submit" id="donateSubmitBtn">
                                         <i class="fa-solid fa-heart" aria-hidden="true"></i>
@@ -461,6 +469,10 @@
       cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_required"].Value))
     };
 
+    // ── Braintree hosted-field placeholders (localized) ───────────────────
+    var cardNumberPlaceholder = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cardNumber_placeholder"].Value));
+    var cvvPlaceholder        = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_placeholder"].Value));
+
     // ── Field-error helpers ────────────────────────────────────────────────
     function showFieldError(spanId, message) {
       var span = document.getElementById(spanId);
@@ -712,9 +724,9 @@
           'input.valid':   { 'color': '#0a7' }
         },
         fields: {
-          number:         { selector: '#cardNumber', placeholder: '**** **** **** ****' },
+          number:         { selector: '#cardNumber', placeholder: cardNumberPlaceholder },
           expirationDate: { selector: '#cardExpiry', placeholder: 'MM/YY' },
-          cvv:            { selector: '#cardCvc',    placeholder: 'CVV' }
+          cvv:            { selector: '#cardCvc',    placeholder: cvvPlaceholder }
         }
       }, function (hfErr, hfInstance) {
         if (hfErr) {

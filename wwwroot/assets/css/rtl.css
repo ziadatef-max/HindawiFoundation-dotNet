@@ -241,8 +241,13 @@
 }
 
 /* reCAPTCHA widget: align to the right in RTL */
-.layout-rtl .form-field:has(.g-recaptcha) {
-  align-items: flex-end;
+.layout-rtl .recaptcha-wrap {
+  justify-content: flex-end;
+}
+
+.layout-rtl .cvv-icon {
+  right: auto;
+  left: 14px;
 }
 
 /* Status / validation messages */

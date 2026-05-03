@@ -102,5 +102,9 @@
 
   "donation_card_number_required": "برجاء إدخال رقم البطاقة",
   "donation_expiry_required": "برجاء إدخال تاريخ انتهاء الصلاحية",
-  "donation_cvv_required": "برجاء إدخال رمز حماية البطاقة"
+  "donation_cvv_required": "برجاء إدخال رمز حماية البطاقة",
+
+  "donation_cardNumber_placeholder": "أدخِل رقم البطاقة",
+  "donation_cvv_placeholder": "CVV",
+  "donation_cvv_icon_alt": "أيقونة رمز حماية البطاقة"
 }
