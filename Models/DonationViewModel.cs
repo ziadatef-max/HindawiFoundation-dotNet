@@ -28,6 +28,7 @@ public class DonationViewModel
     public string CurrencyCode { get; set; } = "USD";
 
     public bool IsValid { get; set; }
+    public bool ShowDonationError { get; set; }
 
     public string? ClientToken { get; set; }
 }

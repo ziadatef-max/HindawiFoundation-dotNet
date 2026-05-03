@@ -55,11 +55,6 @@ public class DonateController : Controller
             IsValid = !string.IsNullOrWhiteSpace(clientToken)
         };
 
-        if (string.IsNullOrWhiteSpace(clientToken))
-        {
-            ModelState.AddModelError(string.Empty, "The donation form is temporarily unavailable. Please try again later.");
-        }
-
         return View("~/Views/Home/Donate.cshtml", model);
     }
 
@@ -75,6 +70,7 @@ public class DonateController : Controller
         {
             model.ClientToken = await _donationService.GetClientToken();
             model.IsValid = false;
+            model.ShowDonationError = true;
             return View("~/Views/Home/Donate.cshtml", model);
         }
 
@@ -84,7 +80,7 @@ public class DonateController : Controller
         {
             _logger.LogWarning("Donation submission failed for culture {Culture}.", culture);
             model.ClientToken = await _donationService.GetClientToken();
-            model.IsValid = false;
+            model.ShowDonationError = true;
             return View("~/Views/Home/Donate.cshtml", model);
         }
 

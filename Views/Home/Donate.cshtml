@@ -1,7 +1,7 @@
 @model HindawiFoundation.Web.Models.DonationViewModel
 @using Microsoft.Extensions.Options
 @inject IOptions<HindawiFoundation.Web.Models.AppSettings> Options
-@{
+    @{
     ViewData["BodyClass"] = "page page--donate";
     ViewData["ActivePage"] = "donate";
     ViewData["TitleKey"] = "donate_page_title";
@@ -10,419 +10,407 @@
     var recaptchaSiteKey = Options.Value.DonationApi.GoogleRecaptchaKey;
     var account = Options.Value.DonationAccount;
     var cfCountryCode = Context.Request.Headers["cf-ipcountry"].FirstOrDefault() ?? "US";
-}
+    }
 
-@section Styles {
-    <link rel="stylesheet" href="~/assets/css/pages/donate.css" asp-append-version="true">
-    <script src="https://www.google.com/recaptcha/api.js?hl=@culture" async defer></script>
-}
+    @section Styles {
+        <link rel="stylesheet" href="~/assets/css/pages/donate.css" asp-append-version="true">
+        <script src="https://www.google.com/recaptcha/api.js?hl=@culture" async defer></script>
+    }
 
-<main id="main-content">
+    <main id="main-content">
 
-    <div class="page-banner">
-      <div class="container">
-        <h1>@localizer["donate_page_title"]</h1>
-      </div>
-    </div>
-
-    <section class="section section--tight" aria-labelledby="donate-intro-title">
-      <div class="container">
-
-        <div class="donate-intro">
-          <h2 class="donate-intro__title" id="donate-intro-title">@localizer["donate_intro_title"]</h2>
-          <p class="donate-intro__desc">@localizer["donate_intro_desc"]</p>
+        <div class="page-banner">
+            <div class="container">
+                <h1>@localizer["donate_page_title"]</h1>
+            </div>
         </div>
 
-        <div class="donate-form-wrap">
-          <div class="donate-form-card">
+        <section class="section section--tight" aria-labelledby="donate-intro-title">
+            <div class="container">
 
-            <div class="payment-methods" role="group" aria-label="Payment method">
-              <button class="payment-method is-active" type="button" data-payment="card" aria-pressed="true">
-                <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
-                @localizer["donate_payment_card"]
-              </button>
-              <button class="payment-method" type="button" data-payment="wire" aria-pressed="false">
-                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
-                @localizer["donate_payment_wire"]
-              </button>
-              @* PayPal tab: code kept but hidden until PayPal is re-enabled *@
-              <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false" style="display:none" aria-hidden="true">
-                <i class="fa-brands fa-paypal" aria-hidden="true"></i>
-                @localizer["donate_payment_paypal"]
-              </button>
-            </div>
+                <div class="donate-intro">
+                    <h2 class="donate-intro__title" id="donate-intro-title">@localizer["donate_intro_title"]</h2>
+                    <p class="donate-intro__desc">@localizer["donate_intro_desc"]</p>
+                </div>
 
-            <div class="donate-form-body">
+                <div class="donate-form-wrap">
+                    <div class="donate-form-card">
 
-              <div class="payment-panel is-active" data-payment-panel="card">
-                  <form id="donateForm"
-                        action="@Url.Action("Index", "Donate", new { culture = culture })"
-                        method="post"
-                        novalidate>
-                      @Html.AntiForgeryToken()
-                      <input type="hidden" asp-for="PaymentMethodnonce" id="PaymentMethodnonce" />
+                        <div class="payment-methods" role="group" aria-label="Payment method">
+                            <button class="payment-method is-active" type="button" data-payment="card" aria-pressed="true">
+                                <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
+                                @localizer["donate_payment_card"]
+                            </button>
+                            <button class="payment-method" type="button" data-payment="wire" aria-pressed="false">
+                                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                                @localizer["donate_payment_wire"]
+                            </button>
+                            @* PayPal tab: code kept but hidden until PayPal is re-enabled *@
+                            <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false" style="display:none" aria-hidden="true">
+                                <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+                                @localizer["donate_payment_paypal"]
+                            </button>
+                        </div>
 
-                      <div class="donate-grid donate-grid--3">
+                        <div class="donate-form-body">
 
-                          <div class="form-field">
-                              <label class="donation-form-field__label">@localizer["donate_label_frequency"]</label>
-                              <div class="frequency-options">
-                                  <label class="frequency-option">
-                                      <input type="radio" asp-for="Frequency" value="one-time"> @localizer["donate_freq_one_time"]
-                                  </label>
-                                  <label class="frequency-option">
-                                      <input type="radio" asp-for="Frequency" value="monthly"> @localizer["donate_freq_monthly"]
-                                  </label>
-                              </div>
-                              <span class="field-error" id="frequency_span"></span>
-                          </div>
+                            <div class="payment-panel is-active" data-payment-panel="card">
+                                <form id="donateForm"
+                                      action="@Url.Action("Index", "Donate", new { culture = culture })"
+                                      method="post"
+                                      novalidate>
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" asp-for="PaymentMethodnonce" id="PaymentMethodnonce" />
 
-                          <div class="form-field">
-                              <label class="form-field__label" for="donationAmount">@localizer["donate_label_amount"]</label>
-                              <div class="amount-input-wrap">
-                                  <input class="form-input" type="number" asp-for="Amount" id="donationAmount" min="1" step="1" autocomplete="off">
-                                  <div class="currency-select" data-currency-select>
-                                      <input type="hidden" asp-for="CurrencyCode" id="CurrencyCode" data-currency-value />
-                                      <button type="button"
-                                              class="currency-select__trigger"
-                                              aria-haspopup="listbox"
-                                              aria-expanded="false"
-                                              data-currency-trigger>
-                                          <span class="currency-select__selected" data-currency-selected>USD</span>
-                                          <span class="currency-select__arrow" aria-hidden="true"></span>
-                                      </button>
-                                      <div class="currency-select__dropdown" data-currency-dropdown hidden>
-                                          <ul class="currency-select__list" role="listbox" data-currency-list>
-                                          </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                              <span class="field-error" id="amount_span"></span>
-                          </div>
+                                    <div class="donate-grid donate-grid--3">
 
-                          <div class="form-field">
-                              <label class="form-field__label" for="donorEmail">@localizer["donate_label_email"]</label>
-                              <input class="form-input" type="email" asp-for="Email" id="donorEmail" autocomplete="email">
-                              <span class="field-error" id="email_span"></span>
-                          </div>
+                                        <div class="form-field">
+                                            <label class="donation-form-field__label">@localizer["donate_label_frequency"]</label>
+                                            <div class="frequency-options">
+                                                <label class="frequency-option">
+                                                    <input type="radio" asp-for="Frequency" value="one-time"> @localizer["donate_freq_one_time"]
+                                                </label>
+                                                <label class="frequency-option">
+                                                    <input type="radio" asp-for="Frequency" value="monthly"> @localizer["donate_freq_monthly"]
+                                                </label>
+                                            </div>
+                                            <span class="field-error" id="frequency_span"></span>
+                                        </div>
 
-                      </div>
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="donationAmount">@localizer["donate_label_amount"]</label>
+                                            <div class="amount-input-wrap">
+                                                <input class="form-input" type="number" asp-for="Amount" id="donationAmount" min="1" step="1" autocomplete="off">
+                                                <div class="currency-select" data-currency-select>
+                                                    <input type="hidden" asp-for="CurrencyCode" id="CurrencyCode" data-currency-value />
+                                                    <button type="button"
+                                                            class="currency-select__trigger"
+                                                            aria-haspopup="listbox"
+                                                            aria-expanded="false"
+                                                            data-currency-trigger>
+                                                        <span class="currency-select__selected" data-currency-selected>USD</span>
+                                                        <span class="currency-select__arrow" aria-hidden="true"></span>
+                                                    </button>
+                                                    <div class="currency-select__dropdown" data-currency-dropdown hidden>
+                                                        <ul class="currency-select__list" role="listbox" data-currency-list>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="field-error" id="amount_span"></span>
+                                        </div>
 
-                      <div class="donate-grid donate-grid--3">
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="donorEmail">@localizer["donate_label_email"]</label>
+                                            <input class="form-input" type="email" asp-for="Email" id="donorEmail" autocomplete="email">
+                                            <span class="field-error" id="email_span"></span>
+                                        </div>
 
-                          <div class="form-field">
-                              <label class="form-field__label" for="firstName">@localizer["donate_label_first_name"]</label>
-                              <input class="form-input" type="text" asp-for="FirstName" id="firstName" autocomplete="given-name">
-                          </div>
+                                    </div>
 
-                          <div class="form-field">
-                              <label class="form-field__label" for="lastName">@localizer["donate_label_last_name"]</label>
-                              <input class="form-input" type="text" asp-for="LastName" id="lastName" autocomplete="family-name">
-                          </div>
+                                    <div class="donate-grid donate-grid--3">
 
-                          <div class="form-field">
-                              <label class="form-field__label" for="phone">@localizer["donate_label_phone"]</label>
-                              <input class="form-input" type="tel" asp-for="Phone" id="phone" autocomplete="tel">
-                          </div>
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="firstName">@localizer["donate_label_first_name"]</label>
+                                            <input class="form-input" type="text" asp-for="FirstName" id="firstName" autocomplete="given-name">
+                                        </div>
 
-                      </div>
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="lastName">@localizer["donate_label_last_name"]</label>
+                                            <input class="form-input" type="text" asp-for="LastName" id="lastName" autocomplete="family-name">
+                                        </div>
 
-                      <hr class="donate-divider">
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="phone">@localizer["donate_label_phone"]</label>
+                                            <input class="form-input" type="tel" asp-for="Phone" id="phone" autocomplete="tel">
+                                        </div>
 
-                      <div class="donate-grid donate-grid--card">
+                                    </div>
 
-                          <div class="form-field form-field--card-number">
-                              <label class="form-field__label" for="cardNumber">@localizer["donate_label_card_number"]</label>
-                              <div class="card-number-input">
-                                  <div class="form-input card-number-input__field" id="cardNumber"></div>
-                                  <div class="card-number-input__icons" aria-hidden="true">
-                                      <img src="~/Icons/master-card.svg" alt="">
-                                      <img src="~/Icons/visa.svg" alt="">
-                                  </div>
-                              </div>
-                              <span class="field-error" id="s_number"></span>
-                          </div>
+                                    <hr class="donate-divider">
 
-                          <div class="form-field">
-                              <label class="form-field__label" for="cardExpiry">@localizer["donate_label_expiry"]</label>
-                              <div class="form-input" id="cardExpiry"></div>
-                              <span class="field-error" id="s_expirationDate"></span>
-                          </div>
+                                    <div class="donate-grid donate-grid--card">
 
-                          <div class="form-field">
-                              <label class="form-field__label" for="cardCvc">@localizer["donate_label_cvv"]</label>
-                              <div class="form-input" id="cardCvc"></div>
-                              <span class="field-error" id="s_cvv"></span>
-                          </div>
+                                        <div class="form-field form-field--card-number">
+                                            <label class="form-field__label" for="cardNumber">@localizer["donate_label_card_number"]</label>
+                                            <div class="card-number-input">
+                                                <div class="form-input card-number-input__field" id="cardNumber"></div>
+                                                <div class="card-number-input__icons" aria-hidden="true">
+                                                    <img src="~/Icons/master-card.svg" alt="">
+                                                    <img src="~/Icons/visa.svg" alt="">
+                                                </div>
+                                            </div>
+                                            <span class="field-error" id="s_number"></span>
+                                        </div>
 
-                      </div>
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="cardExpiry">@localizer["donate_label_expiry"]</label>
+                                            <div class="form-input" id="cardExpiry"></div>
+                                            <span class="field-error" id="s_expirationDate"></span>
+                                        </div>
 
-                      @if (!string.IsNullOrWhiteSpace(recaptchaSiteKey))
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="cardCvc">@localizer["donate_label_cvv"]</label>
+                                            <div class="form-input" id="cardCvc"></div>
+                                            <span class="field-error" id="s_cvv"></span>
+                                        </div>
+
+                                    </div>
+
+                                    @if (!string.IsNullOrWhiteSpace(recaptchaSiteKey))
                       {
-                          <div class="form-field">
-                              <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
-                              <span class="field-error" id="robot_span"></span>
-                          </div>
+                                    <div class="form-field">
+                                        <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
+                                        <span class="field-error" id="robot_span"></span>
+                                    </div>
                       }
 
-                      <button class="donate-submit" type="submit" id="donateSubmitBtn">
-                          <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                          @localizer["button_donate_now"]
-                      </button>
+                                    <button class="donate-submit" type="submit" id="donateSubmitBtn">
+                                        <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                                        @localizer["button_donate_now"]
+                                    </button>
 
-                      @{
-                          var modelOnlyErrors = ViewData.ModelState[string.Empty]?.Errors;
-                      }
-
-                      @if (modelOnlyErrors != null && modelOnlyErrors.Count > 0)
+                                    @if (Model?.ShowDonationError == true)
                       {
-                          <div class="donate-message is-error" role="alert" aria-live="polite" id="serverErrorMsg">
-                              <ul>
-                                  @foreach (var error in modelOnlyErrors)
-                                  {
-                                      if (!string.IsNullOrWhiteSpace(error.ErrorMessage))
-                                      {
-                                          <li>@error.ErrorMessage</li>
-                                      }
-                                  }
-                              </ul>
-                          </div>
+                                    <div class="donate-message is-error" role="alert" aria-live="polite" id="serverErrorMsg">
+                                        @localizer["donate_error_process_failed"]
+                                    </div>
                       }
-                      <div class="donate-message" id="donateMessage" role="alert" aria-live="polite" hidden></div>
+                                    <div class="donate-message" id="donateMessage" role="alert" aria-live="polite" hidden></div>
 
-                  </form>
-              </div>
+                                </form>
+                            </div>
 
-              <div class="payment-panel" data-payment-panel="wire" hidden>
-                <div class="wire-transfer-table" aria-label="Bank transfer details">
-                  <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">@localizer["donate_wire_account_name"]</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.AccountName) ? localizer["donate_wire_account_name"].Value : account.AccountName)</span>
-                  </div>
-                  <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">@localizer["donate_wire_bank_code"]</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankCode) ? localizer["donate_wire_bank_code"].Value : account.BankCode)</span>
-                  </div>
-                  <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">@localizer["donate_wire_account_number"]</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankNumber) ? localizer["donate_wire_account_number"].Value : account.BankNumber)</span>
-                  </div>
-                  <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">@localizer["donate_wire_swift"]</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.SwiftCode) ? localizer["donate_wire_swift"].Value : account.SwiftCode)</span>
-                  </div>
-                  <div class="wire-transfer-row">
-                    <span class="wire-transfer-row__label">@localizer["donate_wire_iban"]</span>
-                    <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.Iban) ? localizer["donate_wire_iban"].Value : account.Iban)</span>
-                  </div>
-                  <div class="wire-transfer-row wire-transfer-row--last">
-                    <span class="wire-transfer-row__label">@localizer["donate_wire_bank_location"]</span>
-                    <span class="wire-transfer-row__value">@localizer["donate_wire_bank_location"]</span>
-                  </div>
-                </div>
-              </div>
+                            <div class="payment-panel" data-payment-panel="wire" hidden>
+                                <div class="wire-transfer-table" aria-label="Bank transfer details">
+                                    <div class="wire-transfer-row">
+                                        <span class="wire-transfer-row__label">@localizer["donate_wire_account_name"]</span>
+                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.AccountName) ? localizer["donate_wire_account_name"].Value : account.AccountName)</span>
+                                    </div>
+                                    <div class="wire-transfer-row">
+                                        <span class="wire-transfer-row__label">@localizer["donate_wire_bank_code"]</span>
+                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankCode) ? localizer["donate_wire_bank_code"].Value : account.BankCode)</span>
+                                    </div>
+                                    <div class="wire-transfer-row">
+                                        <span class="wire-transfer-row__label">@localizer["donate_wire_account_number"]</span>
+                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankNumber) ? localizer["donate_wire_account_number"].Value : account.BankNumber)</span>
+                                    </div>
+                                    <div class="wire-transfer-row">
+                                        <span class="wire-transfer-row__label">@localizer["donate_wire_swift"]</span>
+                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.SwiftCode) ? localizer["donate_wire_swift"].Value : account.SwiftCode)</span>
+                                    </div>
+                                    <div class="wire-transfer-row">
+                                        <span class="wire-transfer-row__label">@localizer["donate_wire_iban"]</span>
+                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.Iban) ? localizer["donate_wire_iban"].Value : account.Iban)</span>
+                                    </div>
+                                    <div class="wire-transfer-row wire-transfer-row--last">
+                                        <span class="wire-transfer-row__label">@localizer["donate_wire_bank_location"]</span>
+                                        <span class="wire-transfer-row__value">@localizer["donate_wire_bank_location"]</span>
+                                    </div>
+                                </div>
+                            </div>
 
-              @* PayPal panel: code kept, hidden at tab level *@
-              <div class="payment-panel" data-payment-panel="paypal" hidden>
+                            @* PayPal panel: code kept, hidden at tab level *@
+                            <div class="payment-panel" data-payment-panel="paypal" hidden>
 
-                <div class="donate-grid donate-grid--3">
+                                <div class="donate-grid donate-grid--3">
 
-                  <div class="form-field">
-                    <label class="donation-form-field__label">@localizer["donate_label_frequency"]</label>
-                    <div class="frequency-options">
-                      <label class="frequency-option">
-                        <input type="radio" name="frequency-pp" value="one-time"> @localizer["donate_freq_one_time"]
-                      </label>
-                      <label class="frequency-option">
-                        <input type="radio" name="frequency-pp" value="monthly" checked> @localizer["donate_freq_monthly"]
-                      </label>
+                                    <div class="form-field">
+                                        <label class="donation-form-field__label">@localizer["donate_label_frequency"]</label>
+                                        <div class="frequency-options">
+                                            <label class="frequency-option">
+                                                <input type="radio" name="frequency-pp" value="one-time"> @localizer["donate_freq_one_time"]
+                                            </label>
+                                            <label class="frequency-option">
+                                                <input type="radio" name="frequency-pp" value="monthly" checked> @localizer["donate_freq_monthly"]
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-field__label" for="ppAmount">@localizer["donate_label_amount"]</label>
+                                        <div class="amount-input-wrap">
+                                            <input class="form-input" type="number" id="ppAmount" name="ppAmount" min="1" step="1" autocomplete="off">
+                                            <span class="amount-currency">EGP</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-field__label" for="ppEmail">@localizer["donate_label_email"]</label>
+                                        <input class="form-input" type="email" id="ppEmail" name="ppEmail" autocomplete="email">
+                                    </div>
+
+                                </div>
+
+                                <div class="donate-grid donate-grid--3">
+
+                                    <div class="form-field">
+                                        <label class="form-field__label" for="ppFirst">@localizer["donate_label_first_name"]</label>
+                                        <input class="form-input" type="text" id="ppFirst" name="ppFirst" autocomplete="given-name">
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-field__label" for="ppLast">@localizer["donate_label_last_name"]</label>
+                                        <input class="form-input" type="text" id="ppLast" name="ppLast" autocomplete="family-name">
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-field__label" for="ppPhone">@localizer["donate_label_phone"]</label>
+                                        <input class="form-input" type="tel" id="ppPhone" name="ppPhone" autocomplete="tel">
+                                    </div>
+
+                                </div>
+
+                                <hr class="donate-divider">
+
+                                <div class="paypal-panel">
+                                    <p class="paypal-message">Continue to PayPal to complete your donation.</p>
+                                    <button class="paypal-button" type="button" aria-label="Pay with PayPal">
+                                        <img src="~/Icons/paypal.svg" alt="" class="paypal-button__icon">
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
-                  </div>
-
-                  <div class="form-field">
-                    <label class="form-field__label" for="ppAmount">@localizer["donate_label_amount"]</label>
-                    <div class="amount-input-wrap">
-                      <input class="form-input" type="number" id="ppAmount" name="ppAmount" min="1" step="1" autocomplete="off">
-                      <span class="amount-currency">EGP</span>
-                    </div>
-                  </div>
-
-                  <div class="form-field">
-                    <label class="form-field__label" for="ppEmail">@localizer["donate_label_email"]</label>
-                    <input class="form-input" type="email" id="ppEmail" name="ppEmail" autocomplete="email">
-                  </div>
-
                 </div>
 
-                <div class="donate-grid donate-grid--3">
-
-                  <div class="form-field">
-                    <label class="form-field__label" for="ppFirst">@localizer["donate_label_first_name"]</label>
-                    <input class="form-input" type="text" id="ppFirst" name="ppFirst" autocomplete="given-name">
-                  </div>
-
-                  <div class="form-field">
-                    <label class="form-field__label" for="ppLast">@localizer["donate_label_last_name"]</label>
-                    <input class="form-input" type="text" id="ppLast" name="ppLast" autocomplete="family-name">
-                  </div>
-
-                  <div class="form-field">
-                    <label class="form-field__label" for="ppPhone">@localizer["donate_label_phone"]</label>
-                    <input class="form-input" type="tel" id="ppPhone" name="ppPhone" autocomplete="tel">
-                  </div>
-
-                </div>
-
-                <hr class="donate-divider">
-
-                <div class="paypal-panel">
-                  <p class="paypal-message">Continue to PayPal to complete your donation.</p>
-                  <button class="paypal-button" type="button" aria-label="Pay with PayPal">
-                    <img src="~/Icons/paypal.svg" alt="" class="paypal-button__icon">
-                  </button>
-                </div>
-
-              </div>
+                <p class="donate-note">@localizer["donate_note"]</p>
 
             </div>
+        </section>
 
-          </div>
-        </div>
-
-        <p class="donate-note">@localizer["donate_note"]</p>
-
-      </div>
-    </section>
-
-    <section class="section impact" aria-labelledby="impact-donate-title">
-      <div class="container">
-        <h2 class="section__title" id="impact-donate-title">@localizer["home_impact"]</h2>
-        <div class="impact-grid" role="list">
-          @if (culture == "ar")
+        <section class="section impact" aria-labelledby="impact-donate-title">
+            <div class="container">
+                <h2 class="section__title" id="impact-donate-title">@localizer["home_impact"]</h2>
+                <div class="impact-grid" role="list">
+                    @if (culture == "ar")
           {
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
-              <p class="number">+300 ألف</p>
-              <p class="label">قارئ شهريًا</p>
-            </article>
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><img src="~/Icons/book-open-cover.svg" alt=""></div>
-              <p class="number">10 ملايين</p>
-              <p class="label label--nowrap">كتاب قُرئ منذ 2024</p>
-            </article>
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
-              <p class="number">+190</p>
-              <p class="label">دولة نخدمها</p>
-            </article>
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
-              <p class="number">+9</p>
-              <p class="label">لغات نخدمها</p>
-            </article>
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
-              <p class="number">+3.5 آلاف</p>
-              <p class="label">كتاب منشور<br><span>(شاملاً الترجمات)</span></p>
-            </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
+                        <p class="number">+300 ألف</p>
+                        <p class="label">قارئ شهريًا</p>
+                    </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><img src="~/Icons/book-open-cover.svg" alt=""></div>
+                        <p class="number">10 ملايين</p>
+                        <p class="label label--nowrap">كتاب قُرئ منذ 2024</p>
+                    </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
+                        <p class="number">+190</p>
+                        <p class="label">دولة نخدمها</p>
+                    </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
+                        <p class="number">+9</p>
+                        <p class="label">لغات نخدمها</p>
+                    </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
+                        <p class="number">+3.5 آلاف</p>
+                        <p class="label">كتاب منشور<br><span>(شاملاً الترجمات)</span></p>
+                    </article>
           }
           else
           {
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
-              <p class="number">300K+</p>
-              <p class="label">Monthly Readers</p>
-            </article>
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><img src="~/Icons/book-open-cover.svg" alt=""></div>
-              <p class="number">10M</p>
-              <p class="label label--nowrap">Books Read since 2024</p>
-            </article>
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
-              <p class="number">190+</p>
-              <p class="label">Countries Served</p>
-            </article>
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
-              <p class="number">9+</p>
-              <p class="label">Languages Served</p>
-            </article>
-            <article class="impact-item" role="listitem">
-              <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
-              <p class="number">3.5K+</p>
-              <p class="label">Books Published<br><span>(incl. translations)</span></p>
-            </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
+                        <p class="number">300K+</p>
+                        <p class="label">Monthly Readers</p>
+                    </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><img src="~/Icons/book-open-cover.svg" alt=""></div>
+                        <p class="number">10M</p>
+                        <p class="label label--nowrap">Books Read since 2024</p>
+                    </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
+                        <p class="number">190+</p>
+                        <p class="label">Countries Served</p>
+                    </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
+                        <p class="number">9+</p>
+                        <p class="label">Languages Served</p>
+                    </article>
+                    <article class="impact-item" role="listitem">
+                        <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
+                        <p class="number">3.5K+</p>
+                        <p class="label">Books Published<br><span>(incl. translations)</span></p>
+                    </article>
           }
-        </div>
-      </div>
-    </section>
+                </div>
+            </div>
+        </section>
 
-    <section class="section section--tight testimonials" aria-labelledby="testimonials-donate-title">
-      <div class="container">
-        <header class="section__header">
-          <h2 class="section__title" id="testimonials-donate-title">@localizer["home_testimonials"]</h2>
-        </header>
+        <section class="section section--tight testimonials" aria-labelledby="testimonials-donate-title">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title" id="testimonials-donate-title">@localizer["home_testimonials"]</h2>
+                </header>
 
-        @if (culture == "ar")
+                @if (culture == "ar")
         {
-          <div class="testimonial-slider" data-slider tabindex="0" aria-label="آراء القُرَّاء">
-            <div class="testimonial-track" data-slider-track>
-              <article class="card card--testimonial" data-slide>
-                <p class="quote">"كانت جودة الترجمة المنقَّحة باستخدام Gemini Pro مذهلة. التقطت دقائق لهجة شخصيَّتي بأفضل ما رأيت من أدوات. إنها نقلة نوعية للعمل الأدبي."</p>
-                <div class="author-row">
-                  <p class="author">مايكل صموئيل</p>
-                  <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                <div class="testimonial-slider" data-slider tabindex="0" aria-label="آراء القُرَّاء">
+                    <div class="testimonial-track" data-slider-track>
+                        <article class="card card--testimonial" data-slide>
+                            <p class="quote">"كانت جودة الترجمة المنقَّحة باستخدام Gemini Pro مذهلة. التقطت دقائق لهجة شخصيَّتي بأفضل ما رأيت من أدوات. إنها نقلة نوعية للعمل الأدبي."</p>
+                            <div class="author-row">
+                                <p class="author">مايكل صموئيل</p>
+                                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                            </div>
+                        </article>
+                        <article class="card card--testimonial" data-slide>
+                            <p class="quote">"إمكانية ترجمة كامل أعمالي السابقة إلى ثلاث لغات في فترة عصر واحدة وبتكلفة أقل بكثير من المعتاد، تُعدّ نقلة نوعية."</p>
+                            <div class="author-row">
+                                <p class="author">جيمس هنري</p>
+                                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                            </div>
+                        </article>
+                    </div>
+                    <div class="slider-dots" aria-label="ترقيم الشريحة">
+                        <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="عرض الرأي الأول" aria-current="true"></button>
+                        <button class="slider-dot" type="button" data-slide-to="1" aria-label="عرض الرأي الثاني" aria-current="false"></button>
+                    </div>
                 </div>
-              </article>
-              <article class="card card--testimonial" data-slide>
-                <p class="quote">"إمكانية ترجمة كامل أعمالي السابقة إلى ثلاث لغات في فترة عصر واحدة وبتكلفة أقل بكثير من المعتاد، تُعدّ نقلة نوعية."</p>
-                <div class="author-row">
-                  <p class="author">جيمس هنري</p>
-                  <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
-                </div>
-              </article>
-            </div>
-            <div class="slider-dots" aria-label="ترقيم الشريحة">
-              <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="عرض الرأي الأول" aria-current="true"></button>
-              <button class="slider-dot" type="button" data-slide-to="1" aria-label="عرض الرأي الثاني" aria-current="false"></button>
-            </div>
-          </div>
         }
         else
         {
-          <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
-            <div class="testimonial-track" data-slider-track>
-              <article class="card card--testimonial" data-slide>
-                <p class="quote">"The quality of the refined translation using Gemini Pro was staggering. It captured the nuances of my protagonist's dialect better than any tool I've used before. It's truly a game-changer for literary work."</p>
-                <div class="author-row">
-                  <p class="author">Michael Samuel</p>
-                  <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
+                    <div class="testimonial-track" data-slider-track>
+                        <article class="card card--testimonial" data-slide>
+                            <p class="quote">"The quality of the refined translation using Gemini Pro was staggering. It captured the nuances of my protagonist's dialect better than any tool I've used before. It's truly a game-changer for literary work."</p>
+                            <div class="author-row">
+                                <p class="author">Michael Samuel</p>
+                                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                            </div>
+                        </article>
+                        <article class="card card--testimonial" data-slide>
+                            <p class="quote">"Being able to translate my entire back catalog into three different languages in one afternoon for a fraction of traditional costs is a game-changer."</p>
+                            <div class="author-row">
+                                <p class="author">James Henry</p>
+                                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                            </div>
+                        </article>
+                    </div>
+                    <div class="slider-dots" aria-label="Slider pagination">
+                        <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="Show testimonial 1" aria-current="true"></button>
+                        <button class="slider-dot" type="button" data-slide-to="1" aria-label="Show testimonial 2" aria-current="false"></button>
+                    </div>
                 </div>
-              </article>
-              <article class="card card--testimonial" data-slide>
-                <p class="quote">"Being able to translate my entire back catalog into three different languages in one afternoon for a fraction of traditional costs is a game-changer."</p>
-                <div class="author-row">
-                  <p class="author">James Henry</p>
-                  <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
-                </div>
-              </article>
-            </div>
-            <div class="slider-dots" aria-label="Slider pagination">
-              <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="Show testimonial 1" aria-current="true"></button>
-              <button class="slider-dot" type="button" data-slide-to="1" aria-label="Show testimonial 2" aria-current="false"></button>
-            </div>
-          </div>
         }
-      </div>
-    </section>
+            </div>
+        </section>
 
-</main>
+    </main>
 
-@section Scripts {
-<script src="https://js.braintreegateway.com/web/3.96.0/js/client.min.js"></script>
-<script src="https://js.braintreegateway.com/web/3.96.0/js/hosted-fields.min.js"></script>
-<script>
+    @section Scripts {
+        <script src="https://js.braintreegateway.com/web/3.96.0/js/client.min.js"></script>
+        <script src="https://js.braintreegateway.com/web/3.96.0/js/hosted-fields.min.js"></script>
+        <script>
   (function () {
     'use strict';
 
@@ -438,6 +426,7 @@
     var phoneInput  = document.getElementById('phone');
     var hostedFieldsInstance = null;
     var isSubmitting = false;
+    var hasServerDonationError = @(Model?.ShowDonationError == true ? "true" : "false");
 
     // ── Currency dropdown state ────────────────────────────────────────
     var currencyMinAmount   = 1;
@@ -692,7 +681,9 @@
 
     // ── Early exit when payment service unavailable ────────────────────────
     if (!clientToken) {
-      showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_unavailable"].Value)), true);
+      if (!hasServerDonationError) {
+        showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
+      }
       if (submitBtn) submitBtn.disabled = true;
       return;
     }
@@ -850,5 +841,5 @@
       });
     })();
   })();
-</script>
-}
+        </script>
+    }
