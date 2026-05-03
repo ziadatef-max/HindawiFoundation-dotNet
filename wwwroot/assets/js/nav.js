@@ -93,7 +93,6 @@ function setActiveNavLink() {
     if (shouldBeActive) matched = true;
   });
 
-  // Fallback 1: sub-path match — /ar/News/Details activates the /ar/News link
   if (!matched) {
     navLinks.forEach((link) => {
       const linkPath = normalize(link.href);
@@ -104,7 +103,6 @@ function setActiveNavLink() {
     });
   }
 
-  // Fallback 2: hyphen-suffix strip (e.g. /news-details → /news)
   if (!matched) {
     const parentPath = currentPath.replace(/-[^/]+$/, "");
     navLinks.forEach((link) => {
