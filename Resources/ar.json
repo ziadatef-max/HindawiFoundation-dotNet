@@ -106,5 +106,7 @@
 
   "donation_cardNumber_placeholder": "أدخِل رقم البطاقة",
   "donation_cvv_placeholder": "CVV",
-  "donation_cvv_icon_alt": "أيقونة رمز حماية البطاقة"
+  "donation_cvv_icon_alt": "أيقونة رمز حماية البطاقة",
+
+  "recaptcha_error": "برجاء تأكيد أنك لست برنامج روبوت."
 }

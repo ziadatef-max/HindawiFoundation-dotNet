@@ -167,9 +167,9 @@
                                     {
                                         <div class="form-field form-field--recaptcha">
                                             <div class="recaptcha-wrap">
-                                                <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey"></div>
+                                                <div class="g-recaptcha" data-sitekey="@recaptchaSiteKey" data-callback="hindawiRecaptchaCallback"></div>
                                             </div>
-                                            <span class="field-error" id="robot_span"></span>
+                                            <span class="field-error@(Model?.ShowRecaptchaError == true ? " is-visible" : "")" id="robot_span">@(Model?.ShowRecaptchaError == true ? localizer["recaptcha_error"].Value : "")</span>
                                         </div>
                                     }
 
@@ -466,7 +466,8 @@
       // "Field is required" messages shown when the hosted field is completely empty
       cardNumberRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_card_number_required"].Value)),
       expiryFieldRequired: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_expiry_required"].Value)),
-      cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_required"].Value))
+      cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_required"].Value)),
+      recaptchaRequired  : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["recaptcha_error"].Value))
     };
 
     // ── Braintree hosted-field placeholders (localized) ───────────────────
@@ -785,14 +786,20 @@
           if (!hfValid) return;
         }
 
-        // reCAPTCHA check
-        if (typeof grecaptcha !== 'undefined') {
-          try {
-            if (!grecaptcha.getResponse()) {
-              showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_recaptcha"].Value)), true);
-              return;
+        // reCAPTCHA check (field-level error under widget)
+        var robotError = document.getElementById('robot_span');
+        if (document.querySelector('.g-recaptcha')) {
+          var recaptchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
+          if (!recaptchaResponse) {
+            if (robotError) {
+              robotError.textContent = validationMsgs.recaptchaRequired;
+              robotError.classList.add('is-visible');
             }
-          } catch (ex) { /* widget not yet ready — server will reject */ }
+            return;
+          } else if (robotError) {
+            robotError.textContent = '';
+            robotError.classList.remove('is-visible');
+          }
         }
 
         if (!hostedFieldsInstance) {
@@ -836,6 +843,16 @@
         });
       });
     }
+
+    // ── reCAPTCHA completion callback (must be global for data-callback attr) ──
+    window.hindawiRecaptchaCallback = function () {
+      clearGlobalError();
+      var robotErr = document.getElementById('robot_span');
+      if (robotErr) {
+        robotErr.textContent = '';
+        robotErr.classList.remove('is-visible');
+      }
+    };
 
     // ── Load currencies and default currency from API ──────────────────────
     (function initCurrencies() {

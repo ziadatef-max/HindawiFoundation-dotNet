@@ -29,6 +29,7 @@ public class DonationViewModel
 
     public bool IsValid { get; set; }
     public bool ShowDonationError { get; set; }
+    public bool ShowRecaptchaError { get; set; }
 
     public string? ClientToken { get; set; }
 }

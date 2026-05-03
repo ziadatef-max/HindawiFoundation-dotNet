@@ -106,5 +106,7 @@
 
   "donation_cardNumber_placeholder": "Enter card number",
   "donation_cvv_placeholder": "CVV",
-  "donation_cvv_icon_alt": "CVV icon"
+  "donation_cvv_icon_alt": "CVV icon",
+
+  "recaptcha_error": "Please verify that you are not a robot."
 }

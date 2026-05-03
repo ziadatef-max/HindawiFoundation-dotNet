@@ -242,7 +242,8 @@
 
 /* reCAPTCHA widget: align to the right in RTL */
 .layout-rtl .recaptcha-wrap {
-  justify-content: flex-end;
+    justify-content: flex-end;
+    direction: ltr;
 }
 
 .layout-rtl .cvv-icon {

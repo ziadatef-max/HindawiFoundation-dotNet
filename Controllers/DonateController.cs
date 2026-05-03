@@ -66,6 +66,30 @@ public class DonateController : Controller
 
         SetCommonViewData(culture);
 
+        // reCAPTCHA validation (only when a site key is configured)
+        if (!string.IsNullOrWhiteSpace(_appSettings.DonationApi.GoogleRecaptchaKey))
+        {
+            var recaptchaToken = Request.Form["g-recaptcha-response"].FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(recaptchaToken))
+            {
+                model.ClientToken = await _donationService.GetClientToken();
+                model.IsValid = false;
+                model.ShowRecaptchaError = true;
+                return View("~/Views/Home/Donate.cshtml", model);
+            }
+
+            var isRecaptchaValid = await _donationService.ValidateRecaptcha(recaptchaToken);
+            if (!isRecaptchaValid)
+            {
+                _logger.LogWarning("reCAPTCHA validation failed for culture {Culture}.", culture);
+                model.ClientToken = await _donationService.GetClientToken();
+                model.IsValid = false;
+                model.ShowRecaptchaError = true;
+                return View("~/Views/Home/Donate.cshtml", model);
+            }
+        }
+
         if (!ModelState.IsValid)
         {
             model.ClientToken = await _donationService.GetClientToken();
