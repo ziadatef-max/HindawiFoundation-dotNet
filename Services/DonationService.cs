@@ -81,7 +81,7 @@ public class DonationService : IDonationService
                 PaymentMethodnonce = donationViewModel.PaymentMethodnonce,
                 ProjectId = 1,
                 CurrencyCode = donationViewModel.CurrencyCode,
-                Language = "en"
+                Language = language
             };
 
             var jsonPayload = JsonConvert.SerializeObject(vmDonation, InvariantJson);

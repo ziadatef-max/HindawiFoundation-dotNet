@@ -84,16 +84,21 @@
   "donate_wire_iban": "IBAN",
   "donate_wire_bank_location": "Bank Location",
 
+  "footer_booktime": "Booktime",
+  "footer_safahat": "Safahat",
+  "footer_folios": "Folios",
+
   "partners_email_team_button": "Email our partnership team",
 
   "donate_validation_frequency_required": "Please select a donation frequency.",
   "donate_validation_amount_required": "Please enter a donation amount.",
-  "donate_validation_amount_min": "Minimum donation amount is 1.",
+  "donate_validation_amount_min": "Minimum donation amount is {min}.",
   "donate_validation_email_required": "Please enter your email address.",
   "donate_validation_email_invalid": "Please enter a valid email address.",
   "donate_validation_card_required": "Please enter your card details.",
   "donate_validation_expiry_required": "Please enter a valid expiry date.",
   "donate_validation_cvv_required": "Please enter your CVV/CVC code.",
+  "donate_error_process_failed": "We were unable to process your donation at this time. Please try again later.",
 
   "donation_card_number_required": "Card Number is required.",
   "donation_expiry_required": "Expiration Date is required.",

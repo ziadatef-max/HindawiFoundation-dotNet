@@ -9,6 +9,7 @@
     var culture = routeCulture == "ar" ? "ar" : "en";
     var recaptchaSiteKey = Options.Value.DonationApi.GoogleRecaptchaKey;
     var account = Options.Value.DonationAccount;
+    var cfCountryCode = Context.Request.Headers["cf-ipcountry"].FirstOrDefault() ?? "US";
 }
 
 @section Styles {
@@ -60,7 +61,6 @@
                         novalidate>
                       @Html.AntiForgeryToken()
                       <input type="hidden" asp-for="PaymentMethodnonce" id="PaymentMethodnonce" />
-                      <input type="hidden" asp-for="CurrencyCode" id="CurrencyCode" />
 
                       <div class="donate-grid donate-grid--3">
 
@@ -81,7 +81,21 @@
                               <label class="form-field__label" for="donationAmount">@localizer["donate_label_amount"]</label>
                               <div class="amount-input-wrap">
                                   <input class="form-input" type="number" asp-for="Amount" id="donationAmount" min="1" step="1" autocomplete="off">
-                                  <span class="amount-currency" id="amountCurrencyLabel">EGP</span>
+                                  <div class="currency-select" data-currency-select>
+                                      <input type="hidden" asp-for="CurrencyCode" id="CurrencyCode" data-currency-value />
+                                      <button type="button"
+                                              class="currency-select__trigger"
+                                              aria-haspopup="listbox"
+                                              aria-expanded="false"
+                                              data-currency-trigger>
+                                          <span class="currency-select__selected" data-currency-selected>USD</span>
+                                          <span class="currency-select__arrow" aria-hidden="true"></span>
+                                      </button>
+                                      <div class="currency-select__dropdown" data-currency-dropdown hidden>
+                                          <ul class="currency-select__list" role="listbox" data-currency-list>
+                                          </ul>
+                                      </div>
+                                  </div>
                               </div>
                               <span class="field-error" id="amount_span"></span>
                           </div>
@@ -284,45 +298,62 @@
       <div class="container">
         <h2 class="section__title" id="impact-donate-title">@localizer["home_impact"]</h2>
         <div class="impact-grid" role="list">
-          <article class="impact-item" role="listitem">
-            <div class="impact-icon">
-              <i class="fa-solid fa-users" aria-hidden="true"></i>
-            </div>
-            <p class="number">300K+</p>
-            <p class="label">Monthly Readers</p>
-          </article>
-
-          <article class="impact-item" role="listitem">
-            <div class="impact-icon">
-              <img src="~/Icons/book-open-cover.svg" alt="">
-            </div>
-            <p class="number">10M</p>
-            <p class="label label--nowrap">Books Read since 2024</p>
-          </article>
-
-          <article class="impact-item" role="listitem">
-            <div class="impact-icon">
-              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-            </div>
-            <p class="number">190+</p>
-            <p class="label">Countries Served</p>
-          </article>
-
-          <article class="impact-item" role="listitem">
-            <div class="impact-icon">
-              <i class="fa-solid fa-globe" aria-hidden="true"></i>
-            </div>
-            <p class="number">9+</p>
-            <p class="label">Languages Served</p>
-          </article>
-
-          <article class="impact-item" role="listitem">
-            <div class="impact-icon">
-              <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
-            </div>
-            <p class="number">3.5K+</p>
-            <p class="label">Books Published<br><span>(incl. translations)</span></p>
-          </article>
+          @if (culture == "ar")
+          {
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
+              <p class="number">+300 ألف</p>
+              <p class="label">قارئ شهريًا</p>
+            </article>
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><img src="~/Icons/book-open-cover.svg" alt=""></div>
+              <p class="number">10 ملايين</p>
+              <p class="label label--nowrap">كتاب قُرئ منذ 2024</p>
+            </article>
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
+              <p class="number">+190</p>
+              <p class="label">دولة نخدمها</p>
+            </article>
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
+              <p class="number">+9</p>
+              <p class="label">لغات نخدمها</p>
+            </article>
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
+              <p class="number">+3.5 آلاف</p>
+              <p class="label">كتاب منشور<br><span>(شاملاً الترجمات)</span></p>
+            </article>
+          }
+          else
+          {
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
+              <p class="number">300K+</p>
+              <p class="label">Monthly Readers</p>
+            </article>
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><img src="~/Icons/book-open-cover.svg" alt=""></div>
+              <p class="number">10M</p>
+              <p class="label label--nowrap">Books Read since 2024</p>
+            </article>
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
+              <p class="number">190+</p>
+              <p class="label">Countries Served</p>
+            </article>
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
+              <p class="number">9+</p>
+              <p class="label">Languages Served</p>
+            </article>
+            <article class="impact-item" role="listitem">
+              <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
+              <p class="number">3.5K+</p>
+              <p class="label">Books Published<br><span>(incl. translations)</span></p>
+            </article>
+          }
         </div>
       </div>
     </section>
@@ -333,30 +364,56 @@
           <h2 class="section__title" id="testimonials-donate-title">@localizer["home_testimonials"]</h2>
         </header>
 
-        <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
-          <div class="testimonial-track" data-slider-track>
-            <article class="card card--testimonial" data-slide>
-              <p class="quote">"The quality of the refined translation using Gemini Pro was staggering. It captured the nuances of my protagonist's dialect better than any tool I've used before. It's truly a game-changer for literary work."</p>
-              <div class="author-row">
-                <p class="author">Michael Samuel</p>
-                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark">
-              </div>
-            </article>
-
-            <article class="card card--testimonial" data-slide>
-              <p class="quote">"Being able to translate my entire back catalog into three different languages in one afternoon for a fraction of traditional costs is a game-changer."</p>
-              <div class="author-row">
-                <p class="author">James Henry</p>
-                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark">
-              </div>
-            </article>
+        @if (culture == "ar")
+        {
+          <div class="testimonial-slider" data-slider tabindex="0" aria-label="آراء القُرَّاء">
+            <div class="testimonial-track" data-slider-track>
+              <article class="card card--testimonial" data-slide>
+                <p class="quote">"كانت جودة الترجمة المنقَّحة باستخدام Gemini Pro مذهلة. التقطت دقائق لهجة شخصيَّتي بأفضل ما رأيت من أدوات. إنها نقلة نوعية للعمل الأدبي."</p>
+                <div class="author-row">
+                  <p class="author">مايكل صموئيل</p>
+                  <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                </div>
+              </article>
+              <article class="card card--testimonial" data-slide>
+                <p class="quote">"إمكانية ترجمة كامل أعمالي السابقة إلى ثلاث لغات في فترة عصر واحدة وبتكلفة أقل بكثير من المعتاد، تُعدّ نقلة نوعية."</p>
+                <div class="author-row">
+                  <p class="author">جيمس هنري</p>
+                  <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                </div>
+              </article>
+            </div>
+            <div class="slider-dots" aria-label="ترقيم الشريحة">
+              <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="عرض الرأي الأول" aria-current="true"></button>
+              <button class="slider-dot" type="button" data-slide-to="1" aria-label="عرض الرأي الثاني" aria-current="false"></button>
+            </div>
           </div>
-
-          <div class="slider-dots" aria-label="Slider pagination">
-            <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="Show testimonial 1" aria-current="true"></button>
-            <button class="slider-dot" type="button" data-slide-to="1" aria-label="Show testimonial 2" aria-current="false"></button>
+        }
+        else
+        {
+          <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
+            <div class="testimonial-track" data-slider-track>
+              <article class="card card--testimonial" data-slide>
+                <p class="quote">"The quality of the refined translation using Gemini Pro was staggering. It captured the nuances of my protagonist's dialect better than any tool I've used before. It's truly a game-changer for literary work."</p>
+                <div class="author-row">
+                  <p class="author">Michael Samuel</p>
+                  <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                </div>
+              </article>
+              <article class="card card--testimonial" data-slide>
+                <p class="quote">"Being able to translate my entire back catalog into three different languages in one afternoon for a fraction of traditional costs is a game-changer."</p>
+                <div class="author-row">
+                  <p class="author">James Henry</p>
+                  <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+                </div>
+              </article>
+            </div>
+            <div class="slider-dots" aria-label="Slider pagination">
+              <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="Show testimonial 1" aria-current="true"></button>
+              <button class="slider-dot" type="button" data-slide-to="1" aria-label="Show testimonial 2" aria-current="false"></button>
+            </div>
           </div>
-        </div>
+        }
       </div>
     </section>
 
@@ -370,6 +427,7 @@
     'use strict';
 
     var donationCulture = '@culture';
+    var cfCountryCode   = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(cfCountryCode));
     var clientToken = @Html.Raw(string.IsNullOrWhiteSpace(Model?.ClientToken) ? "null" : "\"" + Model.ClientToken + "\"");
     var form        = document.getElementById('donateForm');
     var submitBtn   = document.getElementById('donateSubmitBtn');
@@ -380,6 +438,15 @@
     var phoneInput  = document.getElementById('phone');
     var hostedFieldsInstance = null;
     var isSubmitting = false;
+
+    // ── Currency dropdown state ────────────────────────────────────────
+    var currencyMinAmount   = 1;
+    var currenciesData      = [];
+    var currencySelectEl    = document.querySelector('[data-currency-select]');
+    var currencyTriggerEl   = currencySelectEl ? currencySelectEl.querySelector('[data-currency-trigger]') : null;
+    var currencyCodeLabelEl = currencySelectEl ? currencySelectEl.querySelector('[data-currency-selected]') : null;
+    var currencyDropdownEl  = currencySelectEl ? currencySelectEl.querySelector('[data-currency-dropdown]') : null;
+    var currencyListEl      = currencySelectEl ? currencySelectEl.querySelector('[data-currency-list]') : null;
 
     // Map from Braintree field names to their container DOM elements.
     // Populated once the DOM is ready (elements exist at parse time).
@@ -446,6 +513,97 @@
       }
     }
 
+    // ── Currency dropdown helpers ──────────────────────────────────────
+    var CURRENCY_USD = { currencyCode: 'USD', currencyName: 'United States Dollar', exchangeRate: 1 };
+
+    function escHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function selectCurrency(code) {
+      if (!currenciesData.length) return;
+      var found = null, i;
+      for (i = 0; i < currenciesData.length; i++) {
+        if (currenciesData[i].currencyCode === code) { found = currenciesData[i]; break; }
+      }
+      if (!found) {
+        for (i = 0; i < currenciesData.length; i++) {
+          if (currenciesData[i].currencyCode === 'USD') { found = currenciesData[i]; break; }
+        }
+      }
+      if (!found) found = currenciesData[0] || CURRENCY_USD;
+
+      if (currencyField)    currencyField.value       = found.currencyCode;
+      if (currencyCodeLabelEl) currencyCodeLabelEl.textContent = found.currencyCode;
+
+      if (currencyListEl) {
+        currencyListEl.querySelectorAll('[data-value]').forEach(function (item) {
+          var sel = item.getAttribute('data-value') === found.currencyCode;
+          item.classList.toggle('is-selected', sel);
+          item.setAttribute('aria-selected', sel ? 'true' : 'false');
+        });
+      }
+
+      var rate = parseFloat(found.exchangeRate);
+      currencyMinAmount = (rate && rate > 0) ? rate : 1;
+    }
+
+    function openCurrencyDropdown() {
+      if (!currencyDropdownEl || !currencyTriggerEl) return;
+      currencyDropdownEl.hidden = false;
+      currencyTriggerEl.setAttribute('aria-expanded', 'true');
+      var sel = currencyDropdownEl.querySelector('.is-selected');
+      if (sel) sel.scrollIntoView({ block: 'nearest' });
+    }
+
+    function closeCurrencyDropdown() {
+      if (!currencyDropdownEl || !currencyTriggerEl) return;
+      currencyDropdownEl.hidden = true;
+      currencyTriggerEl.setAttribute('aria-expanded', 'false');
+    }
+
+    function buildCurrencyOption(c) {
+      var li = document.createElement('li');
+      li.className = 'currency-select__option';
+      li.setAttribute('role', 'option');
+      li.setAttribute('tabindex', '0');
+      li.setAttribute('data-value', c.currencyCode);
+      li.setAttribute('aria-selected', 'false');
+      var codeHtml = '<span class="currency-select__code" dir="ltr">' + escHtml(c.currencyCode) + '</span>';
+      var sepHtml  = '<span class="currency-select__separator">|</span>';
+      var nameHtml = '<span class="currency-select__name">' + escHtml(c.currencyName) + '</span>';
+      // English: Code | Name   Arabic: Name | Code
+      li.innerHTML = donationCulture === 'ar'
+        ? nameHtml + sepHtml + codeHtml
+        : codeHtml + sepHtml + nameHtml;
+      li.addEventListener('click', function () { selectCurrency(c.currencyCode); closeCurrencyDropdown(); });
+      li.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCurrency(c.currencyCode); closeCurrencyDropdown(); }
+        if (e.key === 'Escape') closeCurrencyDropdown();
+      });
+      return li;
+    }
+
+    function populateCurrencies(currencies, defaultCode) {
+      currenciesData = (Array.isArray(currencies) && currencies.length) ? currencies : [CURRENCY_USD];
+      var hasUsd = currenciesData.some(function (c) { return c.currencyCode === 'USD'; });
+      if (!hasUsd) currenciesData = currenciesData.concat([CURRENCY_USD]);
+      if (!currencyListEl) { selectCurrency(defaultCode || 'USD'); return; }
+      currencyListEl.innerHTML = '';
+      currenciesData.forEach(function (c) { currencyListEl.appendChild(buildCurrencyOption(c)); });
+      var codeInList = currenciesData.some(function (c) { return c.currencyCode === defaultCode; });
+      selectCurrency(codeInList ? defaultCode : 'USD');
+    }
+
+    // ── Currency dropdown interaction wiring ────────────────────────────
+    if (currencyTriggerEl) {
+      currencyTriggerEl.addEventListener('click', function (e) { e.stopPropagation(); openCurrencyDropdown(); });
+    }
+    document.addEventListener('click', function (e) {
+      if (currencySelectEl && !currencySelectEl.contains(e.target)) closeCurrencyDropdown();
+    });
+
     // ── Clear global error on any field interaction (Issue 2) ──────────────
     ['donationAmount', 'donorEmail', 'firstName', 'lastName', 'phone'].forEach(function (id) {
       var el = document.getElementById(id);
@@ -511,8 +669,8 @@
         showFieldError('amount_span', validationMsgs.amountRequired);
         setInputState(amountInput, true);
         valid = false;
-      } else if (isNaN(parsedAmount) || parsedAmount < 1) {
-        showFieldError('amount_span', validationMsgs.amountMin);
+      } else if (isNaN(parsedAmount) || parsedAmount < currencyMinAmount) {
+        showFieldError('amount_span', validationMsgs.amountMin.replace('{min}', currencyMinAmount));
         setInputState(amountInput, true);
         valid = false;
       }
@@ -676,19 +834,21 @@
       });
     }
 
-    // ── Auto-detect default currency ───────────────────────────────────────
-    try {
-      fetch('/' + donationCulture + '/donate/default-currency?countryCode=EG', { credentials: 'same-origin' })
+    // ── Load currencies and default currency from API ──────────────────────
+    (function initCurrencies() {
+      var p1 = fetch('/' + donationCulture + '/donate/currencies', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .catch(function () { return []; });
+      var p2 = fetch('/' + donationCulture + '/donate/default-currency?countryCode=' + encodeURIComponent(cfCountryCode), { credentials: 'same-origin' })
         .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (data) {
-          if (data && data.currencyCode && currencyField) {
-            currencyField.value = data.currencyCode;
-            var label = document.getElementById('amountCurrencyLabel');
-            if (label) label.textContent = data.currencyCode;
-          }
-        })
-        .catch(function () { /* ignore, keep default */ });
-    } catch (e) { /* ignore */ }
+        .catch(function () { return null; });
+      Promise.all([p1, p2]).then(function (results) {
+        var currencies   = Array.isArray(results[0]) ? results[0] : [];
+        var defData      = results[1];
+        var defaultCode  = (defData && defData.currencyCode) ? defData.currencyCode : 'USD';
+        populateCurrencies(currencies, defaultCode);
+      });
+    })();
   })();
 </script>
 }

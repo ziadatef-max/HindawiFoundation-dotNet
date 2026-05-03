@@ -50,7 +50,7 @@ public class DonateController : Controller
         var model = new DonationViewModel
         {
             Frequency = "monthly",
-            CurrencyCode = "EGP",
+            CurrencyCode = "USD",
             ClientToken = clientToken,
             IsValid = !string.IsNullOrWhiteSpace(clientToken)
         };
@@ -71,20 +71,6 @@ public class DonateController : Controller
 
         SetCommonViewData(culture);
 
-        if (model.Frequency != "monthly" && model.Frequency != "one-time")
-        {
-            ModelState.AddModelError(nameof(model.Frequency), "Please select a valid donation frequency.");
-        }
-
-        if (!model.Amount.HasValue || model.Amount.Value <= 0 || model.Amount.Value > 1000000)
-        {
-            ModelState.AddModelError(nameof(model.Amount), "Please enter a valid donation amount.");
-        }
-
-        if (string.IsNullOrWhiteSpace(model.PaymentMethodnonce))
-        {
-            ModelState.AddModelError(string.Empty, "Please enter valid card details before submitting your donation.");
-        }
         if (!ModelState.IsValid)
         {
             model.ClientToken = await _donationService.GetClientToken();
@@ -99,7 +85,6 @@ public class DonateController : Controller
             _logger.LogWarning("Donation submission failed for culture {Culture}.", culture);
             model.ClientToken = await _donationService.GetClientToken();
             model.IsValid = false;
-            ModelState.AddModelError(string.Empty, "We were unable to process your donation at this time. Please try again later.");
             return View("~/Views/Home/Donate.cshtml", model);
         }
 
