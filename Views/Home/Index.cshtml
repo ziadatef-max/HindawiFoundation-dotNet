@@ -1,0 +1,225 @@
+@{
+    ViewData["BodyClass"] = "page page--home";
+    ViewData["ActivePage"] = "home";
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
+    var arrowIcon = culture == "ar" ? "fa-arrow-left" : "fa-arrow-right";
+    var booktimeUrl = culture == "ar" ? "https://www.booktime.org/ar" : "https://www.booktime.org/en";
+    var safahatUrl  = culture == "ar" ? "https://www.safahat.org/ar/" : "https://www.safahat.org/en/";
+    var foliosUrl   = culture == "ar" ? "https://folios.org/ar" : "https://folios.org/en";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/home.css" asp-append-version="true">
+}
+
+<main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <h1 id="hero-title">@localizer["reading_changes_everything_label"]</h1>
+          <p>@localizer["reading_changes_everything_content_label"]</p>
+          <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
+            <i class="fa-solid fa-heart" aria-hidden="true"></i>
+            @localizer["donate_button"]
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight what-we-do" aria-labelledby="what-we-do-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="what-we-do-title">@localizer["what_we_do_label"]</h2>
+          <p class="section__subtitle">@localizer["what_we_do_content_label"]</p>
+        </header>
+
+        <div class="products-grid">
+          <article class="card card--product">
+            <div class="product-icon">
+              <img src="~/Logos/Booktime.svg" alt="@localizer["booktime_label"]">
+            </div>
+            <h3>@localizer["booktime_label"]</h3>
+            <p>@localizer["booktime_content_label"]</p>
+            <a href="@booktimeUrl" class="product-link product-link--booktime" data-product="booktime" target="_blank" rel="noopener noreferrer">
+              @localizer["booktime_website_button"]
+              <i class="fa-solid @arrowIcon" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <article class="card card--product">
+            <div class="product-icon">
+              <img src="~/Logos/safahat.svg" alt="@localizer["safahat_label"]">
+            </div>
+            <h3>@localizer["safahat_label"]</h3>
+            <p>@localizer["safahat_content_label"]</p>
+            <a href="@safahatUrl" class="product-link product-link--safahat" data-product="safahat" target="_blank" rel="noopener noreferrer">
+              @localizer["safahat_website_button"]
+              <i class="fa-solid @arrowIcon" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <article class="card card--product">
+            <div class="product-icon">
+              <img src="~/Logos/folios.svg" alt="@localizer["folios_label"]">
+            </div>
+            <h3>@localizer["folios_label"]</h3>
+            <p>@localizer["folios_content_label"]</p>
+            <a href="@foliosUrl" class="product-link product-link--folios" data-product="folios" target="_blank" rel="noopener noreferrer">
+              @localizer["folios_website_button"]
+              <i class="fa-solid @arrowIcon" aria-hidden="true"></i>
+            </a>
+          </article>
+        </div>
+
+        <div class="donate-inline">
+          <p>@localizer["help_us_spread_the_joy_of_reading_label"]</p>
+          <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
+            <i class="fa-solid fa-heart" aria-hidden="true"></i>
+            @localizer["donate_button"]
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section class="section section--tight why-we-do" aria-labelledby="why-we-do-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="why-we-do-title">@localizer["why_we_do_it_label"]</h2>
+        </header>
+
+        <div class="stats-grid">
+          <article class="card card--stat">
+            <h3 class="stat">@localizer["why_we_do_it_first_subhead_label"]</h3>
+            <p class="desc">@localizer["why_we_do_it_first_content_label"]</p>
+          </article>
+
+          <article class="card card--stat">
+            <h3 class="stat">@localizer["why_we_do_it_second_subhead_label"]</h3>
+            <p class="desc">@localizer["why_we_do_it_second_content_label"]</p>
+          </article>
+
+          <article class="card card--stat">
+            <h3 class="stat">@localizer["why_we_do_it_third_subhead_label"]</h3>
+            <p class="desc">@localizer["why_we_do_it_third_content_label"]</p>
+          </article>
+
+          <article class="card card--stat">
+            <h3 class="stat">@localizer["why_we_do_it_fourth_subhead_label"]</h3>
+            <p class="desc">@localizer["why_we_do_it_fourth_content_label"]</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight impact" aria-labelledby="impact-title">
+      <div class="container">
+        <h2 class="section__title" id="impact-title">@localizer["impact_label"]</h2>
+        <div class="impact-grid" role="list">
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-users" aria-hidden="true"></i>
+            </div>
+            <p class="number">@localizer["impact_first_subhead_label"]</p>
+            <p class="label">@localizer["impact_first_content_label"]</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <img src="~/Icons/book-open-cover.svg" alt="">
+            </div>
+            <p class="number">@localizer["impact_second_subhead_label"]</p>
+            <p class="label label--nowrap">@localizer["impact_second_content_label"]</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            </div>
+            <p class="number">@localizer["impact_third_subhead_label"]</p>
+            <p class="label">@localizer["impact_third_content_label"]</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </div>
+            <p class="number">@localizer["impact_fourth_subhead_label"]</p>
+            <p class="label">@localizer["impact_fourth_content_label"]</p>
+          </article>
+
+          <article class="impact-item" role="listitem">
+            <div class="impact-icon">
+              <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+            </div>
+            <p class="number">@localizer["impact_fifth_subhead_label"]</p>
+            <p class="label">@localizer["impact_fifth_content_label"]</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight testimonials" aria-labelledby="testimonials-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="testimonials-title">@localizer["testimonials_label"]</h2>
+        </header>
+
+        <div class="testimonial-slider" data-slider tabindex="0" aria-label="@localizer["testimonials_slider_label"]">
+          <div class="testimonial-track" data-slider-track>
+            <article class="card card--testimonial" data-slide>
+              <p class="quote">"@localizer["testimonial_1_quote"]"</p>
+              <div class="author-row">
+                <p class="author">@localizer["testimonial_1_author"]</p>
+                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+              </div>
+            </article>
+
+            <article class="card card--testimonial" data-slide>
+              <p class="quote">"@localizer["testimonial_2_quote"]"</p>
+              <div class="author-row">
+                <p class="author">@localizer["testimonial_2_author"]</p>
+                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
+              </div>
+            </article>
+          </div>
+
+          <div class="slider-dots" aria-label="@localizer["testimonials_pagination_label"]">
+            <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="@localizer["testimonials_slide_1_label"]" aria-current="true"></button>
+            <button class="slider-dot" type="button" data-slide-to="1" aria-label="@localizer["testimonials_slide_2_label"]" aria-current="false"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta" aria-labelledby="cta-title">
+      <div class="container cta__inner">
+        <div class="cta__content">
+          <h2 id="cta-title">@localizer["help_us_spread_the_joy_of_reading_title_label"]</h2>
+          <p>@localizer["help_us_spread_the_joy_of_reading_content_label"]</p>
+        </div>
+        <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--light btn--icon">
+          <i class="fa-solid fa-heart" aria-hidden="true"></i>
+          @localizer["donate_button"]
+        </a>
+      </div>
+    </section>
+
+    <section class="section section--tight partners" aria-labelledby="partners-title">
+      <div class="container">
+        <header class="section__header">
+          <h2 class="section__title" id="partners-title">@localizer["partners_button"]</h2>
+          <p class="section__subtitle">@localizer["partners_content_label"]</p>
+        </header>
+
+        <div class="partners-grid">
+          <img src="~/Logos/Fundacao_Calouste_Gulbenkian.svg" alt="Fundação Calouste Gulbenkian" class="partner-logo">
+          <img src="~/Logos/Ulverscroft.svg" alt="Ulverscroft" class="partner-logo">
+          <img src="~/Logos/CNL.svg" alt="CNL" class="partner-logo">
+          <img src="~/Logos/PRODOMINICANA.svg" alt="PRODOMINICANA" class="partner-logo">
+          <img src="~/Logos/Birmingham_City_University.svg" alt="Birmingham City University" class="partner-logo">
+        </div>
+      </div>
+    </section>
+</main>

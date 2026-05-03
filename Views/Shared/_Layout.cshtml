@@ -8,10 +8,9 @@
     var pageTitle = !string.IsNullOrEmpty(pageTitleKey)
         ? localizer[pageTitleKey].Value
         : (ViewData["Title"] as string ?? "");
-    var siteName = localizer["site_name"].Value;
-    var siteTagline = localizer["site_tagline"].Value;
-    var fullTitle = string.IsNullOrEmpty(pageTitle) || pageTitle == "Home" || pageTitle == localizer["home_page_title"].Value
-        ? $"{siteName} - {siteTagline}"
+    var siteName = localizer["website_name_label"].Value;
+    var fullTitle = string.IsNullOrEmpty(pageTitle) || pageTitle == localizer["home_button"].Value
+        ? $"{siteName}"
         : $"{pageTitle} - {siteName}";
 }
 <!DOCTYPE html>

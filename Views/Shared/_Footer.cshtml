@@ -2,7 +2,7 @@
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
     if (culture != "ar") culture = "en";
     var logoSrc = culture == "ar" ? "~/Logos/hindawi_ar.svg" : "~/Logos/hindawi_en.svg";
-    var logoAlt = localizer["site_name"].Value;
+    var logoAlt = localizer["website_name_label"].Value;
     var booktimeUrl = culture == "ar" ? "https://www.booktime.org/ar" : "https://www.booktime.org/en";
     var safahatUrl = culture == "ar" ? "https://www.safahat.org/ar/" : "https://www.safahat.org/en/";
     var foliosUrl = culture == "ar" ? "https://folios.org/ar" : "https://folios.org/en";
@@ -15,41 +15,41 @@
           <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="site-logo" aria-label="Hindawi Foundation home">
             <img src="@(culture == "ar" ? "/Logos/hindawi_ar.svg" : "/Logos/hindawi_en.svg")" alt="Hindawi Foundation">
           </a>
-          <p>@localizer["footer_charity_text"]</p>
+          <p>@localizer["footer_content_label"]</p>
           <ul class="footer-social" aria-label="@localizer["footer_social_links_label"]">
-            <li><a href="#" class="footer-social__item linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
-            <li><a href="#" class="footer-social__item facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/hindawi-foundation" class="footer-social__item linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.facebook.com/hindawi.org" class="footer-social__item facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a></li>
             <li><a href="#" class="footer-social__item instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
           </ul>
         </div>
 
         <div class="footer-menu" aria-label="Footer links">
           <section class="footer-group" aria-label="Main links">
-            <h4>@localizer["footer_menu"]</h4>
+            <h4>@localizer["menu_label"]</h4>
             <ul>
-              <li><a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">@localizer["nav_home"]</a></li>
-              <li><a asp-controller="Home" asp-action="About" asp-route-culture="@culture">@localizer["nav_about"]</a></li>
-              <li><a asp-controller="Home" asp-action="News" asp-route-culture="@culture">@localizer["nav_news"]</a></li>
-              <li><a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture">@localizer["nav_partners"]</a></li>
+              <li><a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">@localizer["home_button"]</a></li>
+              <li><a asp-controller="Home" asp-action="About" asp-route-culture="@culture">@localizer["about_us_button"]</a></li>
+              <li><a asp-controller="Home" asp-action="News" asp-route-culture="@culture">@localizer["news_button"]</a></li>
+              <li><a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture">@localizer["partners_button"]</a></li>
             </ul>
           </section>
 
           <section class="footer-group" aria-label="Policy links">
-            <h4 class="invisible" aria-hidden="true">@localizer["footer_menu"]</h4>
+            <h4 class="invisible" aria-hidden="true">@localizer["menu_label"]</h4>
             <ul>
-              <li><a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture">@localizer["nav_contact"]</a></li>
-              <li><a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture">@localizer["nav_donate"]</a></li>
-              <li><a href="#">@localizer["footer_privacy_policy"]</a></li>
-              <li><a href="#">@localizer["footer_terms_conditions"]</a></li>
+              <li><a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture">@localizer["contact_us_button"]</a></li>
+              <li><a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture">@localizer["donate_button"]</a></li>
+              <li><a href="#">@localizer["privacy_policy_button"]</a></li>
+              <li><a href="#">@localizer["terms_and_conditions_button"]</a></li>
             </ul>
           </section>
 
           <section class="footer-group" aria-label="Products links">
-            <h4 class="invisible" aria-hidden="true">@localizer["footer_menu"]</h4>
+            <h4 class="invisible" aria-hidden="true">@localizer["menu_label"]</h4>
             <ul>
-              <li><a href="@booktimeUrl" target="_blank" rel="noopener noreferrer">@localizer["footer_booktime"]</a></li>
-              <li><a href="@safahatUrl" target="_blank" rel="noopener noreferrer">@localizer["footer_safahat"]</a></li>
-              <li><a href="@foliosUrl" target="_blank" rel="noopener noreferrer">@localizer["footer_folios"]</a></li>
+              <li><a href="@booktimeUrl" target="_blank" rel="noopener noreferrer">@localizer["booktime_button"]</a></li>
+              <li><a href="@safahatUrl" target="_blank" rel="noopener noreferrer">@localizer["safahat_button"]</a></li>
+              <li><a href="@foliosUrl" target="_blank" rel="noopener noreferrer">@localizer["folios_button"]</a></li>
             </ul>
           </section>
         </div>

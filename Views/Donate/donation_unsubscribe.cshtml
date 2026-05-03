@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Manage Donations";
+    ViewData["TitleKey"] = "donate_unsubscribe_page_title";
     ViewData["BodyClass"] = "page page--donate";
     ViewData["ActivePage"] = "donate";
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
@@ -13,17 +13,17 @@
 
     <div class="page-banner">
       <div class="container">
-        <h1>Manage Your Donation</h1>
+        <h1>@localizer["donate_unsubscribe_page_title"]</h1>
       </div>
     </div>
 
     <section class="section section--tight">
       <div class="container">
         <div class="donate-intro">
-          <h2 class="donate-intro__title">Cancel or modify a recurring donation</h2>
-          <p class="donate-intro__desc">To unsubscribe from a recurring donation, please contact us at <a href="mailto:donations@hindawi.org">donations@hindawi.org</a> with your details and we will assist you.</p>
+          <h2 class="donate-intro__title">@localizer["donate_unsubscribe_title"]</h2>
+          <p class="donate-intro__desc">@localizer["donate_unsubscribe_desc"]</p>
           <p class="donate-intro__desc">
-            <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">Return to home</a>
+            <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">@localizer["button_back_home"]</a>
           </p>
         </div>
       </div>

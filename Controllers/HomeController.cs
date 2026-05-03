@@ -30,8 +30,8 @@ public class HomeController : Controller
     public IActionResult Index([FromRoute] string culture)
     {
         if (!IsSupportedCulture(culture)) return NotFound();
-        SetCommonViewData(culture, "home", "home_page_title");
-        return ViewForCulture("Index", culture);
+        SetCommonViewData(culture, "home", "home_button");
+        return View("Index");
     }
 
 
@@ -47,7 +47,7 @@ public class HomeController : Controller
     public IActionResult About([FromRoute] string culture)
     {
         if (!IsSupportedCulture(culture)) return NotFound();
-        SetCommonViewData(culture, "about", "about_page_title");
+        SetCommonViewData(culture, "about", "about_us_button");
         return ViewForCulture("About", culture);
     }
 

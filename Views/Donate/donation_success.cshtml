@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Thank You";
+    ViewData["TitleKey"] = "donate_success_page_title";
     ViewData["BodyClass"] = "page page--donate";
     ViewData["ActivePage"] = "donate";
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
@@ -13,26 +13,26 @@
 
     <div class="page-banner">
       <div class="container">
-        <h1>Thank You</h1>
+        <h1>@localizer["donate_success_page_title"]</h1>
       </div>
     </div>
 
     <section class="section section--tight">
       <div class="container">
         <div class="donate-intro">
-          <h2 class="donate-intro__title">Your donation was successful.</h2>
-          <p class="donate-intro__desc">Thank you for supporting our mission to spread the joy of reading. A confirmation will be sent to your email shortly.</p>
-          <p class="donate-intro__desc">Your generosity helps us publish more books, expand into new languages, and reach more readers worldwide.</p>
+          <h2 class="donate-intro__title">@localizer["donate_success_title"]</h2>
+          <p class="donate-intro__desc">@localizer["donate_success_desc"]</p>
+          <p class="donate-intro__desc">@localizer["donate_success_extra"]</p>
           <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;">
             <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
               <i class="fa-solid fa-heart" aria-hidden="true"></i>
-              Donate Again
+              @localizer["button_donate_again"]
             </a>
             <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="btn btn--secondary">
-              Back to Home
+              @localizer["button_back_home"]
             </a>
             <a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="btn btn--secondary">
-              Contact Us
+              @localizer["contact_us_button"]
             </a>
           </div>
         </div>

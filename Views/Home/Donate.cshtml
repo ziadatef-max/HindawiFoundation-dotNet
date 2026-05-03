@@ -29,8 +29,8 @@
             <div class="container">
 
                 <div class="donate-intro">
-                    <h2 class="donate-intro__title" id="donate-intro-title">@localizer["donate_intro_title"]</h2>
-                    <p class="donate-intro__desc">@localizer["donate_intro_desc"]</p>
+                    <h2 class="donate-intro__title" id="donate-intro-title">@localizer["help_us_spread_the_joy_of_reading_title_label"]</h2>
+                    <p class="donate-intro__desc">@localizer["donation_intro_content_label"]</p>
                 </div>
 
                 <div class="donate-form-wrap">
@@ -39,16 +39,16 @@
                         <div class="payment-methods" role="group" aria-label="Payment method">
                             <button class="payment-method is-active" type="button" data-payment="card" aria-pressed="true">
                                 <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
-                                @localizer["donate_payment_card"]
+                                @localizer["credit/debit_card_button"]
                             </button>
                             <button class="payment-method" type="button" data-payment="wire" aria-pressed="false">
                                 <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
-                                @localizer["donate_payment_wire"]
+                                @localizer["wire_transfer_button"]
                             </button>
                             @* PayPal tab: code kept but hidden until PayPal is re-enabled *@
                             <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false" style="display:none" aria-hidden="true">
                                 <i class="fa-brands fa-paypal" aria-hidden="true"></i>
-                                @localizer["donate_payment_paypal"]
+                                @localizer["paypal_button"]
                             </button>
                         </div>
 
@@ -65,20 +65,20 @@
                                     <div class="donate-grid donate-grid--3">
 
                                         <div class="form-field">
-                                            <label class="donation-form-field__label">@localizer["donate_label_frequency"]</label>
+                                            <label class="donation-form-field__label">@localizer["donation_frequency_label"]</label>
                                             <div class="frequency-options">
                                                 <label class="frequency-option">
-                                                    <input type="radio" asp-for="Frequency" value="one-time"> @localizer["donate_freq_one_time"]
+                                                    <input type="radio" asp-for="Frequency" value="one-time"> @localizer["donation_frequency_one_time_button"]
                                                 </label>
                                                 <label class="frequency-option">
-                                                    <input type="radio" asp-for="Frequency" value="monthly"> @localizer["donate_freq_monthly"]
+                                                    <input type="radio" asp-for="Frequency" value="monthly"> @localizer["donation_frequency_monthly_button"]
                                                 </label>
                                             </div>
                                             <span class="field-error" id="frequency_span"></span>
                                         </div>
 
                                         <div class="form-field">
-                                            <label class="form-field__label" for="donationAmount">@localizer["donate_label_amount"]</label>
+                                            <label class="form-field__label" for="donationAmount">@localizer["donation_amount_label"]</label>
                                             <div class="amount-input-wrap">
                                                 <input class="form-input" type="number" asp-for="Amount" id="donationAmount" min="1" step="1" autocomplete="off">
                                                 <div class="currency-select" data-currency-select>
@@ -101,7 +101,7 @@
                                         </div>
 
                                         <div class="form-field">
-                                            <label class="form-field__label" for="donorEmail">@localizer["donate_label_email"]</label>
+                                            <label class="form-field__label" for="donorEmail">@localizer["donation_email_label"]</label>
                                             <input class="form-input" type="email" asp-for="Email" id="donorEmail" autocomplete="email">
                                             <span class="field-error" id="email_span"></span>
                                         </div>
@@ -111,17 +111,17 @@
                                     <div class="donate-grid donate-grid--3">
 
                                         <div class="form-field">
-                                            <label class="form-field__label" for="firstName">@localizer["donate_label_first_name"]</label>
+                                            <label class="form-field__label" for="firstName">@localizer["donation_first_name_label"]</label>
                                             <input class="form-input" type="text" asp-for="FirstName" id="firstName" autocomplete="given-name">
                                         </div>
 
                                         <div class="form-field">
-                                            <label class="form-field__label" for="lastName">@localizer["donate_label_last_name"]</label>
+                                            <label class="form-field__label" for="lastName">@localizer["donation_last_name_label"]</label>
                                             <input class="form-input" type="text" asp-for="LastName" id="lastName" autocomplete="family-name">
                                         </div>
 
                                         <div class="form-field">
-                                            <label class="form-field__label" for="phone">@localizer["donate_label_phone"]</label>
+                                            <label class="form-field__label" for="phone">@localizer["donation_phone_label"]</label>
                                             <input class="form-input" type="tel" asp-for="Phone" id="phone" autocomplete="tel">
                                         </div>
 
@@ -132,7 +132,7 @@
                                     <div class="donate-grid donate-grid--card">
 
                                         <div class="form-field form-field--card-number">
-                                            <label class="form-field__label" for="cardNumber">@localizer["donate_label_card_number"]</label>
+                                            <label class="form-field__label" for="cardNumber">@localizer["donation_card_number_label"]</label>
                                             <div class="card-number-input">
                                                 <div class="form-input card-number-input__field" id="cardNumber"></div>
                                                 <div class="card-number-input__icons" aria-hidden="true">
@@ -144,17 +144,17 @@
                                         </div>
 
                                         <div class="form-field">
-                                            <label class="form-field__label" for="cardExpiry">@localizer["donate_label_expiry"]</label>
+                                            <label class="form-field__label" for="cardExpiry">@localizer["donation_expiry_label"]</label>
                                             <div class="form-input" id="cardExpiry"></div>
                                             <span class="field-error" id="s_expirationDate"></span>
                                         </div>
 
                                         <div class="form-field">
-                                            <label class="form-field__label" for="cardCvc">@localizer["donate_label_cvv"]</label>
+                                            <label class="form-field__label" for="cardCvc">@localizer["donation_cvv_label"]</label>
                                             <div class="cvv-input">
                                                 <div class="form-input cvv-input__field" id="cardCvc"></div>
                                                 <img src="~/Icons/cvv.svg"
-                                                     alt="@localizer["donation_cvv_icon_alt"]"
+                                                     alt="@localizer["donation_cvv_icon_alt_label"]"
                                                      class="cvv-icon"
                                                      aria-hidden="true">
                                             </div>
@@ -175,7 +175,7 @@
 
                                     <button class="donate-submit" type="submit" id="donateSubmitBtn">
                                         <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                                        @localizer["button_donate_now"]
+                                        @localizer["donation_submission_button"]
                                     </button>
 
                                     @if (Model?.ShowDonationError == true)
@@ -224,19 +224,19 @@
                                 <div class="donate-grid donate-grid--3">
 
                                     <div class="form-field">
-                                        <label class="donation-form-field__label">@localizer["donate_label_frequency"]</label>
+                                        <label class="donation-form-field__label">@localizer["donation_frequency_label"]</label>
                                         <div class="frequency-options">
                                             <label class="frequency-option">
-                                                <input type="radio" name="frequency-pp" value="one-time"> @localizer["donate_freq_one_time"]
+                                                <input type="radio" name="frequency-pp" value="one-time"> @localizer["donation_frequency_one_time_button"]
                                             </label>
                                             <label class="frequency-option">
-                                                <input type="radio" name="frequency-pp" value="monthly" checked> @localizer["donate_freq_monthly"]
+                                                <input type="radio" name="frequency-pp" value="monthly" checked> @localizer["donation_frequency_monthly_button"]
                                             </label>
                                         </div>
                                     </div>
 
                                     <div class="form-field">
-                                        <label class="form-field__label" for="ppAmount">@localizer["donate_label_amount"]</label>
+                                        <label class="form-field__label" for="ppAmount">@localizer["donation_amount_label"]</label>
                                         <div class="amount-input-wrap">
                                             <input class="form-input" type="number" id="ppAmount" name="ppAmount" min="1" step="1" autocomplete="off">
                                             <span class="amount-currency">EGP</span>
@@ -244,7 +244,7 @@
                                     </div>
 
                                     <div class="form-field">
-                                        <label class="form-field__label" for="ppEmail">@localizer["donate_label_email"]</label>
+                                        <label class="form-field__label" for="ppEmail">@localizer["donation_email_label"]</label>
                                         <input class="form-input" type="email" id="ppEmail" name="ppEmail" autocomplete="email">
                                     </div>
 
@@ -253,17 +253,17 @@
                                 <div class="donate-grid donate-grid--3">
 
                                     <div class="form-field">
-                                        <label class="form-field__label" for="ppFirst">@localizer["donate_label_first_name"]</label>
+                                        <label class="form-field__label" for="ppFirst">@localizer["donation_first_name_label"]</label>
                                         <input class="form-input" type="text" id="ppFirst" name="ppFirst" autocomplete="given-name">
                                     </div>
 
                                     <div class="form-field">
-                                        <label class="form-field__label" for="ppLast">@localizer["donate_label_last_name"]</label>
+                                        <label class="form-field__label" for="ppLast">@localizer["donation_last_name_label"]</label>
                                         <input class="form-input" type="text" id="ppLast" name="ppLast" autocomplete="family-name">
                                     </div>
 
                                     <div class="form-field">
-                                        <label class="form-field__label" for="ppPhone">@localizer["donate_label_phone"]</label>
+                                        <label class="form-field__label" for="ppPhone">@localizer["donation_phone_label"]</label>
                                         <input class="form-input" type="tel" id="ppPhone" name="ppPhone" autocomplete="tel">
                                     </div>
 
@@ -285,71 +285,40 @@
                     </div>
                 </div>
 
-                <p class="donate-note">@localizer["donate_note"]</p>
+                <p class="donate-note">@localizer["donation_contact_label"]</p>
 
             </div>
         </section>
 
         <section class="section impact" aria-labelledby="impact-donate-title">
             <div class="container">
-                <h2 class="section__title" id="impact-donate-title">@localizer["home_impact"]</h2>
+                <h2 class="section__title" id="impact-donate-title">@localizer["impact_label"]</h2>
                 <div class="impact-grid" role="list">
-                    @if (culture == "ar")
-          {
                     <article class="impact-item" role="listitem">
                         <div class="impact-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
-                        <p class="number">+300 ألف</p>
-                        <p class="label">قارئ شهريًا</p>
+                        <p class="number">@localizer["impact_first_subhead_label"]</p>
+                        <p class="label">@localizer["impact_first_content_label"]</p>
                     </article>
                     <article class="impact-item" role="listitem">
                         <div class="impact-icon"><img src="~/Icons/book-open-cover.svg" alt=""></div>
-                        <p class="number">10 ملايين</p>
-                        <p class="label label--nowrap">كتاب قُرئ منذ 2024</p>
+                        <p class="number">@localizer["impact_second_subhead_label"]</p>
+                        <p class="label label--nowrap">@localizer["impact_second_content_label"]</p>
                     </article>
                     <article class="impact-item" role="listitem">
                         <div class="impact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
-                        <p class="number">+190</p>
-                        <p class="label">دولة نخدمها</p>
+                        <p class="number">@localizer["impact_third_subhead_label"]</p>
+                        <p class="label">@localizer["impact_third_content_label"]</p>
                     </article>
                     <article class="impact-item" role="listitem">
                         <div class="impact-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
-                        <p class="number">+9</p>
-                        <p class="label">لغات نخدمها</p>
+                        <p class="number">@localizer["impact_fourth_subhead_label"]</p>
+                        <p class="label">@localizer["impact_fourth_content_label"]</p>
                     </article>
                     <article class="impact-item" role="listitem">
                         <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
-                        <p class="number">+3.5 آلاف</p>
-                        <p class="label">كتاب منشور<br><span>(شاملاً الترجمات)</span></p>
+                        <p class="number">@localizer["impact_fifth_subhead_label"]</p>
+                        <p class="label">@localizer["impact_fifth_content_label"]</p>
                     </article>
-          }
-          else
-          {
-                    <article class="impact-item" role="listitem">
-                        <div class="impact-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
-                        <p class="number">300K+</p>
-                        <p class="label">Monthly Readers</p>
-                    </article>
-                    <article class="impact-item" role="listitem">
-                        <div class="impact-icon"><img src="~/Icons/book-open-cover.svg" alt=""></div>
-                        <p class="number">10M</p>
-                        <p class="label label--nowrap">Books Read since 2024</p>
-                    </article>
-                    <article class="impact-item" role="listitem">
-                        <div class="impact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
-                        <p class="number">190+</p>
-                        <p class="label">Countries Served</p>
-                    </article>
-                    <article class="impact-item" role="listitem">
-                        <div class="impact-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
-                        <p class="number">9+</p>
-                        <p class="label">Languages Served</p>
-                    </article>
-                    <article class="impact-item" role="listitem">
-                        <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
-                        <p class="number">3.5K+</p>
-                        <p class="label">Books Published<br><span>(incl. translations)</span></p>
-                    </article>
-          }
                 </div>
             </div>
         </section>
@@ -357,59 +326,31 @@
         <section class="section section--tight testimonials" aria-labelledby="testimonials-donate-title">
             <div class="container">
                 <header class="section__header">
-                    <h2 class="section__title" id="testimonials-donate-title">@localizer["home_testimonials"]</h2>
+                    <h2 class="section__title" id="testimonials-donate-title">@localizer["testimonials_label"]</h2>
                 </header>
 
-                @if (culture == "ar")
-        {
-                <div class="testimonial-slider" data-slider tabindex="0" aria-label="آراء القُرَّاء">
+                <div class="testimonial-slider" data-slider tabindex="0" aria-label="@localizer["testimonials_slider_label"]">
                     <div class="testimonial-track" data-slider-track>
                         <article class="card card--testimonial" data-slide>
-                            <p class="quote">"كانت جودة الترجمة المنقَّحة باستخدام Gemini Pro مذهلة. التقطت دقائق لهجة شخصيَّتي بأفضل ما رأيت من أدوات. إنها نقلة نوعية للعمل الأدبي."</p>
+                            <p class="quote">"@localizer["testimonial_1_quote"]"</p>
                             <div class="author-row">
-                                <p class="author">مايكل صموئيل</p>
+                                <p class="author">@localizer["testimonial_1_author"]</p>
                                 <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
                             </div>
                         </article>
                         <article class="card card--testimonial" data-slide>
-                            <p class="quote">"إمكانية ترجمة كامل أعمالي السابقة إلى ثلاث لغات في فترة عصر واحدة وبتكلفة أقل بكثير من المعتاد، تُعدّ نقلة نوعية."</p>
+                            <p class="quote">"@localizer["testimonial_2_quote"]"</p>
                             <div class="author-row">
-                                <p class="author">جيمس هنري</p>
+                                <p class="author">@localizer["testimonial_2_author"]</p>
                                 <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
                             </div>
                         </article>
                     </div>
-                    <div class="slider-dots" aria-label="ترقيم الشريحة">
-                        <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="عرض الرأي الأول" aria-current="true"></button>
-                        <button class="slider-dot" type="button" data-slide-to="1" aria-label="عرض الرأي الثاني" aria-current="false"></button>
+                    <div class="slider-dots" aria-label="@localizer["testimonials_pagination_label"]">
+                        <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="@localizer["testimonials_slide_1_label"]" aria-current="true"></button>
+                        <button class="slider-dot" type="button" data-slide-to="1" aria-label="@localizer["testimonials_slide_2_label"]" aria-current="false"></button>
                     </div>
                 </div>
-        }
-        else
-        {
-                <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
-                    <div class="testimonial-track" data-slider-track>
-                        <article class="card card--testimonial" data-slide>
-                            <p class="quote">"The quality of the refined translation using Gemini Pro was staggering. It captured the nuances of my protagonist's dialect better than any tool I've used before. It's truly a game-changer for literary work."</p>
-                            <div class="author-row">
-                                <p class="author">Michael Samuel</p>
-                                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
-                            </div>
-                        </article>
-                        <article class="card card--testimonial" data-slide>
-                            <p class="quote">"Being able to translate my entire back catalog into three different languages in one afternoon for a fraction of traditional costs is a game-changer."</p>
-                            <div class="author-row">
-                                <p class="author">James Henry</p>
-                                <img src="~/Icons/quote_mark.svg" alt="" class="quote-mark" aria-hidden="true">
-                            </div>
-                        </article>
-                    </div>
-                    <div class="slider-dots" aria-label="Slider pagination">
-                        <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="Show testimonial 1" aria-current="true"></button>
-                        <button class="slider-dot" type="button" data-slide-to="1" aria-label="Show testimonial 2" aria-current="false"></button>
-                    </div>
-                </div>
-        }
             </div>
         </section>
 
@@ -466,8 +407,8 @@
       recaptchaRequired  : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["recaptcha_error"].Value))
     };
 
-    var cardNumberPlaceholder = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cardNumber_placeholder"].Value));
-    var cvvPlaceholder        = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_placeholder"].Value));
+    var cardNumberPlaceholder = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_card_number_placeholder_label"].Value));
+    var cvvPlaceholder        = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_placeholder_label"].Value));
 
     function showFieldError(spanId, message) {
       var span = document.getElementById(spanId);
