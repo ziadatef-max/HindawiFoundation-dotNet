@@ -1,8 +1,4 @@
-/* Donate page — page-specific styles only
-   Shared components (header, footer, impact, testimonials, page-banner, layout)
-   must NOT be duplicated here. ─────────────────────────────────── */
 
-/* ── Intro ─────────────────────────────────────────────────────── */
 .donate-intro__title {
   font-size: 24px;
   line-height: 33px;
@@ -20,7 +16,6 @@
   margin: 0;
 }
 
-/* ── Form card ──────────────────────────────────────────────────── */
 .donate-form-wrap {
   margin-top: 30px;
 
@@ -35,7 +30,6 @@
   overflow: hidden;
 }
 
-/* ── Payment method tabs ────────────────────────────────────────── */
 .payment-methods {
   display: flex;
   flex-direction: row;
@@ -73,7 +67,6 @@
   color: #8C3CF9;
 }
 
-/* ── Gray form body ─────────────────────────────────────────────── */
 .donate-form-body {
   background: #EFEFEF;
   padding: 60px 30px 30px;
@@ -89,7 +82,6 @@
   padding: 30px;
 }
 
-/* ── Grid rows ──────────────────────────────────────────────────── */
 .donate-grid {
   display: grid;
   gap: 20px;
@@ -101,11 +93,9 @@
 }
 
 .donate-grid--card {
-  /* Card number: ~auto, expiry and CVV fixed narrow */
   grid-template-columns: 1fr 173px 173px;
 }
 
-/* ── Form fields ────────────────────────────────────────────────── */
 .form-field {
   display: flex;
   flex-direction: column;
@@ -147,7 +137,6 @@ font-size: 16px;
   box-shadow: 0 0 0 3px rgba(140, 60, 249, 0.12);
 }
 
-/* ── Remove native number-input spinner arrows ───────────────────── */
 .donate-form-card input[type="number"]::-webkit-outer-spin-button,
 .donate-form-card input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -158,7 +147,6 @@ font-size: 16px;
   -moz-appearance: textfield;
 }
 
-/* ── Amount input with currency dropdown ────────────────────────── */
 .amount-input-wrap {
   position: relative;
   display: flex;
@@ -169,7 +157,6 @@ font-size: 16px;
   padding-right: 90px;
 }
 
-/* Legacy static badge (PayPal panel) */
 .amount-currency {
   position: absolute;
   right: 15px;
@@ -179,7 +166,6 @@ font-size: 16px;
   user-select: none;
 }
 
-/* ── Currency select component ──────────────────────────────────── */
 .currency-select {
   position: absolute;
   right: 0;
@@ -294,7 +280,6 @@ font-size: 16px;
   direction: ltr;
 }
 
-/* ── Donation frequency radio ───────────────────────────────────── */
 .frequency-options {
   display: flex;
   align-items: center;
@@ -320,14 +305,12 @@ font-size: 16px;
   flex-shrink: 0;
 }
 
-/* ── Divider inside form ─────────────────────────────────────────── */
 .donate-divider {
   border: 0;
   border-top: 1px solid #D9D9D9;
   margin: 30px 0;
 }
 
-/* ── Submit button ──────────────────────────────────────────────── */
 .donate-submit {
   display: flex;
   align-items: center;
@@ -359,7 +342,6 @@ font-size: 16px;
   text-align: center;
 }
 
-/* ── Field-level validation errors ─────────────────────────────── */
 .field-error {
   display: none;
   color: #c00;
@@ -378,7 +360,6 @@ font-size: 16px;
   box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.10);
 }
 
-/* ── Note below form ────────────────────────────────────────────── */
 .donate-note {
   font-size: 18px;
   line-height: 25px;
@@ -397,7 +378,6 @@ font-size: 16px;
   text-decoration: underline;
 }
 
-/* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 1259px) {
   .donate-grid--card {
     grid-template-columns: 1fr 1fr 1fr;
@@ -430,7 +410,6 @@ font-size: 16px;
   }
 }
 
-/* ── Card Number with icons ─────────────────────────────────────── */
 .card-number-input {
   position: relative;
   width: 100%;
@@ -467,7 +446,6 @@ font-size: 16px;
   height: auto;
 }
 
-/* ── Payment panels ─────────────────────────────────────────────── */
 .payment-panel {
   display: none;
 }
@@ -476,7 +454,6 @@ font-size: 16px;
   display: block;
 }
 
-/* ── Wire Transfer panel ─────────────────────────────────────────── */
 .wire-transfer-table {
   display: flex;
   flex-direction: column;
@@ -510,7 +487,6 @@ font-size: 16px;
   color: #333333;
 }
 
-/* ── PayPal panel ───────────────────────────────────────────────── */
 .paypal-panel {
   display: flex;
   flex-direction: column;

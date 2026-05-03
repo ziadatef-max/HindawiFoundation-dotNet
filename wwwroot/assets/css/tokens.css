@@ -6,7 +6,6 @@
 }
 
 :root {
-  /* Colors */
   --color-brand-orange: #ff7a4f;
   --color-brand-orange-hover: #c46a1f;
   --color-brand-green: #707805;
@@ -22,7 +21,6 @@
   --color-border-light: #e5e4e5;
   --color-dot: #d9d9d9;
 
-  /* Typography */
   --font-primary: "Noto Sans Cham", "Segoe UI", sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.8125rem;
@@ -43,7 +41,6 @@
   --line-height-relaxed: 1.7;
   --font-size-18: 18px;
 
-  /* Spacing (8px rhythm) */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -58,29 +55,24 @@
   --space-12: 30px;
   --space-13: 37px;
 
-  /* Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-pill: 90px;
 
-  /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.1);
 
-  /* Layout */
   --container-max: 1200px;
   --section-space-y: var(--space-10);
   --header-bottom-height: 52px;
 
-  /* Motion */
   --duration-fast: 0.2s;
   --duration-base: 0.3s;
   --duration-slow: 0.7s;
   --easing-standard: ease;
 
-  /* Layering */
   --z-header: 900;
   --z-mobile-nav: 950;
   --z-dropdown: 1000;

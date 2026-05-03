@@ -1,8 +1,4 @@
-/* Partners page — page-specific styles only
-   Shared components (header, footer, buttons, page-banner, layout)
-   must NOT be duplicated here. ─────────────────────────────────── */
 
-/* ── Intro ─────────────────────────────────────────────────────── */
 .partners-intro {
   margin-bottom: 30px;
   width: 100%;
@@ -29,7 +25,6 @@
   margin-bottom: 0;
 }
 
-/* ── Partner cards grid ────────────────────────────────────────── */
 .partner-cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 380px);
@@ -41,7 +36,6 @@
   margin-inline: auto;
 }
 
-/* ── Partner card ──────────────────────────────────────────────── */
 .partner-card {
   width: 380px;
   height: auto;
@@ -66,7 +60,6 @@
   padding: 0 10px;
   max-width: 360px;
   box-sizing: border-box;
-  /* Override components.css grayscale rule */
   filter: none;
   opacity: 1;
   transition: none;
@@ -77,13 +70,11 @@
   max-width: 285px;
   object-fit: contain;
   display: block;
-  /* Ensure original colours, no grayscale from shared styles */
   filter: none;
   opacity: 1;
   transition: none;
 }
 
-/* Neutralise the components.css hover rule that would re-apply grayscale */
 .partner-card:hover .partner-card__logo,
 .partner-card:hover .partner-card__logo-img {
   filter: none;
@@ -119,7 +110,6 @@
   margin-bottom: 0;
 }
 
-/* ── CTA section ───────────────────────────────────────────────── */
 
 /* Remove the extra 60px top-padding that the shared section--tight
    would add between cards and CTA — gap comes from section 1's
@@ -148,7 +138,6 @@
   margin-bottom: 0;
 }
 
-/* Override shared .btn--primary fixed dimensions for this button */
 .partners-cta__btn {
   width: 346px;
   height: 70px;
@@ -159,7 +148,6 @@
   margin-top: 30px;
 }
 
-/* ── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 1259px) {
   .partner-cards-grid {
     grid-template-columns: repeat(3, 1fr);

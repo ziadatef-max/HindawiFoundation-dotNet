@@ -18,10 +18,6 @@ public class CustomRouteDataCultureProvider : RequestCultureProvider
             uiCulture = segments[0].ToLowerInvariant();
         }
 
-        // Keep format culture ("en") for date/number parsing so Arabic locale
-        // does not break DateTime.Parse or decimal.TryParse in the pipeline.
-        // The UI culture drives string resource selection (JsonStringLocalizer
-        // uses CurrentUICulture, not CurrentCulture).
         return Task.FromResult<ProviderCultureResult?>(new ProviderCultureResult("en", uiCulture));
     }
 }

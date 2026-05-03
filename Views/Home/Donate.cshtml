@@ -436,7 +436,6 @@
     var isSubmitting = false;
     var hasServerDonationError = @(Model?.ShowDonationError == true ? "true" : "false");
 
-    // ── Currency dropdown state ────────────────────────────────────────
     var currencyMinAmount   = 1;
     var currenciesData      = [];
     var currencySelectEl    = document.querySelector('[data-currency-select]');
@@ -445,15 +444,12 @@
     var currencyDropdownEl  = currencySelectEl ? currencySelectEl.querySelector('[data-currency-dropdown]') : null;
     var currencyListEl      = currencySelectEl ? currencySelectEl.querySelector('[data-currency-list]') : null;
 
-    // Map from Braintree field names to their container DOM elements.
-    // Populated once the DOM is ready (elements exist at parse time).
     var hfContainerMap = {
       'number'        : document.getElementById('cardNumber'),
       'expirationDate': document.getElementById('cardExpiry'),
       'cvv'           : document.getElementById('cardCvc')
     };
 
-    // ── Localized validation messages ──────────────────────────────────────
     var validationMsgs = {
       frequencyRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_frequency_required"].Value)),
       amountRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_amount_required"].Value)),
@@ -470,11 +466,9 @@
       recaptchaRequired  : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["recaptcha_error"].Value))
     };
 
-    // ── Braintree hosted-field placeholders (localized) ───────────────────
     var cardNumberPlaceholder = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cardNumber_placeholder"].Value));
     var cvvPlaceholder        = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_placeholder"].Value));
 
-    // ── Field-error helpers ────────────────────────────────────────────────
     function showFieldError(spanId, message) {
       var span = document.getElementById(spanId);
       if (!span) return;
@@ -491,12 +485,9 @@
       el.classList.toggle('is-invalid', invalid);
     }
 
-    // ── Global error helpers (Issue 2) ─────────────────────────────────────
     function clearGlobalError() {
-      // Hide server-rendered error block
       var serverErr = document.getElementById('serverErrorMsg');
       if (serverErr) serverErr.hidden = true;
-      // Hide client message
       if (msg) { msg.hidden = true; msg.textContent = ''; msg.classList.remove('is-error'); }
     }
 
@@ -515,7 +506,6 @@
       }
     }
 
-    // ── Currency dropdown helpers ──────────────────────────────────────
     var CURRENCY_USD = { currencyCode: 'USD', currencyName: 'United States Dollar', exchangeRate: 1 };
 
     function escHtml(s) {
@@ -575,7 +565,6 @@
       var codeHtml = '<span class="currency-select__code" dir="ltr">' + escHtml(c.currencyCode) + '</span>';
       var sepHtml  = '<span class="currency-select__separator">|</span>';
       var nameHtml = '<span class="currency-select__name">' + escHtml(c.currencyName) + '</span>';
-      // English: Code | Name   Arabic: Name | Code
       li.innerHTML = donationCulture === 'ar'
         ? nameHtml + sepHtml + codeHtml
         : codeHtml + sepHtml + nameHtml;
@@ -598,7 +587,6 @@
       selectCurrency(codeInList ? defaultCode : 'USD');
     }
 
-    // ── Currency dropdown interaction wiring ────────────────────────────
     if (currencyTriggerEl) {
       currencyTriggerEl.addEventListener('click', function (e) { e.stopPropagation(); openCurrencyDropdown(); });
     }
@@ -606,7 +594,6 @@
       if (currencySelectEl && !currencySelectEl.contains(e.target)) closeCurrencyDropdown();
     });
 
-    // ── Clear global error on any field interaction (Issue 2) ──────────────
     ['donationAmount', 'donorEmail', 'firstName', 'lastName', 'phone'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) {
@@ -620,7 +607,6 @@
       });
     }
 
-    // ── Clear individual field errors on input (so UI feels responsive) ────
     if (amountInput) {
       amountInput.addEventListener('input', function () {
         clearFieldError('amount_span');
@@ -637,7 +623,6 @@
       });
     }
 
-    // ── Prevent non-numeric characters in number/phone inputs ─────────────
     if (amountInput) {
       amountInput.addEventListener('keydown', function (e) {
         if (e.key === 'e' || e.key === 'E' || e.key === '+' || e.key === '-') e.preventDefault();
@@ -649,22 +634,18 @@
       });
     }
 
-    // ── Client-side form validation (Issue 3) ──────────────────────────────
     function validateDonateForm() {
       var valid = true;
 
-      // Clear all field errors
       ['frequency_span','amount_span','email_span','s_number','s_expirationDate','s_cvv'].forEach(clearFieldError);
       [amountInput, emailEl, document.getElementById('donationAmount')].forEach(function(el) { setInputState(el, false); });
 
-      // Frequency (required)
       var freqChecked = form && form.querySelector('input[name="Frequency"]:checked');
       if (!freqChecked) {
         showFieldError('frequency_span', validationMsgs.frequencyRequired);
         valid = false;
       }
 
-      // Amount (required, min 1)
       var rawAmount = amountInput ? amountInput.value.trim() : '';
       var parsedAmount = parseFloat(rawAmount);
       if (!rawAmount) {
@@ -677,7 +658,6 @@
         valid = false;
       }
 
-      // Email (required + format)
       var emailVal = emailEl ? emailEl.value.trim() : '';
       if (!emailVal) {
         showFieldError('email_span', validationMsgs.emailRequired);
@@ -692,7 +672,6 @@
       return valid;
     }
 
-    // ── Early exit when payment service unavailable ────────────────────────
     if (!clientToken) {
       if (!hasServerDonationError) {
         showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
@@ -707,7 +686,6 @@
       return;
     }
 
-    // ── Braintree initialisation ───────────────────────────────────────────
     braintree.client.create({ authorization: clientToken }, function (clientErr, clientInstance) {
       if (clientErr) {
         showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_init_failed"].Value)), true);
@@ -737,7 +715,6 @@
         }
         hostedFieldsInstance = hfInstance;
 
-        // Clear card field errors and invalid state on focus/change
         var hfSpanMap = { 'number': 's_number', 'expirationDate': 's_expirationDate', 'cvv': 's_cvv' };
         hfInstance.on('focus', function (event) {
           var field  = event.emittedBy;
@@ -752,16 +729,13 @@
       });
     });
 
-    // ── Submit handler ─────────────────────────────────────────────────────
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         if (isSubmitting) return;
 
-        // Run client-side validation first
         if (!validateDonateForm()) return;
 
-        // ── Pre-tokenize: check whether hosted card fields are empty (Issue 1) ──
         if (hostedFieldsInstance) {
           var hfState  = hostedFieldsInstance.getState();
           var hfFields = hfState.fields;
@@ -786,7 +760,6 @@
           if (!hfValid) return;
         }
 
-        // reCAPTCHA check (field-level error under widget)
         var robotError = document.getElementById('robot_span');
         if (document.querySelector('.g-recaptcha')) {
           var recaptchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
@@ -813,7 +786,6 @@
           if (tokenizeErr) {
             setSubmitting(false);
 
-            // Fields are non-empty here (empty was caught above); show "invalid" messages
             var invalidFields = (tokenizeErr.details && tokenizeErr.details.invalidFieldKeys) || [];
             var fieldSpanMap = { 'number': 's_number', 'expirationDate': 's_expirationDate', 'cvv': 's_cvv' };
             var fieldMsgMap  = {
@@ -844,7 +816,6 @@
       });
     }
 
-    // ── reCAPTCHA completion callback (must be global for data-callback attr) ──
     window.hindawiRecaptchaCallback = function () {
       clearGlobalError();
       var robotErr = document.getElementById('robot_span');
@@ -854,7 +825,6 @@
       }
     };
 
-    // ── Load currencies and default currency from API ──────────────────────
     (function initCurrencies() {
       var p1 = fetch('/' + donationCulture + '/donate/currencies', { credentials: 'same-origin' })
         .then(function (r) { return r.ok ? r.json() : []; })

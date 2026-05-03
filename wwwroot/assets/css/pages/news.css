@@ -1,6 +1,4 @@
-/* News listing page ─────────────────────────────────────────── */
 
-/* ── Grid ───────────────────────────────────────────────────── */
 .news-grid {
   display: grid;
   grid-template-columns: repeat(2, 585px);
@@ -12,7 +10,6 @@
   margin-inline: auto;
 }
 
-/* ── Card ───────────────────────────────────────────────────── */
 .news-card {
   display: flex;
   flex-direction: column;
@@ -25,7 +22,6 @@
   color: inherit;
 }
 
-/* ── Card image ─────────────────────────────────────────────── */
 .news-card__image {
   display: block;
   width: 100%;
@@ -34,7 +30,6 @@
   border-radius: 10px 10px 0 0;
 }
 
-/* ── Card body ──────────────────────────────────────────────── */
 .news-card__body {
   flex: 1;
   min-height: 145px;
@@ -45,7 +40,6 @@
   flex-direction: column;
 }
 
-/* ── Date ───────────────────────────────────────────────────── */
 .news-card__date {
   display: flex;
   align-items: center;
@@ -61,7 +55,6 @@
   flex-shrink: 0;
 }
 
-/* ── Title ──────────────────────────────────────────────────── */
 .news-card__title {
   font-size: 24px;
   line-height: 33px;
@@ -73,7 +66,6 @@
   word-break: normal;
 }
 
-/* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 1259px) {
   .news-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

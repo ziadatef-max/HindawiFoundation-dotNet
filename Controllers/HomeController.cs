@@ -26,9 +26,6 @@ public class HomeController : Controller
     private IActionResult ViewForCulture(string baseName, string culture) =>
         View($"{baseName}_{NormalizeCulture(culture)}");
 
-    // ── Home ─────────────────────────────────────────────────────────────────
-
-    /// /en  or  /ar
     [HttpGet("")]
     public IActionResult Index([FromRoute] string culture)
     {
@@ -37,7 +34,7 @@ public class HomeController : Controller
         return ViewForCulture("Index", culture);
     }
 
-    /// /en/home or /en/Home → permanent redirect to /en (or /ar)
+
     [HttpGet("home")]
     public IActionResult HomeRedirect([FromRoute] string culture)
     {
@@ -45,7 +42,6 @@ public class HomeController : Controller
         return RedirectPermanent($"/{NormalizeCulture(culture)}");
     }
 
-    // ── About ────────────────────────────────────────────────────────────────
 
     [HttpGet("about")]
     public IActionResult About([FromRoute] string culture)
@@ -55,8 +51,6 @@ public class HomeController : Controller
         return ViewForCulture("About", culture);
     }
 
-    // ── Partners ─────────────────────────────────────────────────────────────
-
     [HttpGet("partners")]
     public IActionResult Partners([FromRoute] string culture)
     {
@@ -64,8 +58,6 @@ public class HomeController : Controller
         SetCommonViewData(culture, "partners", "partners_page_title");
         return ViewForCulture("Partners", culture);
     }
-
-    // ── News listing ─────────────────────────────────────────────────────────
 
     [HttpGet("news")]
     public IActionResult News([FromRoute] string culture)
@@ -75,8 +67,6 @@ public class HomeController : Controller
         return ViewForCulture("News", culture);
     }
 
-    // ── News details  /en/news/{id}  ─────────────────────────────────────────
-
     [HttpGet("news/{id}")]
     public IActionResult NewsDetails([FromRoute] string culture, [FromRoute] string id)
     {
@@ -84,7 +74,6 @@ public class HomeController : Controller
 
         var resolvedId = NewsMap.Resolve(id);
 
-        // Unknown ID → redirect to default article
         if (!string.Equals(id, resolvedId, StringComparison.Ordinal))
             return RedirectPermanent($"/{NormalizeCulture(culture)}/news/{resolvedId}");
 
@@ -94,8 +83,6 @@ public class HomeController : Controller
         return ViewForCulture("NewsDetails", culture);
     }
 
-    // ── Contact ──────────────────────────────────────────────────────────────
-
     [HttpGet("contact")]
     public IActionResult Contact([FromRoute] string culture)
     {
@@ -103,8 +90,6 @@ public class HomeController : Controller
         SetCommonViewData(culture, "contact", "contact_page_title");
         return ViewForCulture("Contact", culture);
     }
-
-    // ── Error ────────────────────────────────────────────────────────────────
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error() => View();

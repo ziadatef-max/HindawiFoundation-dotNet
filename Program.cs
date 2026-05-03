@@ -8,27 +8,22 @@ using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuration
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-// MVC + view localization
 builder.Services
     .AddControllersWithViews()
     .AddViewLocalization()
     .AddDataAnnotationsLocalization();
 
-// Force generated URLs to be lowercase (e.g. /en/about, not /en/About)
 builder.Services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
 
-// Caching for the JSON localizer
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddMemoryCache();
 
-// Localization (JSON-based)
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
 
-// Application services
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IDonationService, DonationService>();
 
@@ -63,8 +58,6 @@ app.UseRequestLocalization(localizationOptions);
 
 app.UseAuthorization();
 
-// ── Redirects ────────────────────────────────────────────────────────────────
-
 // Root → English home
 app.MapGet("/", context =>
 {
@@ -72,7 +65,7 @@ app.MapGet("/", context =>
     return Task.CompletedTask;
 });
 
-// /news/{id} without culture → /en/news/{id}
+
 app.MapGet("/news/{id}", context =>
 {
     var id = context.GetRouteValue("id") as string ?? NewsMap.GetId(0);

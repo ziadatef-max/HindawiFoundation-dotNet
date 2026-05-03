@@ -4,12 +4,10 @@
     var culture = string.Equals(routeCulture, "ar", StringComparison.OrdinalIgnoreCase) ? "ar" : "en";
     string IsActive(string key) => active == key ? "is-active" : "";
 
-    // Build the equivalent URL in the *other* culture, preserving action + id.
     var routeAction     = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
     var routeController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
     var routeId         = ViewContext.RouteData.Values["id"]?.ToString();
 
-    // Return the lowercase path segment(s) after /{culture}/, or "" for home.
     string SegmentForRoute()
     {
         if (string.Equals(routeController, "Donate", StringComparison.OrdinalIgnoreCase))
@@ -17,7 +15,7 @@
         if (string.Equals(routeAction, "NewsDetails", StringComparison.OrdinalIgnoreCase))
             return "news";
         if (string.Equals(routeAction, "Index", StringComparison.OrdinalIgnoreCase))
-            return "";   // home has no extra segment
+            return ""; 
         return routeAction.ToLowerInvariant();
     }
 
@@ -25,7 +23,6 @@
     var idSuffix = string.IsNullOrEmpty(routeId) ? "" : "/" + routeId;
     var qs       = Context.Request.QueryString.Value ?? "";
 
-    // Build a full URL for a given culture, handling the empty-segment home case.
     string MakeUrl(string cult)
     {
         var path = $"/{cult}";

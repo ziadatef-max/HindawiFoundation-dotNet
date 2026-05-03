@@ -2,7 +2,6 @@
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
-  /* padding-inline: var(--space-5); */
 }
 
 .section {
@@ -65,7 +64,6 @@
   }
 }
 
-/* ── Page Banner (shared across all inner pages) ──────────────── */
 .page-banner {
   background: var(--color-cream);
   padding-block: var(--space-13);

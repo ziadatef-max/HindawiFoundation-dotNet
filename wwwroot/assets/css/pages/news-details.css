@@ -1,12 +1,9 @@
-/* News details page ─────────────────────────────────────────── */
 
-/* ── Article wrapper ────────────────────────────────────────── */
 .news-detail {
   width: 100%;
   max-width: 1200px;
 }
 
-/* ── Hero image ─────────────────────────────────────────────── */
 .news-detail__hero {
   display: block;
   width: 100%;
@@ -15,7 +12,6 @@
   border-radius: 10px;
 }
 
-/* ── Title ──────────────────────────────────────────────────── */
 .news-detail__title {
   font-size: 24px;
   line-height: 33px;
@@ -24,7 +20,6 @@
   margin: 30px 0 8px;
 }
 
-/* ── Date ───────────────────────────────────────────────────── */
 .news-detail__date {
   display: flex;
   align-items: center;
@@ -40,7 +35,6 @@
   flex-shrink: 0;
 }
 
-/* ── Content area ───────────────────────────────────────────── */
 .news-detail__content p {
   font-size: 18px;
   line-height: 25px;
@@ -49,7 +43,6 @@
   margin: 0 0 20px;
 }
 
-/* ── Section headings ───────────────────────────────────────── */
 .news-detail__section {
   font-size: 24px;
   line-height: 33px;
@@ -58,7 +51,6 @@
   margin: 60px 0 20px;
 }
 
-/* ── Bullet list ─────────────────────────────────────────────── */
 .news-detail__list {
   list-style: none;
   padding: 0;
@@ -87,7 +79,6 @@
   flex-shrink: 0;
 }
 
-/* ── Figure / illustration ────────────────────────────────────── */
 .news-detail__figure {
   display: flex;
   flex-direction: column;
@@ -112,7 +103,6 @@
   margin-top: 20px;
 }
 
-/* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 1023px) {
   .news-detail__hero {
     height: 260px;

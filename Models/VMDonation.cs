@@ -26,7 +26,6 @@ public class VMDonation
 
     public string Language { get; set; } = "en";
 
-    // Keep for API compatibility
     public string? CreditCardNumber { get; set; }
 
     public string? CreditCardCVV { get; set; }

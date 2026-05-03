@@ -66,7 +66,6 @@ public class DonateController : Controller
 
         SetCommonViewData(culture);
 
-        // reCAPTCHA validation (only when a site key is configured)
         if (!string.IsNullOrWhiteSpace(_appSettings.DonationApi.GoogleRecaptchaKey))
         {
             var recaptchaToken = Request.Form["g-recaptcha-response"].FirstOrDefault();

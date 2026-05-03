@@ -1,4 +1,4 @@
-    /* Buttons */
+
     .btn {
     display: inline-flex;
     align-items: center;
@@ -63,7 +63,6 @@
     font-size: 0.95em;
     }
 
-    /* Header + nav */
     .site-header {
     position: sticky;
     top: 0;
@@ -277,7 +276,6 @@
     color: var(--color-brand-orange);
     }
 
-    /* Hero */
     .hero {
     background: var(--color-cream);
     padding-block: 30px;
@@ -326,7 +324,6 @@
     object-fit: cover;
     }
 
-    /* Generic cards */
     .card {
     width: 100%;
     max-width: 380px;
@@ -334,7 +331,6 @@
     border-radius: 20px;
     }
 
-    /* Global text safety — prevent text from escaping any card */
     .card,
     .card p,
     .card h3,
@@ -456,7 +452,6 @@
     min-width: 167px;
     }
 
-    /* Stat cards */
     .card--stat {
     width: 585px;
     max-width: none;
@@ -494,7 +489,6 @@
     word-break: normal;
     }
 
-    /* Testimonial cards */
 .testimonials .section__header {
   margin-bottom: 35px;
 }
@@ -583,7 +577,6 @@
   background: var(--color-body-strong);
 }
 
-    /* Section specific shared components */
     .products-grid,
     .stats-grid {
     display: grid;
@@ -971,7 +964,7 @@
 }
 .footer-group .invisible {
   visibility: hidden;
-  margin-bottom: 18px; /* same as real title */
+  margin-bottom: 18px; 
 }
 .site-footer__bottom {
   height: 60.30px;
@@ -988,7 +981,6 @@
   color: #949494;
 }
 
-    /* Responsive */
     @media (min-width: 480px) {
     .hero__content h1{
         font-size: var(--font-size-3xl);
@@ -1086,7 +1078,6 @@
     }
     }
 
-/* ── Shared grid responsive (below Figma desktop width) ─────── */
 @media (max-width: 1259px) {
   .products-grid,
   .stats-grid,
@@ -1112,7 +1103,6 @@
   }
 }
 
-/* ── CTA + Impact tablet responsive (768–1150px) ─────────────── */
 @media (min-width: 768px) and (max-width: 1150px) {
   .cta__inner {
     grid-template-columns: 1fr auto;
@@ -1137,7 +1127,6 @@
   }
 }
 
-/* ── Impact section: stay one line on desktop (issue 5) ──────── */
 @media (min-width: 1024px) {
   .impact-grid {
     flex-wrap: nowrap;
@@ -1159,7 +1148,6 @@
   }
 }
 
-/* ── Footer responsive ───────────────────────────────────────── */
 @media (max-width: 767px) {
   .site-footer__inner {
     flex-direction: column;
@@ -1193,7 +1181,6 @@
   }
 }
 
-/* ── News Card ───────────────────────────────────────────────── */
 .news-card {
   background: var(--color-white);
   border-radius: var(--radius-md);
@@ -1253,7 +1240,6 @@
   color: var(--color-brand-orange-hover);
 }
 
-/* ── Partner Card ────────────────────────────────────────────── */
 .partner-card {
   background: var(--color-surface);
   border-radius: var(--radius-md);

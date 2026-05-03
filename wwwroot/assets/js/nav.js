@@ -5,10 +5,8 @@ export function initNav() {
   const languageSwitch = document.querySelector(".language-switch");
   const languageToggle = document.querySelector("[data-language-toggle]");
 
-  // ── Auto-detect active nav link based on current URL ──────────
   setActiveNavLink();
 
-  // ── Mobile menu ───────────────────────────────────────────────
   if (mobileToggle && mobileMenu) {
     const closeMobileMenu = () => {
       mobileMenu.classList.remove("is-open");
@@ -48,7 +46,6 @@ export function initNav() {
     });
   }
 
-  // ── Language dropdown ─────────────────────────────────────────
   if (languageSwitch && languageToggle) {
     languageToggle.addEventListener("click", (event) => {
       event.preventDefault();
@@ -72,10 +69,6 @@ export function initNav() {
   }
 }
 
-/**
- * Resolve the current URL pathname and mark the matching nav link as active.
- * Normalises paths by stripping trailing slash and .html extension.
- */
 function setActiveNavLink() {
   const normalize = (href) => {
     try {

@@ -1,9 +1,4 @@
-/* Contact page — page-specific styles only
-   Shared components (header, footer, buttons, page-banner, layout)
-   must NOT be duplicated here. ─────────────────────────────────── */
 
-/* ── Contact layout (2-col: info + map) ────────────────────────── */
-.contact-layout {
   display: grid;
   grid-template-columns: 590px 600px;
   gap: 30px;
@@ -11,7 +6,6 @@
   margin-bottom: 60px;
 }
 
-/* ── Left column ────────────────────────────────────────────────── */
 .contact-block__title {
   font-size: 24px;
   line-height: 33px;
@@ -67,7 +61,6 @@
   color: #FF7A4F;
 }
 
-/* ── Right column map ───────────────────────────────────────────── */
 .contact-map {
   width: 100%;
   height: 343px;
@@ -82,7 +75,6 @@
   display: block;
 }
 
-/* ── Global Hubs section ────────────────────────────────────────── */
 .contact-hubs {
   margin-bottom: 60px;
   width: 100%;
@@ -129,7 +121,6 @@
   margin: 0;
 }
 
-/* ── Global Community section ───────────────────────────────────── */
 .contact-community__title {
   font-size: 24px;
   line-height: 33px;
@@ -206,7 +197,6 @@
   opacity: 1;
 }
 
-/* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 1259px) {
   .contact-layout {
     grid-template-columns: 1fr 1fr;

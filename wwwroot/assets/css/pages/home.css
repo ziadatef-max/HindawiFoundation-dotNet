@@ -1,4 +1,4 @@
-/* ── Home hero override ────────────────────────────────── */
+
 .page--home .hero {
   position: relative;
   height: 320px;
@@ -93,8 +93,6 @@
     max-width: 100%;
   }
 }
-
-/* ─────────────────────────────────────────────────────── */
 
 .page--home .what-we-do {
   text-align: center;
