@@ -12,6 +12,7 @@ public class DonationApi
     public string BaseURL { get; set; } = "https://dev-donation.api.booktime.org";
 
     public string Donate { get; set; } = "{0}/donation";
+    public int ProjectId { get; set; } = 2;
 
     public string EncryptionKey { get; set; } = string.Empty;
 
