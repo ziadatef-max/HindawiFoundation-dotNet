@@ -1,9 +1,9 @@
-
-  display: grid;
-  grid-template-columns: 590px 600px;
-  gap: 30px;
-  align-items: start;
-  margin-bottom: 60px;
+.contact-layout {
+    display: grid;
+    grid-template-columns: 590px 600px;
+    gap: 30px;
+    align-items: start;
+    margin-bottom: 60px;
 }
 
 .contact-block__title {
