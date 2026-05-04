@@ -1,7 +1,11 @@
+@using Microsoft.Extensions.Options
+@inject IOptions<HindawiFoundation.Web.Models.AppSettings> Options
 @{
-    ViewData["Title"] = "Partners";
+
     ViewData["BodyClass"] = "page page--partners";
     ViewData["ActivePage"] = "partners";
+
+    var partnershipsTeamEmail = Options.Value.PartnershipsTeamEmail;
 }
 
 @section Styles {
@@ -85,7 +89,7 @@
         <h2 class="partners-cta__title" id="partners-cta-title">Partner With Us to Spread the Joy of Reading</h2>
         <p class="partners-cta__text">Are you an organization, trust, or foundation passionate about global education, cultural preservation, or accessible technology? We are always looking for visionary partners to help us reach new communities and publish more books.</p>
         <p class="partners-cta__text">Whether you want to fund a specific language initiative, sponsor a specific project, or support our core operations, we would love to collaborate.</p>
-        <a href="#" class="btn btn--primary btn--icon partners-cta__btn">
+            <a href="mailto:@partnershipsTeamEmail" class="btn btn--primary btn--icon partners-cta__btn">
           <i class="fa-solid fa-envelope" aria-hidden="true"></i>
           Email Our Partnerships Team
         </a>

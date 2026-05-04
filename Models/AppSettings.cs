@@ -2,6 +2,7 @@ namespace HindawiFoundation.Web.Models;
 
 public class AppSettings
 {
+    public string PartnershipsTeamEmail { get; set; } = string.Empty;
     public DonationApi DonationApi { get; set; } = new();
 
     public DonationAccount DonationAccount { get; set; } = new();

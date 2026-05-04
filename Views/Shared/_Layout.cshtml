@@ -7,7 +7,7 @@
     var pageTitleKey = ViewData["TitleKey"] as string;
     var pageTitle = !string.IsNullOrEmpty(pageTitleKey)
         ? localizer[pageTitleKey].Value
-        : (ViewData["Title"] as string ?? "");
+        : (ViewData["Title"] as string ?? string.Empty);
     var siteName = localizer["website_name_label"].Value;
     var fullTitle = string.IsNullOrEmpty(pageTitle) || pageTitle == localizer["home_button"].Value
         ? $"{siteName}"

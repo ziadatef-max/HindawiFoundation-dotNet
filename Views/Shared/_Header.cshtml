@@ -1,8 +1,8 @@
 @{
-    var active = ViewData["ActivePage"] as string ?? "";
+    var active = ViewData["ActivePage"] as string ?? string.Empty;
     var routeCulture = ViewContext.RouteData.Values["culture"]?.ToString()?.ToLowerInvariant();
     var culture = string.Equals(routeCulture, "ar", StringComparison.OrdinalIgnoreCase) ? "ar" : "en";
-    string IsActive(string key) => active == key ? "is-active" : "";
+    string IsActive(string key) => active == key ? "is-active" : string.Empty;
 
     var routeAction     = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
     var routeController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
@@ -15,13 +15,13 @@
         if (string.Equals(routeAction, "NewsDetails", StringComparison.OrdinalIgnoreCase))
             return "news";
         if (string.Equals(routeAction, "Index", StringComparison.OrdinalIgnoreCase))
-            return "";
+            return string.Empty;
         return routeAction.ToLowerInvariant();
     }
 
     var segment  = SegmentForRoute();
-    var idSuffix = string.IsNullOrEmpty(routeId) ? "" : "/" + routeId;
-    var qs       = Context.Request.QueryString.Value ?? "";
+    var idSuffix = string.IsNullOrEmpty(routeId) ? string.Empty : "/" + routeId;
+    var qs = Context.Request.QueryString.Value ?? string.Empty;
 
     string MakeUrl(string cult)
     {
