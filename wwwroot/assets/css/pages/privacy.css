@@ -1,6 +1,13 @@
 .legal-article {
   max-width: 1200px;  
 }
+.legal-modified-date {
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 400;
+    color: #818181;
+    margin: 0 0 60px;
+}
 
 .legal-section {
   margin-bottom: 60px;
@@ -36,6 +43,11 @@
 }
 
 @media (max-width: 767px) {
+    .legal-modified-date {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 40px;
+    }
   .legal-section {
     margin-bottom: 36px;
   }
