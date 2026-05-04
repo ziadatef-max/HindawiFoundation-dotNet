@@ -4,7 +4,9 @@
       "Bash(xargs cat *)",
       "Bash(dotnet build *)",
       "Bash(dotnet clean *)",
-      "Bash(grep -iE \"\\\\.cshtml$\")"
+      "Bash(grep -iE \"\\\\.cshtml$\")",
+      "Bash(Get-ChildItem -Path \"d:\\\\repos\\\\HindawiFoundation\\\\wwwroot\\\\assets\\\\css\\\\pages\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object -Property FullName)"
     ]
   }
 }

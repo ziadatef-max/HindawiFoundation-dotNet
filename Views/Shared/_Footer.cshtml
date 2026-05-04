@@ -39,8 +39,8 @@
             <ul>
               <li><a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture">@localizer["contact_us_button"]</a></li>
               <li><a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture">@localizer["donate_button"]</a></li>
-              <li><a href="#">@localizer["privacy_policy_button"]</a></li>
-              <li><a href="#">@localizer["terms_and_conditions_button"]</a></li>
+              <li><a asp-controller="Home" asp-action="Privacy" asp-route-culture="@culture">@localizer["privacy_policy_button"]</a></li>
+              <li><a asp-controller="Home" asp-action="Terms" asp-route-culture="@culture">@localizer["terms_and_conditions_button"]</a></li>
             </ul>
           </section>
 

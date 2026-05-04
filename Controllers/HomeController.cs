@@ -91,6 +91,22 @@ public class HomeController : Controller
         return ViewForCulture("Contact", culture);
     }
 
+    [HttpGet("privacy")]
+    public IActionResult Privacy([FromRoute] string culture)
+    {
+        if (!IsSupportedCulture(culture)) return NotFound();
+        SetCommonViewData(culture, "", "privacy_policy_button");
+        return ViewForCulture("Privacy", culture);
+    }
+
+    [HttpGet("terms")]
+    public IActionResult Terms([FromRoute] string culture)
+    {
+        if (!IsSupportedCulture(culture)) return NotFound();
+        SetCommonViewData(culture, "", "terms_and_conditions_button");
+        return ViewForCulture("Terms", culture);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error() => View();
 }
