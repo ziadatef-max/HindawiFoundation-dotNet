@@ -225,6 +225,10 @@
   text-align: right;
 }
 
+.layout-rtl .form-input-validation-container {
+  text-align: right;
+}
+
 .layout-rtl .field-error {
   text-align: right;
 }
@@ -259,14 +263,22 @@
   padding-left: 0;
 }
 
-.layout-rtl .news-detail__list li {
-  padding-right: 15px;
-  padding-left: 0;
+    .layout-rtl .news-detail__list li {
+        padding-right: 15px;
+        padding-left: 0;
+    }
+.layout-rtl .legal-list li {
+    padding-right: 15px;
+    padding-left: 0;
 }
 
 .layout-rtl .news-detail__list li::before {
   right: 0;
   left: auto;
+}
+.layout-rtl .legal-list li::before {
+    right: 0;
+    left: auto;
 }
 
 .layout-rtl .card--testimonial {

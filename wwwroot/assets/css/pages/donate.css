@@ -342,6 +342,22 @@ font-size: 16px;
   text-align: center;
 }
 
+.form-input-validation-container {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.validation-form-message.alert.validation-message {
+  display: none;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #c00;
+}
+
+.validation-form-message.alert.validation-message.shown {
+  display: block;
+}
+
 .field-error {
   display: none;
   color: #c00;

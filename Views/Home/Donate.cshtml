@@ -178,13 +178,9 @@
                                         @localizer["donation_submission_button"]
                                     </button>
 
-                                    @if (Model?.ShowDonationError == true)
-                      {
-                                    <div class="donate-message is-error" role="alert" aria-live="polite" id="serverErrorMsg">
-                                        @localizer["donate_error_process_failed"]
+                                    <div class="form-input-validation-container" id="donateMessageContainer" role="alert" aria-live="polite"@(Model?.ShowDonationError == true ? "" : " hidden")>
+                                        <p class="validation-form-message alert validation-message@(Model?.ShowDonationError == true ? " shown" : "")" id="donateMessage">@(Model?.ShowDonationError == true ? localizer["donate_error_process_failed"].Value : "")</p>
                                     </div>
-                      }
-                                    <div class="donate-message" id="donateMessage" role="alert" aria-live="polite" hidden></div>
 
                                 </form>
                             </div>
@@ -368,6 +364,7 @@
     var clientToken = @Html.Raw(string.IsNullOrWhiteSpace(Model?.ClientToken) ? "null" : "\"" + Model.ClientToken + "\"");
     var form        = document.getElementById('donateForm');
     var submitBtn   = document.getElementById('donateSubmitBtn');
+    var msgContainer = document.getElementById('donateMessageContainer');
     var msg         = document.getElementById('donateMessage');
     var nonceField  = document.getElementById('PaymentMethodnonce');
     var currencyField = document.getElementById('CurrencyCode');
@@ -400,7 +397,6 @@
       cardRequired      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_card_required"].Value)),
       expiryRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_expiry_required"].Value)),
       cvvRequired       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_cvv_required"].Value)),
-      // "Field is required" messages shown when the hosted field is completely empty
       cardNumberRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_card_number_required"].Value)),
       expiryFieldRequired: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_expiry_required"].Value)),
       cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_required"].Value)),
@@ -427,16 +423,15 @@
     }
 
     function clearGlobalError() {
-      var serverErr = document.getElementById('serverErrorMsg');
-      if (serverErr) serverErr.hidden = true;
-      if (msg) { msg.hidden = true; msg.textContent = ''; msg.classList.remove('is-error'); }
+      if (msgContainer) msgContainer.hidden = true;
+      if (msg) { msg.textContent = ''; msg.classList.remove('shown'); }
     }
 
     function showMessage(text, isError) {
-      if (!msg) return;
-      msg.hidden = false;
-      msg.textContent = text;
-      msg.classList.toggle('is-error', !!isError);
+      if (!msg || !msgContainer) return;
+      msgContainer.hidden = !isError;
+      msg.textContent = isError ? text : '';
+      msg.classList.toggle('shown', !!isError);
     }
 
     function setSubmitting(state) {

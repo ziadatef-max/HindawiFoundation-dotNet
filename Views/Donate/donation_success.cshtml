@@ -1,40 +1,28 @@
 @{
     ViewData["TitleKey"] = "donate_success_page_title";
-    ViewData["BodyClass"] = "page page--donate";
+    ViewData["BodyClass"] = "page page--donate-success";
     ViewData["ActivePage"] = "donate";
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/assets/css/pages/donate.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/pages/donation-success.css" asp-append-version="true">
 }
 
 <main id="main-content">
 
-    <div class="page-banner">
+    <section class="section donation-success-section">
       <div class="container">
-        <h1>@localizer["donate_success_page_title"]</h1>
-      </div>
-    </div>
-
-    <section class="section section--tight">
-      <div class="container">
-        <div class="donate-intro">
-          <h2 class="donate-intro__title">@localizer["donate_success_title"]</h2>
-          <p class="donate-intro__desc">@localizer["donate_success_desc"]</p>
-          <p class="donate-intro__desc">@localizer["donate_success_extra"]</p>
-          <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;">
-            <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="btn btn--primary btn--icon">
-              <i class="fa-solid fa-heart" aria-hidden="true"></i>
-              @localizer["button_donate_again"]
-            </a>
-            <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="btn btn--secondary">
-              @localizer["button_back_home"]
-            </a>
-            <a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="btn btn--secondary">
-              @localizer["contact_us_button"]
-            </a>
-          </div>
+        <div class="donation-success">
+          <img class="donation-success__icon" src="~/Icons/donate_success.svg" alt="" aria-hidden="true">
+          <h1 class="donation-success__title">@localizer["donate_success_title"]</h1>
+            <p class="donation-success__go-to">
+                @localizer["go_to_label"]
+                <a asp-controller="Home"
+                    asp-action="Index"
+                    asp-route-culture="@culture"
+                    class="donation-success__link">@localizer["home_button"].</a>
+            </p>
         </div>
       </div>
     </section>

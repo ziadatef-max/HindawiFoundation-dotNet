@@ -79,7 +79,7 @@ public class DonationService : IDonationService
                 PeriodPay = donationViewModel.Frequency,
                 Amount = donationViewModel.Amount,
                 PaymentMethodnonce = donationViewModel.PaymentMethodnonce,
-                ProjectId = _appSettings.DonationApi.ProjectId,
+                ProjectId = 1,
                 CurrencyCode = donationViewModel.CurrencyCode,
                 Language = language
             };

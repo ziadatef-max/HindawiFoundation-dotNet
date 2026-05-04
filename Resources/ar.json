@@ -109,5 +109,8 @@
   "donation_card_number_required": "برجاء إدخال رقم البطاقة",
   "donation_expiry_required": "برجاء إدخال تاريخ انتهاء الصلاحية",
   "donation_cvv_required": "برجاء إدخال رمز حماية البطاقة",
-  "recaptcha_error": "برجاء تأكيد أنك لست برنامج روبوت."
+  "recaptcha_error": "برجاء تأكيد أنك لست برنامج روبوت.",
+  "go_to_label": "يمكنك الذهاب إلى",
+  "donate_success_page_title": "شكراً لك",
+  "donate_success_title": "شكراً على تبرعك."
 }
