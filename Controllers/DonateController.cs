@@ -29,7 +29,7 @@ public class DonateController : Controller
     {
         ViewData["Culture"] = NormalizeCulture(culture);
         ViewData["ActivePage"] = "donate";
-        ViewData["TitleKey"] = "donate_page_title";
+        ViewData["TitleKey"] = "donate_button";
     }
 
     private static readonly HashSet<string> SupportedCultures =
@@ -108,41 +108,6 @@ public class DonateController : Controller
         }
 
         return View("~/Views/Donate/donation_success.cshtml");
-    }
-
-    [HttpGet("~/{culture}/donate-unsubscribe")]
-    public IActionResult Unsubscribe([FromRoute] string culture)
-    {
-        if (!IsSupportedCulture(culture)) return NotFound();
-        ViewData["Culture"] = NormalizeCulture(culture);
-        ViewData["ActivePage"] = "donate";
-        return View("~/Views/Donate/donation_unsubscribe.cshtml");
-    }
-
-    [HttpGet("tiers")]
-    public IActionResult Tiers([FromRoute] string culture, [FromQuery] string? currencyCode = "USD", [FromQuery] decimal? exchangeRate = 1)
-    {
-        var tiers = new List<object>
-        {
-            new { id = "translation-champion", label = "Translation Champion", amount = 100 },
-            new { id = "translation-hero", label = "Translation Hero", amount = 500 },
-            new { id = "literacy-leader", label = "Literacy Leader", amount = 1000 },
-            new { id = "book-supporter", label = "Book Supporter", amount = 1000 },
-            new { id = "series-superhero", label = "Series SuperHero", amount = 10000 },
-            new { id = "library-builder", label = "Library Builder", amount = 2500 }
-        };
-
-        if (exchangeRate.HasValue && exchangeRate > 0)
-        {
-            tiers = tiers.Select(t => new
-            {
-                id = ((dynamic)t).id,
-                label = ((dynamic)t).label,
-                amount = Math.Round(((dynamic)t).amount * exchangeRate.Value, 2)
-            }).Cast<object>().ToList();
-        }
-
-        return Json(new { tiers, currencyCode });
     }
 
     [HttpGet("currencies")]

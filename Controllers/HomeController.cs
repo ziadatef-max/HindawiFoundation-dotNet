@@ -55,7 +55,7 @@ public class HomeController : Controller
     public IActionResult Partners([FromRoute] string culture)
     {
         if (!IsSupportedCulture(culture)) return NotFound();
-        SetCommonViewData(culture, "partners", "partners_page_title");
+        SetCommonViewData(culture, "partners", "partners_button");
         return ViewForCulture("Partners", culture);
     }
 
@@ -63,7 +63,7 @@ public class HomeController : Controller
     public IActionResult News([FromRoute] string culture)
     {
         if (!IsSupportedCulture(culture)) return NotFound();
-        SetCommonViewData(culture, "news", "news_page_title");
+        SetCommonViewData(culture, "news", "news_button");
         return ViewForCulture("News", culture);
     }
 
@@ -77,7 +77,7 @@ public class HomeController : Controller
         if (!string.Equals(id, resolvedId, StringComparison.Ordinal))
             return RedirectPermanent($"/{NormalizeCulture(culture)}/news/{resolvedId}");
 
-        SetCommonViewData(culture, "news", "news_details_page_title");
+        SetCommonViewData(culture, "news", "news_button");
         ViewData["NewsId"] = resolvedId;
         ViewData["NewsIndex"] = NewsMap.GetIndex(resolvedId);
         return ViewForCulture("NewsDetails", culture);
@@ -87,7 +87,7 @@ public class HomeController : Controller
     public IActionResult Contact([FromRoute] string culture)
     {
         if (!IsSupportedCulture(culture)) return NotFound();
-        SetCommonViewData(culture, "contact", "contact_page_title");
+        SetCommonViewData(culture, "contact", "contact_us_button");
         return ViewForCulture("Contact", culture);
     }
 
