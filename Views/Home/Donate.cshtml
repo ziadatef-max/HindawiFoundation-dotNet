@@ -74,7 +74,6 @@
                                                     <input type="radio" asp-for="Frequency" value="monthly"> @localizer["donation_frequency_monthly_button"]
                                                 </label>
                                             </div>
-                                            <span class="field-error" id="frequency_span"></span>
                                         </div>
 
                                         <div class="form-field">
@@ -173,14 +172,14 @@
                                         </div>
                                     }
 
+                                    <div class="form-input-validation-container" id="donateMessageContainer" role="alert" aria-live="polite"@(Model?.ShowDonationError == true ? "" : " hidden")>
+                                        <p class="validation-form-message alert validation-message@(Model?.ShowDonationError == true ? " shown" : "")" id="donateMessage">@(Model?.ShowDonationError == true ? localizer["donate_error_process_failed"].Value : "")</p>
+                                    </div>
+
                                     <button class="donate-submit" type="submit" id="donateSubmitBtn">
                                         <i class="fa-solid fa-heart" aria-hidden="true"></i>
                                         @localizer["donation_submission_button"]
                                     </button>
-
-                                    <div class="form-input-validation-container" id="donateMessageContainer" role="alert" aria-live="polite"@(Model?.ShowDonationError == true ? "" : " hidden")>
-                                        <p class="validation-form-message alert validation-message@(Model?.ShowDonationError == true ? " shown" : "")" id="donateMessage">@(Model?.ShowDonationError == true ? localizer["donate_error_process_failed"].Value : "")</p>
-                                    </div>
 
                                 </form>
                             </div>
@@ -325,7 +324,7 @@
                     <h2 class="section__title" id="testimonials-donate-title">@localizer["testimonials_label"]</h2>
                 </header>
 
-                <div class="testimonial-slider" data-slider tabindex="0" aria-label="@localizer["testimonials_slider_label"]">
+            <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
                     <div class="testimonial-track" data-slider-track>
                         <article class="card card--testimonial" data-slide>
                             <p class="quote">"@localizer["testimonial_1_quote"]"</p>
@@ -342,9 +341,9 @@
                             </div>
                         </article>
                     </div>
-                    <div class="slider-dots" aria-label="@localizer["testimonials_pagination_label"]">
-                        <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="@localizer["testimonials_slide_1_label"]" aria-current="true"></button>
-                        <button class="slider-dot" type="button" data-slide-to="1" aria-label="@localizer["testimonials_slide_2_label"]" aria-current="false"></button>
+                <div class="slider-dots" aria-label="Slider pagination">
+                    <button class="slider-dot is-active" type="button" data-slide-to="0" aria-label="Show testimonial 1" aria-current="true"></button>
+                    <button class="slider-dot" type="button" data-slide-to="1" aria-label="Show testimonial 2" aria-current="false"></button>
                     </div>
                 </div>
             </div>
@@ -389,7 +388,6 @@
     };
 
     var validationMsgs = {
-      frequencyRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_frequency_required"].Value)),
       amountRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_amount_required"].Value)),
       amountMin         : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_amount_min"].Value)),
       emailRequired     : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_email_required"].Value)),
@@ -422,17 +420,32 @@
       el.classList.toggle('is-invalid', invalid);
     }
 
-    function clearGlobalError() {
-      if (msgContainer) msgContainer.hidden = true;
-      if (msg) { msg.textContent = ''; msg.classList.remove('shown'); }
+        function clearGlobalError() {
+        if (msg) {
+        msg.textContent = '';
+        msg.classList.remove('shown');
+        }
+
+        if (msgContainer) {
+        msgContainer.hidden = true;
+        msgContainer.classList.remove('is-visible');
+        }
     }
 
-    function showMessage(text, isError) {
-      if (!msg || !msgContainer) return;
-      msgContainer.hidden = !isError;
-      msg.textContent = isError ? text : '';
-      msg.classList.toggle('shown', !!isError);
-    }
+
+            function showMessage(text, isError) {
+          if (!msg || !msgContainer) return;
+
+          if (isError && text) {
+            msg.textContent = text;
+            msg.classList.add('shown');
+
+            msgContainer.hidden = false;
+            msgContainer.classList.add('is-visible');
+          } else {
+            clearGlobalError();
+          }
+        }
 
     function setSubmitting(state) {
       isSubmitting = state;
@@ -573,14 +586,8 @@
     function validateDonateForm() {
       var valid = true;
 
-      ['frequency_span','amount_span','email_span','s_number','s_expirationDate','s_cvv'].forEach(clearFieldError);
+      ['amount_span','email_span','s_number','s_expirationDate','s_cvv'].forEach(clearFieldError);
       [amountInput, emailEl, document.getElementById('donationAmount')].forEach(function(el) { setInputState(el, false); });
-
-      var freqChecked = form && form.querySelector('input[name="Frequency"]:checked');
-      if (!freqChecked) {
-        showFieldError('frequency_span', validationMsgs.frequencyRequired);
-        valid = false;
-      }
 
       var rawAmount = amountInput ? amountInput.value.trim() : '';
       var parsedAmount = parseFloat(rawAmount);
@@ -617,14 +624,14 @@
     }
 
     if (typeof braintree === 'undefined') {
-      showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_failed_to_load"].Value)), true);
+            showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
       if (submitBtn) submitBtn.disabled = true;
       return;
     }
 
     braintree.client.create({ authorization: clientToken }, function (clientErr, clientInstance) {
       if (clientErr) {
-        showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_init_failed"].Value)), true);
+              showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
         if (submitBtn) submitBtn.disabled = true;
         return;
       }
@@ -645,7 +652,7 @@
         }
       }, function (hfErr, hfInstance) {
         if (hfErr) {
-          showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_card_fields_failed"].Value)), true);
+                showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
           if (submitBtn) submitBtn.disabled = true;
           return;
         }
@@ -712,7 +719,7 @@
         }
 
         if (!hostedFieldsInstance) {
-          showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_not_ready"].Value)), true);
+                showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
           return;
         }
 
@@ -738,7 +745,7 @@
                 }
               });
             } else {
-              showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_msg_card_invalid"].Value)), true);
+                    showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
             }
             return;
           }

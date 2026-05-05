@@ -325,7 +325,6 @@ font-size: 16px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  margin-top: 10px;
 }
 
 .donate-submit:hover {
@@ -343,10 +342,39 @@ font-size: 16px;
 }
 
 .form-input-validation-container {
-  margin-top: 16px;
-  text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 30px;
 }
-
+.validation-form-message {
+    padding: 0.1rem 2rem;
+    opacity: 0.8;
+    -webkit-transition: opacity 0.6s;
+    transition: opacity 0.6s;
+    text-align: center;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+    .validation-form-message.alert {
+        background: transparent;
+        color: red;
+        border: 1px solid red;
+        font-weight: bold;
+    }
 .validation-form-message.alert.validation-message {
   display: none;
   font-size: 16px;
@@ -357,7 +385,14 @@ font-size: 16px;
 .validation-form-message.alert.validation-message.shown {
   display: block;
 }
+.form-input-validation-container[hidden] {
+    display: none !important;
+    padding: 0;
+}
 
+.validation-form-message:empty {
+    display: none;
+}
 .field-error {
   display: none;
   color: #c00;
@@ -548,6 +583,7 @@ font-size: 16px;
 
 .form-field--recaptcha {
   width: 100%;
+  padding-bottom: 30px;
 }
 
 .recaptcha-wrap {
