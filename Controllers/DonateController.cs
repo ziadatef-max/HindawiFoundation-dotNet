@@ -41,7 +41,11 @@ public class DonateController : Controller
     [HttpGet("")]
     public async Task<IActionResult> Index([FromRoute] string culture)
     {
-        if (!IsSupportedCulture(culture)) return NotFound();
+        if (!IsSupportedCulture(culture))
+        {
+            _logger.LogWarning("Unsupported culture '{Culture}' requested for donate page.", culture);
+            return NotFound();
+        }
 
         SetCommonViewData(culture);
 
@@ -62,7 +66,11 @@ public class DonateController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index([FromRoute] string culture, DonationViewModel model)
     {
-        if (!IsSupportedCulture(culture)) return NotFound();
+        if (!IsSupportedCulture(culture))
+        {
+            _logger.LogWarning("Unsupported culture '{Culture}' in donation POST.", culture);
+            return NotFound();
+        }
 
         SetCommonViewData(culture);
 
@@ -72,6 +80,7 @@ public class DonateController : Controller
 
             if (string.IsNullOrWhiteSpace(recaptchaToken))
             {
+                _logger.LogWarning("Donation submitted without reCAPTCHA token for culture {Culture}.", culture);
                 model.ClientToken = await _donationService.GetClientToken();
                 model.IsValid = false;
                 model.ShowRecaptchaError = true;
@@ -91,11 +100,20 @@ public class DonateController : Controller
 
         if (!ModelState.IsValid)
         {
+            _logger.LogWarning("Donation form has invalid model state for culture {Culture}.", culture);
             model.ClientToken = await _donationService.GetClientToken();
             model.IsValid = false;
             model.ShowDonationError = true;
             return View("~/Views/Home/Donate.cshtml", model);
         }
+
+        _logger.LogInformation(
+            "Processing donation. Culture: {Culture}, Frequency: {Frequency}, Amount: {Amount}, Currency: {CurrencyCode}, HasEmail: {HasEmail}.",
+            culture,
+            model.Frequency,
+            model.Amount,
+            model.CurrencyCode,
+            !string.IsNullOrWhiteSpace(model.Email));
 
         var success = await _donationService.Donate(model, culture);
 

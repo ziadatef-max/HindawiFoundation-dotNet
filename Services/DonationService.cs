@@ -70,6 +70,14 @@ public class DonationService : IDonationService
     {
         try
         {
+            _logger.LogInformation(
+                "Processing donation. Frequency: {Frequency}, Amount: {Amount}, Currency: {CurrencyCode}, HasEmail: {HasEmail}, Language: {Language}.",
+                donationViewModel.Frequency,
+                donationViewModel.Amount,
+                donationViewModel.CurrencyCode,
+                !string.IsNullOrWhiteSpace(donationViewModel.Email),
+                language);
+
             var vmDonation = new VMDonation
             {
                 FirstName = donationViewModel.FirstName ?? string.Empty,
@@ -98,16 +106,14 @@ public class DonationService : IDonationService
 
             if (!response.IsSuccessStatusCode)
             {
-                _logger.LogWarning(
-                    "Donation failed. Status: {StatusCode}. RequestBody: {RequestBody}. ResponseBody: {ResponseBody}",
-                    response.StatusCode,
-                    jsonContent,
-                    responseBody);
+                _logger.LogError(
+                    "Donation API returned non-success status {StatusCode} : {Body}.",
+                    response.StatusCode, responseBody);
 
                 return false;
             }
 
-            _logger.LogInformation("Donation succeeded. ResponseBody: {ResponseBody}", responseBody);
+            _logger.LogInformation("Donation succeeded.");
             return true;
         }
         catch (Exception ex)
@@ -190,6 +196,10 @@ public class DonationService : IDonationService
                 return result?.currencyCode?.ToString() ?? "USD";
             }
 
+            _logger.LogWarning(
+                "Default currency API returned non-success status {StatusCode} for country {CountryCode}. Falling back to USD.",
+                response.StatusCode,
+                countryCode);
             return "USD";
         }
         catch (Exception ex)
