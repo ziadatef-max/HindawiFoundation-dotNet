@@ -70,7 +70,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("../../Images/hero_image.svg");
+  background-image: url("../../Images/hero_image.svg?v=2");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;

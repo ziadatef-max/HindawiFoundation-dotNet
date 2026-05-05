@@ -36,7 +36,7 @@ I could not unzip the original archive in this session, so the binary asset fold
 | `fontawesome/` | optional — see below |
 | `Space_Grotesk/` | optional — see below |
 
-The CSS is already wired to expect these top-level folder names inside `wwwroot`. CSS internal paths like `url("../../Images/hindawi_logo_side.svg")` (in `components.css`) and `url("../../../Images/hero_image.svg")` (in `pages/home.css`) and `url("../../Fonts/NotoSansCham-VariableFont_wght.ttf")` (in `tokens.css`) all resolve correctly when those folders sit at the `wwwroot/` root.
+The CSS is already wired to expect these top-level folder names inside `wwwroot`. CSS internal paths like `url("../../Images/hindawi_logo_side.svg?v=2")` (in `components.css`) and `url("../../../Images/hero_image.svg?v=2")` (in `pages/home.css`) and `url("../../Fonts/NotoSansCham-VariableFont_wght.ttf")` (in `tokens.css`) all resolve correctly when those folders sit at the `wwwroot/` root.
 
 ### About FontAwesome and Space_Grotesk
 
