@@ -1,3 +1,4 @@
+@using HindawiFoundation.Web.Services.Static
 @{
     var active = ViewData["ActivePage"] as string ?? string.Empty;
     var routeCulture = ViewContext.RouteData.Values["culture"]?.ToString()?.ToLowerInvariant();
@@ -58,8 +59,11 @@
               <i class="fa-solid fa-globe" aria-hidden="true"></i>
             </button>
             <ul class="language-menu" id="languageMenu" aria-label="Language options">
-              <li><a href="@englishUrl" class="@(culture == "en" ? "is-active" : "")" data-lang="en" aria-current="@(culture == "en" ? "true" : "false")">@localizer["lang_english"]</a></li>
-              <li><a href="@arabicUrl"  class="@(culture == "ar" ? "is-active" : "")" data-lang="ar" aria-current="@(culture == "ar" ? "true" : "false")">@localizer["lang_arabic"]</a></li>
+              @foreach (var lang in SupportedLanguages.All)
+              {
+                var langUrl = lang.IsoCode == "ar" ? arabicUrl : englishUrl;
+                <li><a href="@langUrl" class="@(culture == lang.IsoCode ? "is-active" : "")" data-lang="@lang.IsoCode" aria-current="@(culture == lang.IsoCode ? "true" : "false")">@lang.Name</a></li>
+              }
             </ul>
           </li>
         </ul>

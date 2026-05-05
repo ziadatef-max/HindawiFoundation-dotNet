@@ -6,7 +6,8 @@
       "Bash(dotnet clean *)",
       "Bash(grep -iE \"\\\\.cshtml$\")",
       "Bash(Get-ChildItem -Path \"d:\\\\repos\\\\HindawiFoundation\\\\wwwroot\\\\assets\\\\css\\\\pages\" -ErrorAction SilentlyContinue)",
-      "Bash(Select-Object -Property FullName)"
+      "Bash(Select-Object -Property FullName)",
+      "PowerShell(New-Item -ItemType Directory -Path \"d:\\\\repos\\\\HindawiFoundation\\\\Services\\\\Static\" -Force)"
     ]
   }
 }

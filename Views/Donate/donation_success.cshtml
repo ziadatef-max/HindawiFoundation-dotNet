@@ -1,5 +1,5 @@
 @{
-    ViewData["TitleKey"] = "donate_success_page_title";
+    ViewData["TitleKey"] = "donation_success_message";
     ViewData["BodyClass"] = "page page--donate-success";
     ViewData["ActivePage"] = "donate";
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
@@ -15,7 +15,7 @@
       <div class="container">
         <div class="donation-success">
           <img class="donation-success__icon" src="~/Icons/donate_success.svg?v=2" alt="" aria-hidden="true">
-          <h1 class="donation-success__title">@localizer["donate_success_title"]</h1>
+          <h1 class="donation-success__title">@localizer["donation_success_message"]</h1>
             <p class="donation-success__go-to">
                 @localizer["go_to_label"]
                 <a asp-controller="Home"

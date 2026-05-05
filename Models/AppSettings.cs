@@ -4,8 +4,6 @@ public class AppSettings
 {
     public string PartnershipsTeamEmail { get; set; } = string.Empty;
     public DonationApi DonationApi { get; set; } = new();
-
-    public DonationAccount DonationAccount { get; set; } = new();
 }
 
 public class DonationApi
@@ -28,17 +26,4 @@ public class DonationApi
     public string GetCurrencies { get; set; } = "{0}/donation/currencies";
 
     public string GetDefaultCurrency { get; set; } = "{0}/donation/default-currency?countryCode={1}";
-}
-
-public class DonationAccount
-{
-    public string BankNumber { get; set; } = string.Empty;
-
-    public string AccountName { get; set; } = string.Empty;
-
-    public string BankCode { get; set; } = string.Empty;
-
-    public string SwiftCode { get; set; } = string.Empty;
-
-    public string Iban { get; set; } = string.Empty;
 }

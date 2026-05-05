@@ -8,7 +8,6 @@
     var routeCulture = ViewContext.RouteData.Values["culture"]?.ToString()?.ToLowerInvariant();
     var culture = routeCulture == "ar" ? "ar" : "en";
     var recaptchaSiteKey = Options.Value.DonationApi.GoogleRecaptchaKey;
-    var account = Options.Value.DonationAccount;
     var cfCountryCode = Context.Request.Headers["cf-ipcountry"].FirstOrDefault() ?? "US";
     }
 
@@ -122,6 +121,7 @@
                                         <div class="form-field">
                                             <label class="form-field__label" for="phone">@localizer["donation_phone_label"]</label>
                                             <input class="form-input" type="tel" asp-for="Phone" id="phone" autocomplete="tel">
+                                            <span class="field-error" id="phone_span"></span>
                                         </div>
 
                                     </div>
@@ -173,7 +173,7 @@
                                     }
 
                                     <div class="form-input-validation-container" id="donateMessageContainer" role="alert" aria-live="polite"@(Model?.ShowDonationError == true ? "" : " hidden")>
-                                        <p class="validation-form-message alert validation-message@(Model?.ShowDonationError == true ? " shown" : "")" id="donateMessage">@(Model?.ShowDonationError == true ? localizer["donate_error_process_failed"].Value : "")</p>
+                                        <p class="validation-form-message alert validation-message@(Model?.ShowDonationError == true ? " shown" : "")" id="donateMessage">@(Model?.ShowDonationError == true ? localizer["donation_failure_message"].Value : "")</p>
                                     </div>
 
                                     <button class="donate-submit" type="submit" id="donateSubmitBtn">
@@ -187,28 +187,28 @@
                             <div class="payment-panel" data-payment-panel="wire" hidden>
                                 <div class="wire-transfer-table" aria-label="Bank transfer details">
                                     <div class="wire-transfer-row">
-                                        <span class="wire-transfer-row__label">@localizer["donate_wire_account_name"]</span>
-                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.AccountName) ? localizer["donate_wire_account_name"].Value : account.AccountName)</span>
+                                        <span class="wire-transfer-row__label">@localizer["wire_transfer_account_name_label"]</span>
+                                        <span class="wire-transfer-row__value">@localizer["wire_transfer_account_name_value_label"]</span>
                                     </div>
                                     <div class="wire-transfer-row">
-                                        <span class="wire-transfer-row__label">@localizer["donate_wire_bank_code"]</span>
-                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankCode) ? localizer["donate_wire_bank_code"].Value : account.BankCode)</span>
+                                        <span class="wire-transfer-row__label">@localizer["wire_transfer_bank_code_label"]</span>
+                                        <span class="wire-transfer-row__value">@localizer["wire_transfer_bank_code_value_label"]</span>
                                     </div>
                                     <div class="wire-transfer-row">
-                                        <span class="wire-transfer-row__label">@localizer["donate_wire_account_number"]</span>
-                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.BankNumber) ? localizer["donate_wire_account_number"].Value : account.BankNumber)</span>
+                                        <span class="wire-transfer-row__label">@localizer["wire_transfer_account_number_label"]</span>
+                                        <span class="wire-transfer-row__value">@localizer["wire_transfer_account_number_value_label"]</span>
                                     </div>
                                     <div class="wire-transfer-row">
-                                        <span class="wire-transfer-row__label">@localizer["donate_wire_swift"]</span>
-                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.SwiftCode) ? localizer["donate_wire_swift"].Value : account.SwiftCode)</span>
+                                        <span class="wire-transfer-row__label">@localizer["wire_transfer_swift_code_label"]</span>
+                                        <span class="wire-transfer-row__value">@localizer["wire_transfer_swift_code_value_label"]</span>
                                     </div>
                                     <div class="wire-transfer-row">
-                                        <span class="wire-transfer-row__label">@localizer["donate_wire_iban"]</span>
-                                        <span class="wire-transfer-row__value">@(string.IsNullOrWhiteSpace(account.Iban) ? localizer["donate_wire_iban"].Value : account.Iban)</span>
+                                        <span class="wire-transfer-row__label">@localizer["wire_transfer_iban_label"]</span>
+                                        <span class="wire-transfer-row__value">@localizer["wire_transfer_iban_value_label"]</span>
                                     </div>
                                     <div class="wire-transfer-row wire-transfer-row--last">
-                                        <span class="wire-transfer-row__label">@localizer["donate_wire_bank_location"]</span>
-                                        <span class="wire-transfer-row__value">@localizer["donate_wire_bank_location"]</span>
+                                        <span class="wire-transfer-row__label">@localizer["wire_transfer_bank_location_label"]</span>
+                                        <span class="wire-transfer-row__value">@localizer["wire_transfer_bank_location_value_label"]</span>
                                     </div>
                                 </div>
                             </div>
@@ -313,6 +313,7 @@
                         <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
                         <p class="number">@localizer["impact_fifth_subhead_label"]</p>
                         <p class="label">@localizer["impact_fifth_content_label"]</p>
+                        <span class="label">@localizer["impact_fifth_content_note_label"]</span>
                     </article>
                 </div>
             </div>
@@ -327,16 +328,16 @@
             <div class="testimonial-slider" data-slider tabindex="0" aria-label="Testimonials slider">
                     <div class="testimonial-track" data-slider-track>
                         <article class="card card--testimonial" data-slide>
-                            <p class="quote">"@localizer["testimonial_1_quote"]"</p>
+                            <p class="quote">@localizer["testimonials_first_quote_label"]</p>
                             <div class="author-row">
-                                <p class="author">@localizer["testimonial_1_author"]</p>
+                                <p class="author">@localizer["testimonials_first_user_label"]</p>
                                 <img src="~/Icons/quote_mark.svg?v=2" alt="" class="quote-mark" aria-hidden="true">
                             </div>
                         </article>
                         <article class="card card--testimonial" data-slide>
-                            <p class="quote">"@localizer["testimonial_2_quote"]"</p>
+                            <p class="quote">@localizer["testimonials_second_quote_label"]</p>
                             <div class="author-row">
-                                <p class="author">@localizer["testimonial_2_author"]</p>
+                                <p class="author">@localizer["testimonials_second_user_label"]</p>
                                 <img src="~/Icons/quote_mark.svg?v=2" alt="" class="quote-mark" aria-hidden="true">
                             </div>
                         </article>
@@ -388,16 +389,17 @@
     };
 
     var validationMsgs = {
-      amountRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_amount_required"].Value)),
-      amountMin         : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_amount_min"].Value)),
-      emailRequired     : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_email_required"].Value)),
-      emailInvalid      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_email_invalid"].Value)),
-      cardRequired      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_card_required"].Value)),
-      expiryRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_expiry_required"].Value)),
-      cvvRequired       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_validation_cvv_required"].Value)),
-      cardNumberRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_card_number_required"].Value)),
-      expiryFieldRequired: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_expiry_required"].Value)),
-      cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_cvv_required"].Value)),
+      amountRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_donation_amount_message"].Value)),
+      amountMin         : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_minimum_amount_message"].Value)),
+      emailRequired     : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_email_message"].Value)),
+      emailInvalid      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_email_message"].Value)),
+      cardRequired      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_card_number_message"].Value)),
+      expiryRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_expiry_date_message"].Value)),
+      cvvRequired       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_cvv_message"].Value)),
+      cardNumberRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_card_number_message"].Value)),
+      expiryFieldRequired: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_expiry_date_message"].Value)),
+      cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_cvv_message"].Value)),
+      phoneInvalid       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_phone_message"].Value)),
       recaptchaRequired  : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["recaptcha_error"].Value))
     };
 
@@ -570,6 +572,19 @@
         setInputState(emailEl, false);
         clearGlobalError();
       });
+      emailEl.addEventListener('blur', function () {
+        var val = emailEl.value.trim();
+        if (!val) {
+          showFieldError('email_span', validationMsgs.emailRequired);
+          setInputState(emailEl, true);
+        } else if (!/^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/.test(val)) {
+          showFieldError('email_span', validationMsgs.emailInvalid);
+          setInputState(emailEl, true);
+        } else {
+          clearFieldError('email_span');
+          setInputState(emailEl, false);
+        }
+      });
     }
 
     if (amountInput) {
@@ -580,24 +595,41 @@
     if (phoneInput) {
       phoneInput.addEventListener('input', function () {
         phoneInput.value = phoneInput.value.replace(/[^\d+\-\s()]/g, '');
+        clearFieldError('phone_span');
+        setInputState(phoneInput, false);
+        clearGlobalError();
+      });
+      phoneInput.addEventListener('blur', function () {
+        var val = phoneInput.value.trim();
+        var phonePattern = /^\+?\d{10,16}$/;
+        if (val.length > 0 && !phonePattern.test(val)) {
+          showFieldError('phone_span', validationMsgs.phoneInvalid);
+          setInputState(phoneInput, true);
+        } else {
+          clearFieldError('phone_span');
+          setInputState(phoneInput, false);
+        }
       });
     }
 
     function validateDonateForm() {
       var valid = true;
+      var firstInvalidEl = null;
 
-      ['amount_span','email_span','s_number','s_expirationDate','s_cvv'].forEach(clearFieldError);
-      [amountInput, emailEl, document.getElementById('donationAmount')].forEach(function(el) { setInputState(el, false); });
+      ['amount_span','email_span','phone_span','s_number','s_expirationDate','s_cvv'].forEach(clearFieldError);
+      [amountInput, emailEl, phoneInput].forEach(function(el) { if (el) setInputState(el, false); });
 
       var rawAmount = amountInput ? amountInput.value.trim() : '';
       var parsedAmount = parseFloat(rawAmount);
       if (!rawAmount) {
         showFieldError('amount_span', validationMsgs.amountRequired);
         setInputState(amountInput, true);
+        if (!firstInvalidEl) firstInvalidEl = amountInput;
         valid = false;
       } else if (isNaN(parsedAmount) || parsedAmount < currencyMinAmount) {
         showFieldError('amount_span', validationMsgs.amountMin.replace('{min}', currencyMinAmount));
         setInputState(amountInput, true);
+        if (!firstInvalidEl) firstInvalidEl = amountInput;
         valid = false;
       }
 
@@ -605,33 +637,46 @@
       if (!emailVal) {
         showFieldError('email_span', validationMsgs.emailRequired);
         setInputState(emailEl, true);
+        if (!firstInvalidEl) firstInvalidEl = emailEl;
         valid = false;
       } else if (!/^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/.test(emailVal)) {
         showFieldError('email_span', validationMsgs.emailInvalid);
         setInputState(emailEl, true);
+        if (!firstInvalidEl) firstInvalidEl = emailEl;
         valid = false;
       }
+
+      var phoneVal = phoneInput ? phoneInput.value.trim() : '';
+      var phonePattern = /^\+?\d{10,16}$/;
+      if (phoneVal.length > 0 && !phonePattern.test(phoneVal)) {
+        showFieldError('phone_span', validationMsgs.phoneInvalid);
+        setInputState(phoneInput, true);
+        if (!firstInvalidEl) firstInvalidEl = phoneInput;
+        valid = false;
+      }
+
+      if (!valid && firstInvalidEl) firstInvalidEl.focus();
 
       return valid;
     }
 
     if (!clientToken) {
       if (!hasServerDonationError) {
-        showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
+        showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_failure_message"].Value)), true);
       }
       if (submitBtn) submitBtn.disabled = true;
       return;
     }
 
     if (typeof braintree === 'undefined') {
-            showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
+            showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_failure_message"].Value)), true);
       if (submitBtn) submitBtn.disabled = true;
       return;
     }
 
     braintree.client.create({ authorization: clientToken }, function (clientErr, clientInstance) {
       if (clientErr) {
-              showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
+              showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_failure_message"].Value)), true);
         if (submitBtn) submitBtn.disabled = true;
         return;
       }
@@ -652,7 +697,7 @@
         }
       }, function (hfErr, hfInstance) {
         if (hfErr) {
-                showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
+                showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_failure_message"].Value)), true);
           if (submitBtn) submitBtn.disabled = true;
           return;
         }
@@ -719,7 +764,7 @@
         }
 
         if (!hostedFieldsInstance) {
-                showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
+                showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_failure_message"].Value)), true);
           return;
         }
 
@@ -745,7 +790,7 @@
                 }
               });
             } else {
-                    showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donate_error_process_failed"].Value)), true);
+                    showMessage(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_failure_message"].Value)), true);
             }
             return;
           }
