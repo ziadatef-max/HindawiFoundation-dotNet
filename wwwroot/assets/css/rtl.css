@@ -286,6 +286,11 @@
   text-align: right;
 }
 
+.layout-rtl .card--stat {
+    direction: rtl;
+    text-align: right;
+}
+
 .layout-rtl .card--testimonial .quote,
 .layout-rtl .card--testimonial p {
   direction: rtl;

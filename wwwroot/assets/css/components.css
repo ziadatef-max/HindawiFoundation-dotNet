@@ -627,6 +627,10 @@
     font-weight: 700;
     }
 
+    .what-we-do .section__title {
+        padding-bottom: 15px;
+    }
+
     .impact-grid {
     display: flex;
     justify-content: center;
