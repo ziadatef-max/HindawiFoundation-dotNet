@@ -67,6 +67,16 @@
             </ul>
           </li>
         </ul>
+        <button
+          class="mobile-toggle"
+          type="button"
+          data-mobile-toggle
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
 
@@ -89,22 +99,14 @@
             </li>
           </ul>
         </nav>
-
-        <button
-          class="mobile-toggle"
-          type="button"
-          data-mobile-toggle
-          aria-label="Toggle menu"
-          aria-expanded="false"
-          aria-controls="mobileMenu"
-        >
-          <i class="fa-solid fa-bars" aria-hidden="true"></i>
-        </button>
       </div>
     </div>
 </header>
 
 <nav class="mobile-nav" id="mobileMenu" aria-label="Mobile" hidden>
+    <button class="mobile-nav__close" type="button" data-mobile-close aria-label="Close menu">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
     <a asp-controller="Home" asp-action="Index"    asp-route-culture="@culture" class="@IsActive("home")">@localizer["home_button"]</a>
     <a asp-controller="Home" asp-action="About"    asp-route-culture="@culture" class="@IsActive("about")">@localizer["about_us_button"]</a>
     <a asp-controller="Home" asp-action="News"     asp-route-culture="@culture" class="@IsActive("news")">@localizer["news_button"]</a>

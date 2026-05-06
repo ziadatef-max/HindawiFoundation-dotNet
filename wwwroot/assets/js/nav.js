@@ -7,6 +7,8 @@ export function initNav() {
 
   setActiveNavLink();
 
+  const mobileClose = document.querySelector("[data-mobile-close]");
+
   if (mobileToggle && mobileMenu) {
     const closeMobileMenu = () => {
       mobileMenu.classList.remove("is-open");
@@ -34,6 +36,10 @@ export function initNav() {
         openMobileMenu();
       }
     });
+
+    if (mobileClose) {
+      mobileClose.addEventListener("click", closeMobileMenu);
+    }
 
     mobileMenu.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", closeMobileMenu);
@@ -82,7 +88,7 @@ function setActiveNavLink() {
   const currentPath = normalize(window.location.href);
 
   const navLinks = document.querySelectorAll(
-    ".site-nav__menu a, .site-nav__donate a, .mobile-nav a"
+    ".site-nav__menu a, .site-nav__donate a, .mobile-nav a, .mobile-bottom-nav__item"
   );
 
   let matched = false;

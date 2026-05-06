@@ -12,6 +12,9 @@
     var fullTitle = string.IsNullOrEmpty(pageTitle) || pageTitle == localizer["home_button"].Value
         ? $"{siteName}"
         : $"{pageTitle} - {siteName}";
+
+    var bnActive = ViewData["ActivePage"] as string ?? string.Empty;
+    string BnIsActive(string key) => bnActive == key ? "is-active" : string.Empty;
 }
 <!DOCTYPE html>
 <html lang="@culture" dir="@dir">
@@ -36,13 +39,36 @@
   @await RenderSectionAsync("Styles", required: false)
 </head>
 <body class="@layoutClass @bodyClass" data-culture="@culture">
+<div class="website-wrapper">
+      @await Html.PartialAsync("_Header")
 
-  @await Html.PartialAsync("_Header")
+      @RenderBody()
 
-  @RenderBody()
+      @await Html.PartialAsync("_Footer")
 
-  @await Html.PartialAsync("_Footer")
-
+      <nav class="mobile-bottom-nav" aria-label="Mobile bottom navigation">
+        <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="mobile-bottom-nav__item @BnIsActive("home")">
+          <i class="fa-solid fa-house mobile-bottom-nav__icon" aria-hidden="true"></i>
+          <span class="mobile-bottom-nav__label">@localizer["home_button"]</span>
+        </a>
+        <a asp-controller="Home" asp-action="About" asp-route-culture="@culture" class="mobile-bottom-nav__item @BnIsActive("about")">
+          <i class="fa-solid fa-circle-info mobile-bottom-nav__icon" aria-hidden="true"></i>
+          <span class="mobile-bottom-nav__label">@localizer["about_us_button"]</span>
+        </a>
+        <a asp-controller="Home" asp-action="News" asp-route-culture="@culture" class="mobile-bottom-nav__item @BnIsActive("news")">
+          <i class="fa-solid fa-newspaper mobile-bottom-nav__icon" aria-hidden="true"></i>
+          <span class="mobile-bottom-nav__label">@localizer["news_button"]</span>
+        </a>
+        <a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="mobile-bottom-nav__item @BnIsActive("contact")">
+          <i class="fa-solid fa-envelope mobile-bottom-nav__icon" aria-hidden="true"></i>
+          <span class="mobile-bottom-nav__label">@localizer["contact_us_button"]</span>
+        </a>
+        <a asp-controller="Donate" asp-action="Index" asp-route-culture="@culture" class="mobile-bottom-nav__item @BnIsActive("donate")">
+          <i class="fa-solid fa-heart mobile-bottom-nav__icon" aria-hidden="true"></i>
+          <span class="mobile-bottom-nav__label">@localizer["donate_button"]</span>
+        </a>
+      </nav>
+  </div>
   <script type="module" src="~/assets/js/main.js" asp-append-version="true"></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>

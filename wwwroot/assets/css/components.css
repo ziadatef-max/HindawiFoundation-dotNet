@@ -235,8 +235,7 @@
     }
 
     .mobile-toggle {
-    display: block;
-    margin-left: auto;
+    display: none;
     color: var(--color-heading);
     font-size: 22px;
     padding: var(--space-1);
@@ -257,6 +256,16 @@
     display: flex;
     }
 
+    .mobile-nav__close {
+    position: absolute;
+    top: var(--space-4);
+    inset-inline-end: var(--space-4);
+    font-size: 22px;
+    padding: var(--space-2);
+    color: var(--color-heading);
+    z-index: 1;
+    }
+
     .mobile-nav a {
     display: block;
     padding: var(--space-3) var(--space-4);
@@ -270,6 +279,46 @@
     .mobile-nav a.is-active {
     background: var(--color-cream);
     color: var(--color-brand-orange);
+    }
+
+    .mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: var(--z-header);
+    background: var(--color-white);
+    border-top: 1px solid var(--color-border-light);
+    height: 65px;
+    align-items: stretch;
+    }
+
+    .mobile-bottom-nav__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--color-body);
+    font-size: 10px;
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: color var(--duration-base) var(--easing-standard);
+    }
+
+    .mobile-bottom-nav__item:hover,
+    .mobile-bottom-nav__item.is-active {
+    color: var(--color-brand-orange);
+    }
+
+    .mobile-bottom-nav__icon {
+    font-size: 20px;
+    }
+
+    .mobile-bottom-nav__label {
+    font-size: 10px;
+    line-height: 1;
     }
 
     .hero {
@@ -814,10 +863,11 @@
     height: 52px;
     }
 
-    .site-footer {
-  border: 1px solid #E5E4E5;
-  padding-top: 0;
-  background: #ffffff;
+.site-footer {
+    border: 1px solid #E5E4E5;
+    padding-top: 0;
+    background: #ffffff;
+    margin-top:auto;
 }
 
 .site-footer__inner {
@@ -1006,10 +1056,6 @@
         display: flex;
     }
 
-    .mobile-toggle {
-        display: none;
-    }
-
     .hero__inner {
         flex-direction: row;
         justify-content: space-between;
@@ -1150,6 +1196,22 @@
 }
 
 @media (max-width: 767px) {
+  .mobile-toggle {
+    display: block;
+  }
+
+  .site-header__bottom {
+    display: none;
+  }
+
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  body {
+    padding-bottom: 65px;
+  }
+
   .site-footer__inner {
     flex-direction: column;
     gap: 32px;

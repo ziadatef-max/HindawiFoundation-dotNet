@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Write-Output \"=== CSS Directory ===\" ; Get-ChildItem -Path \"d:\\\\repos\\\\HindawiFoundation\\\\wwwroot\\\\assets\\\\css\\\\\" -ErrorAction Continue | ForEach-Object { $_.FullName })",
+      "PowerShell(Write-Output \"=== JS Directory ===\" ; Get-ChildItem -Path \"d:\\\\repos\\\\HindawiFoundation\\\\wwwroot\\\\assets\\\\js\\\\\" -ErrorAction Continue | ForEach-Object { $_.FullName })",
+      "PowerShell(Write-Output \"=== Icons Directory ===\" ; Get-ChildItem -Path \"d:\\\\repos\\\\HindawiFoundation\\\\wwwroot\\\\Icons\\\\\" -ErrorAction Continue | ForEach-Object { $_.FullName })"
+    ]
+  }
+}
