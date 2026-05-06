@@ -101,7 +101,6 @@
 
 .layout-rtl.page--home .partners .partners-grid,
 .layout-rtl .page--home .partners .partners-grid {
-  direction: ltr;
   flex-direction: row;
 }
 
