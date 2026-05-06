@@ -95,10 +95,6 @@
     align-items: center;
     }
 
-    .site-logo__img {
-    height: 36px;
-    }
-
     .site-header__utilities {
     margin-left: auto;
     display: flex;
@@ -709,29 +705,28 @@
   top: -63px;
   width: 364px;
   height: 504.2px;
-  background: url("../../Images/hindawi_logo_side.svg?v=2") no-repeat center;
+  background: url("../../Images/hindawi_logo_side.svg?v=3") no-repeat center;
   pointer-events: none;
 }
 
 .cta__inner {
-  position: relative;
-  z-index: 1;
-  width: 1200px;
-  max-width: calc(100% - 40px);
-  height: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 719px 194px;
-  column-gap: 287px;
-  align-items: center;
+    position: relative;
+    z-index: 1;
+    width: 1200px;
+    max-width: calc(100% - 40px);
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 719px 1fr;
+    column-gap: 100px;
+    align-items: center;
 }
-
 .cta__content {
   width: 719px;
 }
 
 .cta__content h2 {
-  width: 511px;
+    width : 520px;
   margin: 0 0 16px;
   color: #ffffff;
   font-size: 55px;
@@ -748,15 +743,17 @@
 }
 
 .cta .btn--light {
-  width: 189px;
-  height: 70px;
-  padding: 0;
-  border-radius: 40px;
-  background: #ffffff;
-  color: #707805;
-  font-size: 18px;
-  line-height: 25px;
-  font-weight: 700;
+    width: 189px;
+    height: 70px;
+    padding: 0;
+    border-radius: 40px;
+    background: #ffffff;
+    color: #707805;
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 700;
+    justify-self: end;
+    margin: 0;
 }
 
 .cta .btn--light i {
@@ -1250,7 +1247,7 @@
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .partner-card__logo {

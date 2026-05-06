@@ -49,7 +49,9 @@
 
 .legal-section__body a {
   color: var(--color-brand-orange);
-  text-decoration: underline;
+}
+.legal-section__body a:hover {
+    text-decoration: underline;
 }
 
 .legal-list {

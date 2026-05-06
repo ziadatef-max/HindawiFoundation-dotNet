@@ -40,24 +40,32 @@
 
     .legal-section__body a {
         color: var(--color-brand-orange);
-        text-decoration: underline;
     }
+
+        .legal-section__body a:hover {
+            text-decoration: underline;
+        }
 
 .legal-list {
     margin: 0 0 20px 25px;
     padding: 0;
+    list-style: none;
 }
 
     .legal-list li {
         position: relative;
-        padding-left: 15px;
         font-size: 18px;
         line-height: 25px;
         color: #333333;
         margin-bottom: 10px;
     }
-    .legal-list li::before {
-        content: '';
+
+ul.legal-list li {
+    padding-left: 15px;
+}
+
+    ul.legal-list li::before {
+        content: "";
         position: absolute;
         left: 0;
         top: 9px;
@@ -65,20 +73,56 @@
         height: 7px;
         border-radius: 50%;
         background: #FF7A4F;
-        flex-shrink: 0;
     }
+
+ol.legal-list {
+    counter-reset: legal-counter;
+}
+
+    ol.legal-list li {
+        padding-left: 22px;
+        counter-increment: legal-counter;
+    }
+
+        ol.legal-list li::before {
+            content: counter(legal-counter) ".";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 16px;
+            color: #333333;
+            font-size: 18px;
+            line-height: 25px;
+            font-weight: 400;
+            background: none;
+            border-radius: 0;
+        }
+
 
 .layout-rtl .legal-list {
     margin: 0 25px 20px 0;
     padding: 0;
 }
 
-@media (max-width: 767px) {
-    .legal-list li {
-        font-size: 16px;
-        line-height: 24px;
-    }
+.layout-rtl ul.legal-list li {
+    padding-left: 0;
+    padding-right: 15px;
 }
+
+    .layout-rtl ul.legal-list li::before {
+        left: auto;
+        right: 0;
+    }
+
+.layout-rtl ol.legal-list li {
+    padding-left: 0;
+    padding-right: 22px;
+}
+
+    .layout-rtl ol.legal-list li::before {
+        left: auto;
+        right: 0;
+    }
 
 @media (max-width: 767px) {
     .legal-modified-date {
@@ -96,7 +140,13 @@
         line-height: 28px;
     }
 
-    .legal-section__body {
+    .legal-section__body,
+    .legal-list li {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    ol.legal-list li::before {
         font-size: 16px;
         line-height: 24px;
     }

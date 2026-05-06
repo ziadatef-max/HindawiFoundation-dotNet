@@ -1,7 +1,7 @@
 @{
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
     if (culture != "ar") culture = "en";
-    var logoSrc = culture == "ar" ? "~/Logos/hindawi_ar.svg?v=2" : "~/Logos/hindawi_en.svg?v=2";
+    var logoSrc = culture == "ar" ? "~/Logos/hindawi_ar.svg?v=3" : "~/Logos/hindawi_en.svg?v=3";
     var logoAlt = localizer["website_name_label"].Value;
     var booktimeUrl = culture == "ar" ? "https://www.booktime.org/ar" : "https://www.booktime.org/en";
     var safahatUrl = culture == "ar" ? "https://www.safahat.org/ar/" : "https://www.safahat.org/en/";
@@ -13,7 +13,7 @@
       <div class="site-footer__inner">
         <div class="footer-brand">
           <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture" class="site-logo" aria-label="Hindawi Foundation home">
-            <img src="@(culture == "ar" ? "/Logos/hindawi_ar.svg?v=2" : "/Logos/hindawi_en.svg?v=2")" alt="Hindawi Foundation">
+            <img src="@(culture == "ar" ? "/Logos/hindawi_ar.svg?v=3" : "/Logos/hindawi_en.svg?v=3")" alt="Hindawi Foundation">
           </a>
           <p>@localizer["footer_content_label"]</p>
           <ul class="footer-social" aria-label="Social Links">

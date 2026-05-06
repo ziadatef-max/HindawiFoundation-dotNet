@@ -4,7 +4,7 @@
   height: 320px;
   padding: 0;
   background-color: #eaebda;
-  background-image: url("../../../Images/hero_image.svg?v=2");
+  background-image: url("../../../Images/hero_image.svg?v=3");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
@@ -134,36 +134,30 @@
   height: 75.18px;
   width: auto;
 }
-.page--home .partners .partners-grid a:nth-child(1) .partner-logo {
-  width: 240.39px;
-  height: 75.18px;
-  object-fit: contain;
+.page--home .partners .partners-grid .partner-logo:nth-child(2) {
+    width: 240.39px;
+    height: 75.18px;
 }
 
-.page--home .partners .partners-grid a:nth-child(2) .partner-logo {
-  width: 79.3px;
-  height: 75.18px;
-  object-fit: contain;
+.page--home .partners .partners-grid .partner-logo:nth-child(4) {
+    width: 79.3px;
+    height: 75.18px;
 }
 
-.page--home .partners .partners-grid a:nth-child(3) .partner-logo {
-  width: 206.38px;
-  height: 75.18px;
-  object-fit: contain;
+.page--home .partners .partners-grid .partner-logo:nth-child(1) {
+    width: 206.38px;
+    height: 75.18px;
 }
 
-.page--home .partners .partners-grid a:nth-child(4) .partner-logo {
-  width: 197.24px;
-  height: 75.18px;
-  object-fit: contain;
+.page--home .partners .partners-grid .partner-logo:nth-child(3) {
+    width: 197.24px;
+    height: 75.18px;
 }
 
-.page--home .partners .partners-grid a:nth-child(5) .partner-logo {
-  width: 250.9px;
-  height: 53.56px;
-  object-fit: contain;
+.page--home .partners .partners-grid .partner-logo:nth-child(5) {
+    width: 250.9px;
+    height: 53.56px;
 }
-
 @media (max-width: 900px) {
   .page--home .partners .partners-grid {
     justify-content: center;
