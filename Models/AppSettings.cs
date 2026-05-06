@@ -26,4 +26,5 @@ public class DonationApi
     public string GetCurrencies { get; set; } = "{0}/donation/currencies";
 
     public string GetDefaultCurrency { get; set; } = "{0}/donation/default-currency?countryCode={1}";
+    public string DonationEmail { get; set; }
 }

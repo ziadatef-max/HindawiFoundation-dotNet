@@ -280,7 +280,16 @@
                     </div>
                 </div>
 
-                <p class="donate-note">@localizer["donation_contact_label"]</p>
+            <p class="donate-note">
+                
+                @{
+                    string donation_contact = localizer["donation_contact_label"].Value;
+                    string donation_contact_email = Options.Value.DonationApi.DonationEmail;
+
+                    string donationLink = $"<a href=mailto:\"{donation_contact_email}\" class=\"contact-link\">{donation_contact_email}</a>";
+                    @Html.Raw(donation_contact.Replace("{donation_email}", donationLink))
+                }
+            </p>
 
             </div>
         </section>
@@ -313,7 +322,7 @@
                         <div class="impact-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
                         <p class="number">@localizer["impact_fifth_subhead_label"]</p>
                         <p class="label">@localizer["impact_fifth_content_label"]</p>
-                        <span class="label">@localizer["impact_fifth_content_note_label"]</span>
+                    <span class="label label-note">@localizer["impact_fifth_content_note_label"]</span>
                     </article>
                 </div>
             </div>
