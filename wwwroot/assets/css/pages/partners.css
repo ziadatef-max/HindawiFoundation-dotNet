@@ -27,9 +27,9 @@
 
 .partner-cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 380px);
+  grid-template-columns: repeat(3, minmax(0, 380px));
   gap: 30px;
-  justify-content: start;
+  justify-content: center;
   align-items: stretch;
   width: 100%;
   max-width: 1200px;
@@ -37,7 +37,8 @@
 }
 
 .partner-card {
-  width: 380px;
+  width: 100%;
+  max-width: 380px;
   height: auto;
   min-height: 293px;
   background: #efefef;
@@ -73,6 +74,7 @@
   filter: none;
   opacity: 1;
   transition: none;
+  width:100%;
 }
 
 .partner-card:hover .partner-card__logo,
@@ -139,7 +141,8 @@
 }
 
 .partners-cta__btn {
-  width: 346px;
+  width: 100%;
+  max-width: 346px;
   height: 70px;
   font-size: 18px;
   line-height: 25px;

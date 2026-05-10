@@ -43,7 +43,7 @@
   text-decoration: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .donation-success-section {
     padding-top: 60px;
     padding-bottom: 60px;

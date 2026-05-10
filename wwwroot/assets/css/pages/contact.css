@@ -1,9 +1,11 @@
 .contact-layout {
     display: grid;
-    grid-template-columns: 590px 600px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 30px;
     align-items: start;
     margin-bottom: 60px;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .contact-block__title {
@@ -102,6 +104,7 @@
 .hubs-list {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 100px;
 }
 
@@ -203,7 +206,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .contact-layout {
     grid-template-columns: 1fr;
   }

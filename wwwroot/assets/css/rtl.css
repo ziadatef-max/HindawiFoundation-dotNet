@@ -37,18 +37,9 @@
   flex-direction: row;
 }
 
-.layout-rtl .mobile-toggle {
-  margin-left: 0;
-  margin-right: 0;
-}
-
 .layout-rtl .language-menu {
   left: 0;
   right: auto;
-}
-
-.layout-rtl .mobile-nav {
-  text-align: right;
 }
 
 .layout-rtl .site-footer__inner,
@@ -111,11 +102,20 @@
   transform: scaleX(-1);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .layout-rtl .cta::after {
     right: auto;
     left: -160px;
   }
+}
+
+.layout-rtl .mobile-bottom-nav {
+  direction: rtl;
+  flex-direction: row;
+}
+
+.layout-rtl .mobile-bottom-nav__item {
+  direction: rtl;
 }
 
 .layout-rtl .payment-methods {
@@ -214,7 +214,13 @@
     justify-content: flex-end;
     direction: ltr;
 }
+.layout-rtl .g-recaptcha {
+    transform-origin: right top;
+}
 
+.layout-rtl .recaptcha-wrap {
+    justify-content: flex-end;
+}
 .layout-rtl .cvv-icon {
   right: auto;
   left: 14px;

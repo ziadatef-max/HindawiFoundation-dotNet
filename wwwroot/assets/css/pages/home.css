@@ -30,13 +30,14 @@
 }
 
 .page--home .hero__content {
-  width: 590px;
+  width: 100%;
   max-width: 590px;
   margin-top: 68px;
 }
 
 .page--home .hero__content h1 {
-  width: 590px;
+  width: 100%;
+  max-width: 590px;
   margin: 0 0 20px;
   font-size: 28px;
   line-height: 38px;
@@ -45,7 +46,7 @@
 }
 
 .page--home .hero__content p {
-  width: 538px;
+  width: 100%;
   max-width: 538px;
   margin: 0 0 20px;
   font-size: 16px;
@@ -68,7 +69,7 @@
   display: none !important;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .page--home .hero {
     height: auto;
     min-height: 360px;
@@ -120,48 +121,36 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  gap: 56px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px 56px;
 }
 
 .page--home .partners .partners-grid a {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
 }
 
 .page--home .partners .partner-logo {
   display: block;
-  height: 75.18px;
   width: auto;
-}
-.page--home .partners .partners-grid .partner-logo:nth-child(2) {
-    width: 240.39px;
-    height: 75.18px;
-}
-
-.page--home .partners .partners-grid .partner-logo:nth-child(4) {
-    width: 79.3px;
-    height: 75.18px;
+  max-width: min(220px, 100%);
+  height: auto;
+  max-height: 76px;
+  object-fit: contain;
 }
 
-.page--home .partners .partners-grid .partner-logo:nth-child(1) {
-    width: 206.38px;
-    height: 75.18px;
-}
-
-.page--home .partners .partners-grid .partner-logo:nth-child(3) {
-    width: 197.24px;
-    height: 75.18px;
-}
-
-.page--home .partners .partners-grid .partner-logo:nth-child(5) {
-    width: 250.9px;
-    height: 53.56px;
-}
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .page--home .partners .partners-grid {
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
+    gap: 28px 40px;
+  }
+
+  .page--home .partners .partner-logo {
+    max-width: min(180px, 45vw);
+  }
+}
+
+@media (max-width: 640px) {
+  .page--home .partners .partner-logo {
+    max-width: min(160px, 80vw);
   }
 }

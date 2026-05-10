@@ -1,7 +1,7 @@
 
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(2, 585px);
+  grid-template-columns: repeat(2, minmax(0, 585px));
   gap: 30px;
   justify-content: center;
   align-items: stretch;
@@ -13,7 +13,8 @@
 .news-card {
   display: flex;
   flex-direction: column;
-  width: 585px;
+  width: 100%;
+  max-width: 1200px;
   height: auto;
   min-height: 291px;
   border-radius: 10px;
@@ -87,7 +88,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .news-grid {
     grid-template-columns: 1fr;
   }

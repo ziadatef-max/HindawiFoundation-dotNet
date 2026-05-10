@@ -590,7 +590,20 @@ font-size: 16px;
   display: flex;
   justify-content: flex-start;
 }
+.g-recaptcha {
+    transform-origin: left top;
+}
 
+/* Small mobile fix */
+@media (max-width: 360px) {
+    .recaptcha-wrap {
+        height: 66px;
+    }
+
+    .g-recaptcha {
+        transform: scale(0.815);
+    }
+}
 .cvv-input {
   position: relative;
 }

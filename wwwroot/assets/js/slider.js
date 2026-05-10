@@ -6,7 +6,7 @@ export function initSlider() {
 
   const slides = Array.from(sliderRoot.querySelectorAll("[data-slide]"));
   const dots = Array.from(sliderRoot.querySelectorAll("[data-slide-to]"));
-  const mobileQuery = window.matchMedia("(max-width: 767px)");
+  const mobileQuery = window.matchMedia("(max-width: 768px)");
   let activeIndex = 0;
 
   if (!slides.length || !dots.length) {

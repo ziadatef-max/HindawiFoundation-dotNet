@@ -124,7 +124,7 @@ ol.legal-list {
         right: 0;
     }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .legal-modified-date {
         font-size: 16px;
         line-height: 24px;

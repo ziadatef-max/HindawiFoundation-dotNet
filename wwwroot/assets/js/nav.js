@@ -1,56 +1,8 @@
 export function initNav() {
-  const body = document.body;
-  const mobileToggle = document.querySelector("[data-mobile-toggle]");
-  const mobileMenu = document.getElementById("mobileMenu");
   const languageSwitch = document.querySelector(".language-switch");
   const languageToggle = document.querySelector("[data-language-toggle]");
 
   setActiveNavLink();
-
-  const mobileClose = document.querySelector("[data-mobile-close]");
-
-  if (mobileToggle && mobileMenu) {
-    const closeMobileMenu = () => {
-      mobileMenu.classList.remove("is-open");
-      mobileMenu.setAttribute("hidden", "");
-      mobileToggle.setAttribute("aria-expanded", "false");
-      const icon = mobileToggle.querySelector("i");
-      if (icon) icon.className = "fa-solid fa-bars";
-      body.style.overflow = "";
-    };
-
-    const openMobileMenu = () => {
-      mobileMenu.classList.add("is-open");
-      mobileMenu.removeAttribute("hidden");
-      mobileToggle.setAttribute("aria-expanded", "true");
-      const icon = mobileToggle.querySelector("i");
-      if (icon) icon.className = "fa-solid fa-xmark";
-      body.style.overflow = "hidden";
-    };
-
-    mobileToggle.addEventListener("click", () => {
-      const isOpen = mobileMenu.classList.contains("is-open");
-      if (isOpen) {
-        closeMobileMenu();
-      } else {
-        openMobileMenu();
-      }
-    });
-
-    if (mobileClose) {
-      mobileClose.addEventListener("click", closeMobileMenu);
-    }
-
-    mobileMenu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeMobileMenu);
-    });
-
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && mobileMenu.classList.contains("is-open")) {
-        closeMobileMenu();
-      }
-    });
-  }
 
   if (languageSwitch && languageToggle) {
     languageToggle.addEventListener("click", (event) => {
@@ -88,7 +40,7 @@ function setActiveNavLink() {
   const currentPath = normalize(window.location.href);
 
   const navLinks = document.querySelectorAll(
-    ".site-nav__menu a, .site-nav__donate a, .mobile-nav a, .mobile-bottom-nav__item"
+    ".site-nav__menu a, .site-nav__donate a, .mobile-bottom-nav__item"
   );
 
   let matched = false;
@@ -119,4 +71,3 @@ function setActiveNavLink() {
     });
   }
 }
-

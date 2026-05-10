@@ -109,14 +109,9 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .news-detail__hero {
     height: 220px;
-  }
-
-  .news-detail__figure img {
-    width: 100%;
-    height: auto;
   }
 
   .news-detail__section {

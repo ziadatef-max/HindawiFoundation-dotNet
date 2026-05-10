@@ -59,6 +59,10 @@
           <i class="fa-solid fa-newspaper mobile-bottom-nav__icon" aria-hidden="true"></i>
           <span class="mobile-bottom-nav__label">@localizer["news_button"]</span>
         </a>
+        <a asp-controller="Home" asp-action="Partners" asp-route-culture="@culture" class="mobile-bottom-nav__item @BnIsActive("partners")">
+          <i class="fa-solid fa-handshake mobile-bottom-nav__icon" aria-hidden="true"></i>
+          <span class="mobile-bottom-nav__label">@localizer["partners_button"]</span>
+        </a>
         <a asp-controller="Home" asp-action="Contact" asp-route-culture="@culture" class="mobile-bottom-nav__item @BnIsActive("contact")">
           <i class="fa-solid fa-envelope mobile-bottom-nav__icon" aria-hidden="true"></i>
           <span class="mobile-bottom-nav__label">@localizer["contact_us_button"]</span>
