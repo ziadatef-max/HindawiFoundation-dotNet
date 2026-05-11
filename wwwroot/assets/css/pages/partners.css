@@ -94,13 +94,22 @@
 }
 
 .partner-card__value {
-  font-size: 18px;
-  line-height: 25px;
-  font-weight: 700;
-  color: #333333;
-  margin: 0 0 20px;
-  overflow-wrap: anywhere;
-  word-break: normal;
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 400;
+    color: #333333;
+    margin: 0 0 20px;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+.partner-card__value_title {
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 700;
+    color: #333333;
+    margin: 0 0 20px;
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 .partner-card__value:last-child {

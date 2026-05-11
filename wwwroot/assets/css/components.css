@@ -646,13 +646,13 @@
         padding-bottom: 15px;
     }
 
-    .impact-grid {
+.impact-grid {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 90px;
+    gap: 75px;
     flex-wrap: wrap;
-    }
+}
 
     .impact-item {
     width: 174px;
@@ -661,13 +661,13 @@
     }
 
 
-    .impact-icon {
+.impact-icon {
     width: 75px;
     height: 60px;
-    margin: 0 auto 18px;
+    margin: 0 auto 15px;
     display: grid;
     place-items: center;
-    }
+}
 
     .impact-icon i {
     font-size: 60px;
@@ -675,13 +675,13 @@
     color: #ffffff;
     }
 
-    .impact-item .number {
-    margin: 0 0 8px;
+.impact-item .number {
+    margin: 0 0 14px;
     color: #ffffff;
     font-size: 46px;
     line-height: 61px;
     font-weight: 700;
-    }
+}
 
     .impact-item .label {
     margin: 0;
