@@ -4,7 +4,7 @@
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
     var arrowIcon = culture == "ar" ? "fa-arrow-left" : "fa-arrow-right";
     var booktimeUrl = culture == "ar" ? "https://www.booktime.org/ar" : "https://www.booktime.org/en";
-    var safahatUrl  = culture == "https://www.hindawi.org/";
+    var safahatUrl  = "https://www.hindawi.org/";
    // var safahatUrl  = culture == "ar" ? "https://www.safahat.org/ar/" : "https://www.safahat.org/en/";
    var foliosUrl   = culture == "ar" ? "https://folios.org/ar" : "https://folios.org/en";
 }
@@ -53,7 +53,7 @@
             </div>
             <h3>@localizer["safahat_label"]</h3>
             <p>@localizer["safahat_content_label"]</p>
-            <a href="@safahatUrl" class="product-link product-link--safahat" data-product="safahat" target="_blank" rel="noopener noreferrer">
+            <a href="@safahatUrl" class="product-link product-link--safahat" target="_blank" rel="noopener noreferrer">
               @localizer["safahat_website_button"]
               <i class="fa-solid @arrowIcon" aria-hidden="true"></i>
             </a>
@@ -221,8 +221,8 @@
                 <img src="~/Logos/CNL-home.png?v=4" alt="CNL" class="partner-logo">
                 <img src="~/Logos/Fundacao_Calouste_Gulbenkian-home.png?v=4" alt="Fundação Calouste Gulbenkian" class="partner-logo">
                 <img src="~/Logos/PRODOMINICANA-home.png?v=4" alt="PRODOMINICANA" class="partner-logo">
-                <img src="~/Logos/Ulverscroft-home.png?v=4" alt="Ulverscroft" class="partner-logo">
                 <img src="~/Logos/Birmingham_City_University-home.png?v=4" alt="Birmingham City University" class="partner-logo">
+                <img src="~/Logos/Ulverscroft-home.png?v=4" alt="Ulverscroft" class="partner-logo">
         </div>
       </div>
     </section>

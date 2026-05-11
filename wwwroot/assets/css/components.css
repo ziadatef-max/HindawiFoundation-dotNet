@@ -300,6 +300,8 @@
     align-items: center;
     gap: var(--space-8);
     text-align: center;
+    padding-top:68px;
+    padding-bottom:60px;
     }
 
     .hero__content h1 {
@@ -708,11 +710,11 @@
     max-width: none;
     }
 .cta {
-  position: relative;
-  height: 376px;
-  padding: 80px;
-  background: #ff7a4f;
-  overflow: hidden;
+    position: relative;
+    height: 376px;
+    padding-block: 80px;
+    background: #ff7a4f;
+    overflow: hidden;
 }
 
 .cta::after {
@@ -805,8 +807,10 @@
     font-size: 32px;
     line-height: 1.2;
   }
-
-  .impact {
+    .cta .btn--light {
+        justify-self: start;
+    }
+        .impact {
     height: auto;
   }
 
@@ -1053,7 +1057,7 @@
     }
 
     .products-grid {
-        grid-template-columns: repeat(3, 380px);
+        grid-template-columns: repeat(2, 380px);
         justify-content: center;
         align-items: stretch;
         gap: 30px;
