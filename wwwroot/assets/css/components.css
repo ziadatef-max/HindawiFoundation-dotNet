@@ -841,7 +841,9 @@
     align-items: center;
     gap: var(--space-6);
     }
-
+    .partner-logo {
+        transition: all var(--duration-base) var(--easing-standard);
+    }
     .partner-logo--tall {
     height: 52px;
     }
@@ -1320,9 +1322,11 @@
 }
 
 .partner-card__logo {
-  height: 48px;
-  max-width: 160px;
-  object-fit: contain;
+    height: 48px;
+    max-width: 160px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: filter var(--duration-base) var(--easing-standard), opacity var(--duration-base) var(--easing-standard);
 }
 
 .partner-card__funded {

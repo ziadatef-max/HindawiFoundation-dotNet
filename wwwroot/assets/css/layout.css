@@ -22,7 +22,7 @@ body {
     }
 }
 
-@media (min-width: 769px) {
+@media (max-width: 1259px) {
   .container {
     padding-inline: 30px;
   }

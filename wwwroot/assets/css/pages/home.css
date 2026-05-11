@@ -114,11 +114,12 @@
 }
 
 .page--home .partners .partners-grid {
-    width: 1200px;
+    width: 100%;
     max-width: 1200px;
+    margin-inline: auto;
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 32px 54px;
 }
@@ -129,9 +130,13 @@
 
 .page--home .partners .partner-logo {
     display: block;
+    height: auto;
     max-height: 66px;
+    max-width: 100%;
     object-fit: contain;
+    flex: 0 1 auto;
 }
+
 .page--home .partners .partners-grid .partner-logo:nth-child(1) {
     width: 181.19px;  
 }
