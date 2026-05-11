@@ -72,31 +72,3 @@
   margin: 0 25px 20px 0;
   padding: 0;
 }
-
-@media (max-width: 768px) {
-  .legal-list li {
-    font-size: 16px;
-    line-height: 24px;
-  }
-}
-
-@media (max-width: 768px) {
-    .legal-modified-date {
-        font-size: 16px;
-        line-height: 24px;
-        margin-bottom: 40px;
-    }
-  .legal-section {
-    margin-bottom: 36px;
-  }
-
-  .legal-section__title {
-    font-size: 20px;
-    line-height: 28px;
-  }
-
-  .legal-section__body {
-    font-size: 16px;
-    line-height: 24px;
-  }
-}

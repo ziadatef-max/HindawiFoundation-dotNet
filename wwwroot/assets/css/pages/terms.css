@@ -119,35 +119,7 @@ ol.legal-list {
     padding-right: 22px;
 }
 
-    .layout-rtl ol.legal-list li::before {
-        left: auto;
-        right: 0;
-    }
-
-@media (max-width: 768px) {
-    .legal-modified-date {
-        font-size: 16px;
-        line-height: 24px;
-        margin-bottom: 40px;
-    }
-
-    .legal-section {
-        margin-bottom: 36px;
-    }
-
-    .legal-section__title {
-        font-size: 20px;
-        line-height: 28px;
-    }
-
-    .legal-section__body,
-    .legal-list li {
-        font-size: 16px;
-        line-height: 24px;
-    }
-
-    ol.legal-list li::before {
-        font-size: 16px;
-        line-height: 24px;
-    }
+.layout-rtl ol.legal-list li::before {
+    left: auto;
+    right: 0;
 }

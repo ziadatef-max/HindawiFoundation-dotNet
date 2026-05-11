@@ -25,6 +25,18 @@ export function initNav() {
       }
     });
   }
+
+  document.querySelectorAll(".mobile-bottom-nav__item").forEach((item) => {
+    item.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+      document.querySelectorAll(".mobile-bottom-nav__item").forEach((link) => {
+        link.classList.remove("is-active");
+      });
+      item.classList.add("is-active");
+    });
+  });
 }
 
 function setActiveNavLink() {

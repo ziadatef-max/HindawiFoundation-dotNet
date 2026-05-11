@@ -210,12 +210,8 @@
   .contact-layout {
     grid-template-columns: 1fr;
   }
-
+/*
   .contact-map {
     height: 240px;
-  }
-
-  .hubs-list {
-    gap: 40px;
-  }
+  }*/
 }

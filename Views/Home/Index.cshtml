@@ -4,8 +4,9 @@
     var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
     var arrowIcon = culture == "ar" ? "fa-arrow-left" : "fa-arrow-right";
     var booktimeUrl = culture == "ar" ? "https://www.booktime.org/ar" : "https://www.booktime.org/en";
-    var safahatUrl  = culture == "ar" ? "https://www.safahat.org/ar/" : "https://www.safahat.org/en/";
-    var foliosUrl   = culture == "ar" ? "https://folios.org/ar" : "https://folios.org/en";
+    var safahatUrl  = culture == "https://www.hindawi.org/";
+   // var safahatUrl  = culture == "ar" ? "https://www.safahat.org/ar/" : "https://www.safahat.org/en/";
+   var foliosUrl   = culture == "ar" ? "https://folios.org/ar" : "https://folios.org/en";
 }
 
 @section Styles {
@@ -36,7 +37,7 @@
         <div class="products-grid">
           <article class="card card--product">
             <div class="product-icon">
-              <img src="~/Logos/Booktime.svg?v=3" alt="@localizer["booktime_label"]">
+              <img src="~/Logos/Booktime.svg?v=4" alt="@localizer["booktime_label"]">
             </div>
             <h3>@localizer["booktime_label"]</h3>
             <p>@localizer["booktime_content_label"]</p>
@@ -48,7 +49,7 @@
 
           <article class="card card--product">
             <div class="product-icon">
-              <img src="~/Logos/safahat.svg?v=3" alt="@localizer["safahat_label"]">
+              <img src="~/Logos/safahat.svg?v=4" alt="@localizer["safahat_label"]">
             </div>
             <h3>@localizer["safahat_label"]</h3>
             <p>@localizer["safahat_content_label"]</p>
@@ -58,9 +59,9 @@
             </a>
           </article>
 
-          <article class="card card--product">
+         <!-- <article class="card card--product">
             <div class="product-icon">
-              <img src="~/Logos/folios.svg?v=3" alt="@localizer["folios_label"]">
+              <img src="~/Logos/folios.svg?v=4" alt="@localizer["folios_label"]">
             </div>
             <h3>@localizer["folios_label"]</h3>
             <p>@localizer["folios_content_label"]</p>
@@ -69,6 +70,8 @@
               <i class="fa-solid @arrowIcon" aria-hidden="true"></i>
             </a>
           </article>
+          -->
+
         </div>
 
         <div class="donate-inline">
@@ -127,7 +130,7 @@
 
           <article class="impact-item" role="listitem">
             <div class="impact-icon">
-              <img src="~/Icons/book-open-cover.svg?v=3" alt="">
+              <img src="~/Icons/book-open-cover.svg?v=4" alt="">
             </div>
             <p class="number">@localizer["impact_second_subhead_label"]</p>
             <p class="label label--nowrap">@localizer["impact_second_content_label"]</p>
@@ -173,7 +176,7 @@
               <p class="quote">@localizer["testimonials_first_quote_label"]</p>
               <div class="author-row">
                 <p class="author">@localizer["testimonials_first_user_label"]</p>
-                <img src="~/Icons/quote_mark.svg?v=3" alt="" class="quote-mark" aria-hidden="true">
+                <img src="~/Icons/quote_mark.svg?v=4" alt="" class="quote-mark" aria-hidden="true">
               </div>
             </article>
 
@@ -181,7 +184,7 @@
               <p class="quote">@localizer["testimonials_second_quote_label"]</p>
               <div class="author-row">
                 <p class="author">@localizer["testimonials_second_user_label"]</p>
-                <img src="~/Icons/quote_mark.svg?v=3" alt="" class="quote-mark" aria-hidden="true">
+                <img src="~/Icons/quote_mark.svg?v=4" alt="" class="quote-mark" aria-hidden="true">
               </div>
             </article>
           </div>
@@ -215,11 +218,11 @@
         </header>
 
         <div class="partners-grid">
-                <img src="~/Logos/CNL-home.svg?v=3" alt="CNL" class="partner-logo">
-                <img src="~/Logos/Fundacao_Calouste_Gulbenkian-home.svg?v=3" alt="Fundação Calouste Gulbenkian" class="partner-logo">
-                <img src="~/Logos/PRODOMINICANA-home.svg?v=3" alt="PRODOMINICANA" class="partner-logo">
-                <img src="~/Logos/Ulverscroft-home.svg?v=3" alt="Ulverscroft" class="partner-logo">
-                <img src="~/Logos/Birmingham_City_University-home.svg?v=3" alt="Birmingham City University" class="partner-logo">
+                <img src="~/Logos/CNL-home.png?v=4" alt="CNL" class="partner-logo">
+                <img src="~/Logos/Fundacao_Calouste_Gulbenkian-home.png?v=4" alt="Fundação Calouste Gulbenkian" class="partner-logo">
+                <img src="~/Logos/PRODOMINICANA-home.png?v=4" alt="PRODOMINICANA" class="partner-logo">
+                <img src="~/Logos/Ulverscroft-home.png?v=4" alt="Ulverscroft" class="partner-logo">
+                <img src="~/Logos/Birmingham_City_University-home.png?v=4" alt="Birmingham City University" class="partner-logo">
         </div>
       </div>
     </section>

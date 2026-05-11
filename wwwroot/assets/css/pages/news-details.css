@@ -103,18 +103,3 @@
   margin-top: 20px;
 }
 
-@media (max-width: 1023px) {
-  .news-detail__hero {
-    height: 260px;
-  }
-}
-
-@media (max-width: 768px) {
-  .news-detail__hero {
-    height: 220px;
-  }
-
-  .news-detail__section {
-    margin-top: 40px;
-  }
-}

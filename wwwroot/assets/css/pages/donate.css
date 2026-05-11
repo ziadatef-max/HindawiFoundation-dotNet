@@ -446,7 +446,7 @@ font-size: 16px;
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 640px) {
   .donate-grid--3,
   .donate-grid--card {
     grid-template-columns: 1fr;
@@ -454,10 +454,6 @@ font-size: 16px;
 
   .payment-method {
     width: 100%;
-  }
-
-  .donate-form-body {
-    padding: 30px 20px 20px;
   }
 }
 
@@ -599,10 +595,6 @@ font-size: 16px;
     .recaptcha-wrap {
         height: 66px;
     }
-
-    .g-recaptcha {
-        transform: scale(0.815);
-    }
 }
 .cvv-input {
   position: relative;
@@ -619,13 +611,11 @@ font-size: 16px;
   user-select: none;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 640px) {
   .wire-transfer-row {
     flex-direction: column;
     align-items: flex-start;
     height: auto;
-    padding: 12px 0;
-    gap: 4px;
   }
 
   .wire-transfer-row__label {

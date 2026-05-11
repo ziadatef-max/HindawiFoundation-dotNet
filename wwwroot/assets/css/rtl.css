@@ -40,6 +40,7 @@
 .layout-rtl .language-menu {
   left: 0;
   right: auto;
+  padding-right :0;
 }
 
 .layout-rtl .site-footer__inner,
@@ -62,7 +63,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("../../Images/hero_image.svg?v=3");
+  background-image: url("../../Images/hero_image.png?v=4");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;

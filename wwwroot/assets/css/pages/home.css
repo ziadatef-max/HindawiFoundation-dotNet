@@ -4,7 +4,7 @@
   height: 320px;
   padding: 0;
   background-color: #eaebda;
-  background-image: url("../../../Images/hero_image.svg?v=3");
+  background-image: url("../../../Images/hero_image.png?v=4");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
@@ -73,7 +73,6 @@
   .page--home .hero {
     height: auto;
     min-height: 360px;
-    padding: 48px 0;
     background-size: cover;
     background-position: center top;
   }
@@ -93,6 +92,9 @@
     width: 100%;
     max-width: 100%;
   }
+}
+.what-we-do .products-grid {
+    grid-template-columns: repeat(2, 380px);
 }
 
 .page--home .what-we-do {
@@ -118,12 +120,11 @@
 .page--home .partners .partners-grid {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   flex-wrap: wrap;
-  gap: 32px 56px;
+  gap: 32px 54px;
 }
 
 .page--home .partners .partners-grid a {
@@ -138,12 +139,32 @@
   max-height: 76px;
   object-fit: contain;
 }
+.page--home .partners .partners-grid .partner-logo:nth-child(2) {
+    width: 240.39px;
+    height: 75.18px;
+}
+
+.page--home .partners .partners-grid .partner-logo:nth-child(4) {
+    width: 79.3px;
+    height: 75.18px;
+}
+
+.page--home .partners .partners-grid .partner-logo:nth-child(1) {
+    width: 206.38px;
+    height: 75.18px;
+}
+
+.page--home .partners .partners-grid .partner-logo:nth-child(3) {
+    width: 197.24px;
+    height: 75.18px;
+}
+
+.page--home .partners .partners-grid .partner-logo:nth-child(5) {
+    width: 250.9px;
+    height: 53.56px;
+}
 
 @media (max-width: 1024px) {
-  .page--home .partners .partners-grid {
-    gap: 28px 40px;
-  }
-
   .page--home .partners .partner-logo {
     max-width: min(180px, 45vw);
   }

@@ -42,23 +42,3 @@
 .donation-success__link:hover {
   text-decoration: none;
 }
-
-@media (max-width: 768px) {
-  .donation-success-section {
-    padding-top: 60px;
-    padding-bottom: 60px;
-  }
-
-  .donation-success__icon {
-    width: 64px;
-    height: 64px;
-  }
-
-  .donation-success__title {
-    font-size: 24px;
-  }
-
-  .donation-success__link {
-    font-size: 16px;
-  }
-}

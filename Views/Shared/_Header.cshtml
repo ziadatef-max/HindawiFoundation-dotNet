@@ -35,7 +35,7 @@
     var englishUrl = MakeUrl("en");
     var arabicUrl  = MakeUrl("ar");
 
-    var logoSrc = culture == "ar" ? "/Logos/hindawi_ar.svg?v=3" : "/Logos/hindawi_en.svg?v=3";
+    var logoSrc = culture == "ar" ? "/Logos/hindawi_ar.svg?v=4" : "/Logos/hindawi_en.svg?v=4";
     var logoAlt = localizer["website_name_label"].Value;
 }
 <header class="site-header" data-component="header">
@@ -62,7 +62,11 @@
               @foreach (var lang in SupportedLanguages.All)
               {
                 var langUrl = lang.IsoCode == "ar" ? arabicUrl : englishUrl;
-                <li><a href="@langUrl" class="@(culture == lang.IsoCode ? "is-active" : "")" data-lang="@lang.IsoCode" aria-current="@(culture == lang.IsoCode ? "true" : "false")">@lang.Name</a></li>
+                <li>
+                  <a href="@langUrl" class="@(culture == lang.IsoCode ? "is-active" : "")" data-lang="@lang.IsoCode" aria-current="@(culture == lang.IsoCode ? "true" : "false")">
+                    <span>@lang.Name</span>@if (culture == lang.IsoCode){<i class="fa-solid fa-check language-menu__check" aria-hidden="true"></i>}
+                  </a>
+                </li>
               }
             </ul>
           </li>
