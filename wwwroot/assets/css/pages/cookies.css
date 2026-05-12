@@ -4,10 +4,11 @@
 }
 
 .legal-modified-date {
-  font-size: 14px;
-  line-height: 20px;
-  color: #666666;
-  margin: 0 0 32px;
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 400;
+    color: #818181;
+    margin: 0 0 60px;
 }
 
 .legal-section {
