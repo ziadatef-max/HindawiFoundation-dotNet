@@ -1,0 +1,30 @@
+@{
+    ViewData["TitleKey"] = "donation_success_message";
+    ViewData["BodyClass"] = "page page--donate-success";
+    ViewData["ActivePage"] = "donate";
+    var culture = ViewData["Culture"]?.ToString() ?? ViewContext.RouteData.Values["culture"]?.ToString() ?? "en";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/pages/donation-success.css" asp-append-version="true">
+}
+
+<main id="main-content">
+
+    <section class="section donation-success-section">
+      <div class="container">
+        <div class="donation-success">
+          <img class="donation-success__icon" src="~/Icons/donate_success.svg?v=4" alt="" aria-hidden="true">
+          <h1 class="donation-success__title">@localizer["unsubscription_message"]</h1>
+            <p class="donation-success__go-to">
+                @localizer["go_to_label"]
+                <a asp-controller="Home"
+                    asp-action="Index"
+                    asp-route-culture="@culture"
+                    class="donation-success__link">@localizer["home_button"].</a>
+            </p>
+        </div>
+      </div>
+    </section>
+
+</main>

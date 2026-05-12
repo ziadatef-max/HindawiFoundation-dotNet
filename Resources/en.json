@@ -105,5 +105,6 @@
   "invalid_expiry_date_message": "Invalid expiry date (MM/YY).",
   "empty_cvv_message": "Empty CVV field.",
   "invalid_cvv_message": "Invalid CVV (3-4 digits).",
-  "recaptcha_error": "Please verify that you are not a robot."
+  "recaptcha_error": "Please verify that you are not a robot.",
+  "unsubscription_message": "Your subscription has been canceled."
 }

@@ -72,3 +72,10 @@
   margin: 0 25px 20px 0;
   padding: 0;
 }
+.legal-section a {
+    color: var(--color-brand-orange);
+}
+
+.legal-section a:hover {
+    text-decoration: underline;
+}

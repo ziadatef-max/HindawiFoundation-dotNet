@@ -2,6 +2,7 @@ using HindawiFoundation.Web.Models;
 using HindawiFoundation.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Text.RegularExpressions;
 
 namespace HindawiFoundation.Web.Controllers;
 
@@ -140,5 +141,16 @@ public class DonateController : Controller
     {
         var currency = await _donationService.GetDefaultCurrency(countryCode ?? "US");
         return Json(new { currencyCode = currency });
+    }
+    [HttpGet("donate-unsubscribe")]
+    public async Task<IActionResult> DonationUnsubscribing([FromRoute] string culture)
+    {
+        if (!IsSupportedCulture(culture))
+        {
+            _logger.LogWarning("Unsupported culture '{Culture}' requested for donate page.", culture);
+            return NotFound();
+        }
+
+        return View("~/Views/Donate/donation-unsubscribe.cshtml");
     }
 }

@@ -107,6 +107,14 @@ public class HomeController : Controller
         return ViewForCulture("Terms", culture);
     }
 
+    [HttpGet("cookies")]
+    public IActionResult Cookies([FromRoute] string culture)
+    {
+        if (!IsSupportedCulture(culture)) return NotFound();
+        SetCommonViewData(culture, "", "cookies_page_title");
+        return ViewForCulture("Cookies", culture);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error() => View();
 }
