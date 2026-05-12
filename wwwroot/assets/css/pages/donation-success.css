@@ -15,11 +15,9 @@
     align-items: center;
     gap: 4px;
     flex-wrap: wrap;
+    font-size:18px;
 }
 
-.donation-success__link {
-    display: inline;
-}
 .donation-success__icon {
     margin-bottom: 60px;
 }
@@ -33,12 +31,12 @@
 }
 
 .donation-success__link {
-  font-size: 18px;
-  line-height: 1.4;
-  color: var(--color-brand-orange);
-  text-decoration: underline;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--color-brand-orange);
+    display: inline;
 }
 
 .donation-success__link:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }

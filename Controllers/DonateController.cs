@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace HindawiFoundation.Web.Controllers;
 
-[Route("{culture}/donate")]
+[Route("{culture}")]
 public class DonateController : Controller
 {
     private readonly IDonationService _donationService;
@@ -39,7 +39,7 @@ public class DonateController : Controller
     private static bool IsSupportedCulture(string? culture) =>
         !string.IsNullOrEmpty(culture) && SupportedCultures.Contains(culture);
 
-    [HttpGet("")]
+    [HttpGet("donate")]
     public async Task<IActionResult> Index([FromRoute] string culture)
     {
         if (!IsSupportedCulture(culture))
@@ -63,7 +63,7 @@ public class DonateController : Controller
         return View("~/Views/Home/Donate.cshtml", model);
     }
 
-    [HttpPost("")]
+    [HttpPost("donate")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index([FromRoute] string culture, DonationViewModel model)
     {
@@ -129,14 +129,14 @@ public class DonateController : Controller
         return View("~/Views/Donate/donation_success.cshtml");
     }
 
-    [HttpGet("currencies")]
+    [HttpGet("donate/currencies")]
     public async Task<IActionResult> Currencies()
     {
         var currencies = await _donationService.GetCurrencies();
         return Json(currencies);
     }
 
-    [HttpGet("default-currency")]
+    [HttpGet("donate/default-currency")]
     public async Task<IActionResult> DefaultCurrency([FromQuery] string? countryCode = "US")
     {
         var currency = await _donationService.GetDefaultCurrency(countryCode ?? "US");
