@@ -208,101 +208,97 @@ font-size: 16px;
 }
 
 .currency-select {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  display: flex;
-  align-items: stretch;
+    position: absolute;
+    top: 50%;
+    inset-inline-end: .75rem;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 3;
 }
-
 .currency-select__trigger {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  height: 100%;
-  padding: 0 12px;
-  background: transparent;
-  border: none;
-  border-left: 1px solid #E2E2E2;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 600;
-  color: #333333;
-  white-space: nowrap;
-  direction: ltr;
+    position: relative;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    gap: .6rem;
+    height: 35px;
+    padding: 0 16px;
+    border: 0;
+    background: 0 0;
+    border-inline-start: 1px solid #d6d6d6;
+    color: #3a3a3a;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-appearance: none;
 }
 
-.currency-select__trigger:focus {
-  outline: 2px solid #8C3CF9;
-  outline-offset: -2px;
-}
-
-.currency-select__trigger:hover {
-  background: rgba(140, 60, 249, 0.05);
-}
 
 .currency-select__selected {
-  direction: ltr;
-  unicode-bidi: embed;
+    display: inline-block;
+    font-weight: 400;
+    white-space: nowrap;
 }
 
 .currency-select__arrow {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 5px solid #555;
-  flex-shrink: 0;
-  margin-top: 1px;
+    width: 0;
+    height: 0;
+    border-left: 4.5px solid transparent;
+    border-right: 4.5px solid transparent;
+    border-top: 5.5px solid #3a3a3a;
+    flex-shrink: 0;
 }
 
 .currency-select__dropdown {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  min-width: 230px;
-  background: #fff;
-  border: 1px solid #E2E2E2;
-  border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  z-index: 200;
-  overflow: hidden;
+    position: absolute;
+    top: calc(100% + 11px);
+    inset-inline-end: -6px;
+    max-width: min(375px, 100vw - 2rem);
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #f7f7f7;
+    box-shadow: 0 .4rem 1rem rgba(0, 0, 0, .18);
+    overflow: hidden;
 }
 
 .currency-select__list {
-    list-style: none;
-    margin: 0;
-    padding: 4px 0;
-    max-height: 240px;
+    width:300px;
+    max-height: 320px;
     overflow-y: auto;
+    margin: 0;
+    padding: 5px;
+    list-style: none;
     scrollbar-width: thin;
-    width: 372.5px;
 }
 
 .currency-select__option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
-  color: #333333;
-  cursor: pointer;
-  direction: ltr;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 5px;
+    min-height: 37.5px;
+    padding: 10px;
+    border-radius: 4px;
+    color: #333;
+    font-size: 14px;
+    line-height: 100%;
+    cursor: pointer;
+    transition: background-color .2s ease;
 }
 
-.currency-select__option:hover,
-.currency-select__option:focus {
-  background: #F5F0FF;
-  outline: none;
-}
+    .currency-select__option:hover,
+    .currency-select__option:focus {
+        background-color: #f0f0f0;
+        outline: 0;
+    }
 
-.currency-select__option.is-selected {
-  background: #EDE8FF;
-  font-weight: 600;
-}
+    .currency-select__option.is-selected {
+        background-color: #f0f0f0;
+        outline: 0;
+    }
 
 .currency-select__name {
   flex: 1;
@@ -337,15 +333,36 @@ font-size: 16px;
   color: #333333;
   cursor: pointer;
 }
-
-.frequency-option input[type="radio"] {
-  width: 24px;
-  height: 24px;
-  accent-color: #8C3CF9;
-  cursor: pointer;
-  flex-shrink: 0;
+    .frequency-option input[type=radio]:checked {
+        border-color: #8c3cf9;
+    }
+        .frequency-option input[type=radio] {
+    -moz-appearance: none;
+    appearance: none;
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #e1e1e1;
+    background-color: #fff;
+    border-radius: 50%;
+    outline: 0;
+    cursor: pointer;
+    position: relative;
 }
-
+            .frequency-option input[type=radio]:checked::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%,-50%);
+                transform: translate(-50%, -50%);
+                width: 80%;
+                height: 80%;
+                background-color: #8c3cf9;
+                border-radius: 50%;
+            }
 .donate-divider {
   border: 0;
   border-top: 1px solid #D9D9D9;
