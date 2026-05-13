@@ -339,8 +339,8 @@ font-size: 16px;
 }
 
 .frequency-option input[type="radio"] {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   accent-color: #8C3CF9;
   cursor: pointer;
   flex-shrink: 0;
