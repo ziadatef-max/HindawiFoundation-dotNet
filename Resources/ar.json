@@ -106,5 +106,6 @@
   "empty_cvv_message": "حقل رمز التحقق (CVV) فارغ.",
   "invalid_cvv_message": "رمز التحقق (CVV) غير صحيح (يجب أن يتكوّن من 3 إلى 4 أرقام).",
   "recaptcha_error": "يرجى إثبات أنك لست برنامج روبوت.",
-  "unsubscription_message": "تم إلغاء اشتراكك."
+  "unsubscription_message": "تم إلغاء اشتراكك.",
+  "cookie_policy_label": "سياسة ملفات التعريف"
 }

@@ -111,7 +111,7 @@ public class HomeController : Controller
     public IActionResult Cookies([FromRoute] string culture)
     {
         if (!IsSupportedCulture(culture)) return NotFound();
-        SetCommonViewData(culture, "", "cookies_page_title");
+        SetCommonViewData(culture, "", "cookie_policy_label");
         return ViewForCulture("Cookies", culture);
     }
 
