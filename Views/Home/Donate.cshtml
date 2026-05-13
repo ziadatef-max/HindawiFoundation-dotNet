@@ -404,7 +404,7 @@
         expiryFieldRequired: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_expiry_date_message"].Value)),
         cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_cvv_message"].Value)),
         phoneInvalid       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["invalid_phone_message"].Value)),
-      r ecaptchaRequired  : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["recaptcha_error"].Value))
+        recaptchaRequired  : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["recaptcha_error"].Value))
     };
 
     var cardNumberPlaceholder = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_card_number_placeholder_label"].Value));
