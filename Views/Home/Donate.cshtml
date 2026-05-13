@@ -393,18 +393,18 @@
     };
 
     var validationMsgs = {
-      amountRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_donation_amount_message"].Value)),
-      amountMin         : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_minimum_amount_message"].Value)),
-      emailRequired     : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_email_message"].Value)),
-      emailInvalid      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_email_message"].Value)),
-      cardRequired      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_card_number_message"].Value)),
-      expiryRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_expiry_date_message"].Value)),
-      cvvRequired       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_cvv_message"].Value)),
-      cardNumberRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_card_number_message"].Value)),
-      expiryFieldRequired: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_expiry_date_message"].Value)),
-      cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_cvv_message"].Value)),
-      phoneInvalid       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["submit_valid_phone_message"].Value)),
-      recaptchaRequired  : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["recaptcha_error"].Value))
+        amountRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_donation_amount_message"].Value)),
+        amountMin         : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_minimum_amount_message"].Value)),
+        emailRequired     : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_email_message"].Value)),
+        emailInvalid      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["invalid_email_message"].Value)),
+        cardRequired      : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["invalid_card_number_message"].Value)),
+        expiryRequired    : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["invalid_expiry_date_message"].Value)),
+        cvvRequired       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["invalid_cvv_message"].Value)),
+        cardNumberRequired : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_card_number_message"].Value)),
+        expiryFieldRequired: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_expiry_date_message"].Value)),
+        cvvFieldRequired   : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["empty_cvv_message"].Value)),
+        phoneInvalid       : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["invalid_phone_message"].Value)),
+      r ecaptchaRequired  : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["recaptcha_error"].Value))
     };
 
     var cardNumberPlaceholder = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizer["donation_card_number_placeholder_label"].Value));

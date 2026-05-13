@@ -271,10 +271,11 @@
     transition: color var(--duration-base) var(--easing-standard);
     }
 
-    .mobile-bottom-nav__item:hover,
-    .mobile-bottom-nav__item.is-active {
-    color: var(--color-brand-orange);
-    }
+        .mobile-bottom-nav__item:hover,
+        .mobile-bottom-nav__item.is-active {
+            color: var(--color-brand-orange);
+            border-top: 3px solid var(--color-brand-orange);
+        }
 
     .mobile-bottom-nav__icon {
     font-size: 18px;
