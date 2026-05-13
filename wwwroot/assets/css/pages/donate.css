@@ -31,31 +31,72 @@
 }
 
 .payment-methods {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding: 30px;
-  padding-bottom: 10px;
-  background: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 30px;
+    padding-bottom: 10px;
+    background: #ffffff;
 }
 
 .payment-method {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  width: 200px;
-  height: 84px;
-  padding: 20px;
-  background: #FFFFFF;
-  border: 1px solid #DADADA;
-  border-radius: 6px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #333333;
-  cursor: pointer;
-  box-sizing: border-box;
-  line-height: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 200px;
+    height: 84px;
+    padding: 20px;
+    background: #FFFFFF;
+    border: 1px solid #DADADA;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333333;
+    cursor: pointer;
+    box-sizing: border-box;
+    line-height: 1;
+}
+.payment-method__icon {
+/*    height: 18px;*/
+    display: inline-block;
+    flex: 0 0 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/* Credit card - default */
+.payment-method__icon--card {
+    width: 21px;
+    background-image: url("../../../Icons/credit-card-blank-icon.svg?v=4");
+}
+
+/* Credit card - active */
+.payment-method.is-active .payment-method__icon--card {
+    background-image: url("../../../Icons/credit-card-blank-active-icon.svg?v=4");
+}
+
+/* Wire transfer - default */
+.payment-method__icon--wire {
+    width: 18px;
+    background-image: url("../../../Icons/university-icon.svg?v=4");
+}
+
+/* Wire transfer - active */
+.payment-method.is-active .payment-method__icon--wire {
+    background-image: url("../../../Icons/university-active-icon.svg?v=4");
+}
+
+/* PayPal - default */
+.payment-method__icon--paypal {
+    width: 14px;
+    background-image: url("../../../Icons/paypal-icon.svg?v=4");
+}
+
+/* PayPal - active */
+.payment-method.is-active .payment-method__icon--paypal {
+    background-image: url("../../../Icons/paypal-active-icon.svg?v=4");
 }
 
 .payment-method i {

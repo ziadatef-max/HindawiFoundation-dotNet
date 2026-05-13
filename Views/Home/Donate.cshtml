@@ -37,16 +37,18 @@
 
                         <div class="payment-methods" role="group" aria-label="Payment method">
                             <button class="payment-method is-active" type="button" data-payment="card" aria-pressed="true">
-                                <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
+                                <span class="payment-method__icon payment-method__icon--card" aria-hidden="true"></span>
                                 @localizer["credit/debit_card_button"]
                             </button>
+
                             <button class="payment-method" type="button" data-payment="wire" aria-pressed="false">
-                                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                                <span class="payment-method__icon payment-method__icon--wire" aria-hidden="true"></span>
                                 @localizer["wire_transfer_button"]
                             </button>
+
                             @* PayPal tab: code kept but hidden until PayPal is re-enabled *@
-                            <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false" style="display:none" aria-hidden="true">
-                                <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+                        <button class="payment-method" type="button" data-payment="paypal" aria-pressed="false" style="display:none" aria-hidden="true">
+                                <span class="payment-method__icon payment-method__icon--paypal" aria-hidden="true"></span>
                                 @localizer["paypal_button"]
                             </button>
                         </div>
